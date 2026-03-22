@@ -7,7 +7,7 @@
     Title="Game">
 
     <ShellContent
-        Title="Home"
+        
         ContentTemplate="{DataTemplate local:New}"
         Route="New" />
 
