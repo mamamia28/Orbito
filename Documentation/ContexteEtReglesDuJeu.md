@@ -10,6 +10,16 @@ Le jeu choisi est Orbito, un jeu de plateau au tour par tour dont le but est d'a
 Puis les joueurs peuvent déplacer une bille adverse sur ses cases adjacentes et poser une de leurs billes sur le plateau.
 Il s'agit donc d'un jeu de stratégie complexe.
 
+<table style="border: none; border-collapse: collapse; margin-top: 0; margin-bottom: 0;">
+  <tr style="border: none;">
+    <td style="border: none; padding: 0; line-height: 0; vertical-align: top;">
+      <img src="Images/OrbitoGame.jpg" alt="Plateau de jeu Orbito" width="300" style="display: block; margin: 0;">
+    </td>
+    <td style="border: none; padding: 0 0 0 10px; vertical-align: top;">Voici une image représentant le plateau de Orbito  
+    </td>
+  </tr>
+</table>
+
 Cette version numérique offrira une expérience de jeu simple et intergénérationnelle, conçue pour plaire aussi bien aux enfants qu'aux adultes. Elle sera particulièrement adaptée aux joueurs amateurs, qui pourront affronter d'autres joueurs à domicile ou une IA, que ce soit le temps d'une partie rapide ou lors de tournois.
 
 L'application permettra des affrontements en 1 contre 1 (humain ou IA) et assurera un suivi complet de la progression grâce à la sauvegarde des scores et des statistiques détaillées par joueur (nombre de victoires, coups joués, etc.).
