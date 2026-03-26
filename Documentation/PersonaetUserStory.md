@@ -1,7 +1,7 @@
 ***
 # Persona 1 : Jacques Petit
 
-![](/Images/PetitJacques.png)
+![](Images/PetitJacques.png)
 ## Profil
 * **Âge :** 22 ans
 * **Lieu de résidence :** Toulouse
@@ -35,7 +35,7 @@ Il lance alors une partie contre l'intelligence artificielle de l'application. L
 
 # Persona 2 : Jean-Marie Rozier
 
-![](/Images/Jean-MarieRozier.png)
+![](Images/Jean-MarieRozier.png)
 ## Profil
 * **Âge :** 38 ans
 * **Lieu de résidence :** Nantes
@@ -69,7 +69,7 @@ Elle installe le jeu sur son portable et crée en quelques secondes les profils 
 
 # Persona 3 : Bernard Dubois
 
-![](/Images/BernardDubois.png)
+![](Images/BernardDubois.png)
 ## Profil
 * **Âge :** 71 ans
 * **Lieu de résidence :** Clermont-Ferrand
@@ -102,7 +102,7 @@ Il ouvre l'application, dont il apprécie immédiatement la lisibilité des bout
 
 # Persona 4 : Loïc Vasseur
 
-![](/Images/LoïcVasseur.png)
+![](Images/LoïcVasseur.png)
 ## Profil
 * **Âge :** 31 ans
 * **Lieu de résidence :** Joyeuse (Ardèche)
