@@ -34,15 +34,19 @@
                     />
                 
             </Grid>
-        
+            <Border
+                BackgroundColor="DarkViolet"
+                WidthRequest="600"
+                StrokeShape="RoundRectangle 10">
                 <Label
                 Text="Choisissez un Mode de Jeu"
+                FontAttributes="Bold"
                 FontSize="30"
                 HorizontalOptions="Center"
                 TextColor="White"
                 Padding="30"
                 />
-         
+            </Border>
 
             <HorizontalStackLayout
                 Padding="30"
