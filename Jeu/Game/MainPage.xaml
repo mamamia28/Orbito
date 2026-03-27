@@ -17,13 +17,18 @@
                     HorizontalOptions="Center"
                     />
 
-            <Grid Padding="30"
-                <Border
-                VerticalOptions="End"
-                    WidthRequest="550"
-                    HeightRequest="70">
-
-                <Button
+            <Border
+                HorizontalOptions="End"
+                WidthRequest="420"
+                HeightRequest="200"
+                BackgroundColor="DarkViolet"
+                Stroke="White"
+                StrokeShape="20"
+                StrokeThickness="2">
+                
+                <Grid Padding="30" RowDefinitions="Auto, auto" RowSpacing="15">
+                    
+                    <Button
                         Text="HISTORIQUE"
                         WidthRequest="400"
                         HeightRequest="60"
@@ -31,20 +36,23 @@
                         BorderColor="White"
                         BorderWidth="2"
                         Grid.Row="0"
+                        TextColor="White"
                     />
-                <Button
+                    <Button
                         Text="STATS"
-                        WidthRequest="500"
+                        WidthRequest="400"
                         HeightRequest="60"
                         FontSize="30"
                         BorderColor="White"
                         BorderWidth="2"
                         Grid.Row="1"
+                        TextColor="White"
                     />
-                </Border>
-            </Grid>
-
-            <Button
+                </Grid>
+                
+            </Border>
+            <Grid Padding="30">
+                <Button
                     Text="Quitter"
                     WidthRequest="200"
                     HeightRequest="70"
@@ -54,9 +62,23 @@
                     HorizontalOptions="Start"
                     BorderColor="Black"
                     BorderWidth="3"
+                    Margin="0, 600, 0, 0"
                     Grid.Column="0"
                     />
 
+                <Button
+                    Text="Jouer"
+                    Padding="20"
+                    BackgroundColor="DarkViolet"
+                    TextColor="Black"
+                    BorderColor="Black"
+                    BorderWidth="3"
+                    FontSize="150"
+                    Margin="0, 500, 0, 0"
+                    Grid.Column="1"
+                    HorizontalOptions="Center"
+                    />
+            </Grid>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
