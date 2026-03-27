@@ -7,7 +7,7 @@
     Title="Game">
 
     <ShellContent
-        Title="Home"
+        Title="Choix Mode"
         ContentTemplate="{DataTemplate local:ChoixMode}"
         Route="ChoixMode" />
 
