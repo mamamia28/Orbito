@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
              x:Class="Game.MainPage"
              BackgroundColor="DarkBlue">
 
@@ -10,14 +10,53 @@
             Spacing="25">
 
             <Image
-                    Source="orbitowhite_nobg.png"
+                    Source="orbitowhite_nobg.webp"
                     HeightRequest="200"
                     Aspect="AspectFit"
                     SemanticProperties.Description="Logo Orbito" 
                     HorizontalOptions="Center"
                     />
 
+            <Grid Padding="30"
+                <Border
+                VerticalOptions="End"
+                    WidthRequest="550"
+                    HeightRequest="70">
+
+                <Button
+                        Text="HISTORIQUE"
+                        WidthRequest="400"
+                        HeightRequest="60"
+                        FontSize="30"
+                        BorderColor="White"
+                        BorderWidth="2"
+                        Grid.Row="0"
+                    />
+                <Button
+                        Text="STATS"
+                        WidthRequest="500"
+                        HeightRequest="60"
+                        FontSize="30"
+                        BorderColor="White"
+                        BorderWidth="2"
+                        Grid.Row="1"
+                    />
+                </Border>
+            </Grid>
+
+            <Button
+                    Text="Quitter"
+                    WidthRequest="200"
+                    HeightRequest="70"
+                    FontSize="30"
+                    BackgroundColor="Red"
+                    TextColor="Black"
+                    HorizontalOptions="Start"
+                    BorderColor="Black"
+                    BorderWidth="3"
+                    Grid.Column="0"
+                    />
+
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>
