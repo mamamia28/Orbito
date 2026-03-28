@@ -8,7 +8,7 @@
 
     <ShellContent
         
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        ContentTemplate="{DataTemplate local:PagePseudos}"
+        Route="PagePseudos" />
 
 </Shell>

@@ -1,8 +1,8 @@
 namespace Game;
 
-public partial class New : ContentPage
+public partial class PagePseudos : ContentPage
 {
-	public New()
+	public PagePseudos()
 	{
 		InitializeComponent();
 	}
