@@ -4,16 +4,25 @@
              x:Class="Game.New"
              BackgroundColor="#2E073F">
 
-    <ScrollView>
+    
+    <Grid>
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
-            <Image
-                Source="orbitowhite_nobg.png"
+            <Border
+                BackgroundColor="Transparent"
+                Stroke="Transparent">
+            <Button
+                BackgroundColor="Transparent"
+                
                 HeightRequest="185"
-                Aspect="AspectFit"
+                Text="Orbito"
+                FontSize="150"
+                TextColor="White"
+                FontFamily="MoreSugar"
                 SemanticProperties.Description="Logo Orbito" />
-
+            </Border>
+             
             
 
             <HorizontalStackLayout
@@ -105,17 +114,25 @@
                 </VerticalStackLayout>
             </HorizontalStackLayout>
 
+            <Border
+                BackgroundColor="Transparent"
+                StrokeThickness="0">
             <Button
                 Text="Lancer la partie"
                 WidthRequest="700"
+                Padding="0"
                 HeightRequest="70"
-                FontSize="40"
+                FontFamily="MoreSugar"
+                LineBreakMode="WordWrap"
+                FontSize="50"
                 />
+            </Border>
 
             <Grid Padding="20">
 
                 <Button
-                    Text="Retour"
+                    
+                    Text="="
                     WidthRequest="200"
                     HeightRequest="70"
                     FontSize="30"
@@ -124,14 +141,21 @@
                     HorizontalOptions="Start"
                     BorderColor="Black"
                     BorderWidth="3"
+                    FontFamily="MoreSugarExtras"
                     
                     Grid.Column="0"
+                    
+                    IsVisible="True"
+                    IsEnabled="True"
+                    CornerRadius="20"
+                    
+                    
                     />
 
                 
 
             </Grid>
         </VerticalStackLayout>
-    </ScrollView>
+    </Grid>
 
 </ContentPage>
