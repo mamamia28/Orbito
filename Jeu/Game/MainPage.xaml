@@ -11,13 +11,17 @@
             <Grid
                 ColumnDefinitions="*"
                 RowDefinitions="*,*,*">
-            <Image
+            <Button
                     Grid.Row="0"
                     VerticalOptions="Start"
                     Grid.Column="0"
-                    Source="orbitowhite_nobg.webp"
+                    Text="Orbito"
                     HeightRequest="200"
-                    Aspect="AspectFit"
+                    FontFamily="MoreSugar"
+                    FontSize="150"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    
                     SemanticProperties.Description="Logo Orbito" 
                     HorizontalOptions="Center"
                     />
