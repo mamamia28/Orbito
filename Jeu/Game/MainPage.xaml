@@ -8,19 +8,27 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
-
+            <Grid
+                ColumnDefinitions="*"
+                RowDefinitions="*,*,*">
             <Image
+                    Grid.Row="0"
+                    VerticalOptions="Start"
+                    Grid.Column="0"
                     Source="orbitowhite_nobg.webp"
                     HeightRequest="200"
                     Aspect="AspectFit"
                     SemanticProperties.Description="Logo Orbito" 
                     HorizontalOptions="Center"
                     />
-
+            
             <Border
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Margin="0,150,0,0"
                 HorizontalOptions="End"
                 WidthRequest="420"
-                HeightRequest="200"
+                HeightRequest="400"
                 BackgroundColor="DarkViolet"
                 Stroke="White"
                 StrokeShape="20"
@@ -51,7 +59,9 @@
                 </Grid>
                 
             </Border>
-            <Grid Padding="30">
+            <Grid Padding="30"
+                  Grid.Row="2"
+                  Margin="0,00,0,0">
                 <Button
                     Text="Quitter"
                     WidthRequest="200"
@@ -62,7 +72,7 @@
                     HorizontalOptions="Start"
                     BorderColor="Black"
                     BorderWidth="3"
-                    Margin="0, 600, 0, 0"
+                    Margin="0, 200, 0, 0"
                     Grid.Column="0"
                     />
 
@@ -73,11 +83,13 @@
                     TextColor="Black"
                     BorderColor="Black"
                     BorderWidth="3"
+                    WidthRequest="600"
                     FontSize="150"
-                    Margin="0, 500, 0, 0"
+                    Margin="0, 00, 0, 0"
                     Grid.Column="1"
                     HorizontalOptions="Center"
                     />
+            </Grid>
             </Grid>
         </VerticalStackLayout>
     </ScrollView>
