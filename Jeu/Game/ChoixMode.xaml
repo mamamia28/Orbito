@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Game.ChoixMode"
+             BackgroundColor="DarkBlue">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+
+            <Grid Padding="30">
+
+                <Button
+                    Text="?"
+                    TextColor="Black"
+                    FontSize="40"
+                    BackgroundColor="White"
+                    WidthRequest="50"
+                    HeightRequest="60"
+                    BorderColor="Black"
+                    BorderWidth="3"
+                    Grid.Column="1"
+                    HorizontalOptions="Start"
+                    />
+
+                <Image
+                    Source="orbitowhite_nobg.png"
+                    HeightRequest="200"
+                    Aspect="AspectFit"
+                    SemanticProperties.Description="Logo Orbito" 
+                    Grid.Column="3"
+                    HorizontalOptions="Center"
+                    />
+                
+            </Grid>
+            <Border
+                BackgroundColor="DarkViolet"
+                WidthRequest="600"
+                StrokeShape="RoundRectangle 10">
+                <Label
+                Text="Choisissez un Mode de Jeu"
+                FontAttributes="Bold"
+                FontSize="30"
+                HorizontalOptions="Center"
+                TextColor="White"
+                Padding="30"
+                />
+            </Border>
+
+            <HorizontalStackLayout
+                Padding="30"
+                Spacing="25"
+                HorizontalOptions="Center"
+                
+                >
+                <Button 
+                    Text="Joueur VS IA"
+                    WidthRequest="500"
+                    HeightRequest="60"
+                    FontSize="30"
+                    BorderColor="White"
+                    BorderWidth="2"
+                />
+                <Button
+                    Text="IA VS IA"
+                    WidthRequest="500"
+                    HeightRequest="60"
+                    FontSize="30"
+                    BorderColor="White"
+                    BorderWidth="2"
+                    />
+
+            </HorizontalStackLayout>
+
+            <Button
+                Text="Joueur VS Joueur"
+                WidthRequest="700"
+                HeightRequest="70"
+                FontSize="40"
+                BorderColor="White"
+                BorderWidth="2"
+                />
+
+            <Grid Padding="30">
+
+                <Button
+                    Text="Retour"
+                    WidthRequest="200"
+                    HeightRequest="70"
+                    FontSize="30"
+                    BackgroundColor="Red"
+                    TextColor="Black"
+                    HorizontalOptions="Start"
+                    BorderColor="Black"
+                    BorderWidth="3"
+                    Grid.Column="0"
+                    />
+
+                <Button
+                    Text="Variantes"
+                    WidthRequest="200"
+                    HeightRequest="70"
+                    FontSize="30"
+                    BackgroundColor="White"
+                    TextColor="Purple"
+                    HorizontalOptions="End"
+                    BorderColor="Purple"
+                    BorderWidth="3"
+                    Grid.Column="1"
+                    FontAttributes="Bold"
+                    />
+
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
