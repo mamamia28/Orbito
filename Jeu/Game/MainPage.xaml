@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
              x:Class="Game.MainPage"
-             BackgroundColor="DarkBlue">
+             xmlns:local="clr-namespace:Game.Behaviors"
+             BackgroundColor="#2E073F">
 
     <ScrollView>
         <VerticalStackLayout
@@ -44,21 +45,25 @@
                         Text="HISTORIQUE"
                         WidthRequest="400"
                         HeightRequest="60"
+                        FontFamily="MoreSugar"
                         FontSize="30"
                         BorderColor="White"
                         BorderWidth="2"
                         Grid.Row="0"
                         TextColor="White"
+                        local:HoverBehavior.CursorHoverType="Hand"
                     />
                     <Button
                         Text="STATS"
                         WidthRequest="400"
+                        FontFamily="MoreSugar"
                         HeightRequest="60"
                         FontSize="30"
                         BorderColor="White"
                         BorderWidth="2"
                         Grid.Row="1"
                         TextColor="White"
+                        local:HoverBehavior.CursorHoverType="Hand"
                     />
                 </Grid>
                 
@@ -68,6 +73,7 @@
                   Margin="0,00,0,0">
                 <Button
                     Text="Quitter"
+                    FontFamily="MoreSugar"
                     WidthRequest="200"
                     HeightRequest="70"
                     FontSize="30"
@@ -78,11 +84,14 @@
                     BorderWidth="3"
                     Margin="0, 200, 0, 0"
                     Grid.Column="0"
+                    local:HoverBehavior.CursorHoverType="Hand"
                     />
 
                 <Button
                     Text="Jouer"
+                    FontFamily="MoreSugar"
                     Padding="20"
+                    Clicked="OnPlayClicked"
                     BackgroundColor="DarkViolet"
                     TextColor="Black"
                     BorderColor="Black"
@@ -92,6 +101,7 @@
                     Margin="0, 00, 0, 0"
                     Grid.Column="1"
                     HorizontalOptions="Center"
+                    local:HoverBehavior.CursorHoverType="Hand"
                     />
             </Grid>
             </Grid>

@@ -2,15 +2,18 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Game.ChoixMode"
-             BackgroundColor="DarkBlue">
+             xmlns:local="clr-namespace:Game.Behaviors"
+             BackgroundColor="#2E073F">
 
     <ScrollView>
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
 
-            <Grid Padding="30">
-
+            <Grid Padding="30,0,30,30">
+                <Border
+                    Grid.Column="1"
+                    Stroke="Transparent">
                 <Button
                     Text="?"
                     TextColor="Black"
@@ -20,14 +23,20 @@
                     HeightRequest="60"
                     BorderColor="Black"
                     BorderWidth="3"
-                    Grid.Column="1"
+                    Padding="0"
+                    
                     HorizontalOptions="Start"
+                    FontFamily="MoreSugar"
+                    local:HoverBehavior.CursorHoverType="Help"
                     />
+                </Border>
 
-                <Image
-                    Source="orbitowhite_nobg.png"
+                <Label
+                    Text="Orbito"
+                    FontFamily="MoreSugar"
+                    FontSize="150"
                     HeightRequest="200"
-                    Aspect="AspectFit"
+                    
                     SemanticProperties.Description="Logo Orbito" 
                     Grid.Column="3"
                     HorizontalOptions="Center"
@@ -45,6 +54,8 @@
                 HorizontalOptions="Center"
                 TextColor="White"
                 Padding="30"
+                FontFamily="MoreSugar"
+                local:HoverBehavior.CursorHoverType="IBeam"
                 />
             </Border>
 
@@ -61,6 +72,8 @@
                     FontSize="30"
                     BorderColor="White"
                     BorderWidth="2"
+                    FontFamily="MoreSugar"
+                    local:HoverBehavior.CursorHoverType="Hand"
                 />
                 <Button
                     Text="IA VS IA"
@@ -69,6 +82,8 @@
                     FontSize="30"
                     BorderColor="White"
                     BorderWidth="2"
+                    FontFamily="MoreSugar"
+                    local:HoverBehavior.CursorHoverType="Hand"
                     />
 
             </HorizontalStackLayout>
@@ -80,12 +95,16 @@
                 FontSize="40"
                 BorderColor="White"
                 BorderWidth="2"
+                Clicked="OnJoueurVSJoueurClicked"
+                FontFamily="MoreSugar"
+                local:HoverBehavior.CursorHoverType="Hand"
                 />
 
             <Grid Padding="30">
 
                 <Button
-                    Text="Retour"
+                    Text="="
+                    FontFamily="MoreSugarExtras"
                     WidthRequest="200"
                     HeightRequest="70"
                     FontSize="30"
@@ -95,6 +114,8 @@
                     BorderColor="Black"
                     BorderWidth="3"
                     Grid.Column="0"
+                    Clicked="OnRetourClicked"
+                    local:HoverBehavior.CursorHoverType="Hand"
                     />
 
                 <Button
@@ -109,6 +130,8 @@
                     BorderWidth="3"
                     Grid.Column="1"
                     FontAttributes="Bold"
+                    FontFamily="MoreSugar"
+                    local:HoverBehavior.CursorHoverType="Hand"
                     />
 
             </Grid>
