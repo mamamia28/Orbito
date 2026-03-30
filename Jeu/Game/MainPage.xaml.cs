@@ -6,5 +6,9 @@
         {
             InitializeComponent();
         }
+        private async void OnPlayClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("ChoixMode");
+        }
     }
 }
