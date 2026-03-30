@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Game.Behaviors"
              x:Class="Game.PagePseudos"
              BackgroundColor="#2E073F">
 
@@ -118,6 +119,7 @@
                     BackgroundColor="Transparent"
                     StrokeThickness="0">
                 <Button
+                    local:HoverBehavior.CursorHoverType="Hand"
                     Text="Lancer la partie"
                     WidthRequest="700"
                     Padding="0"
@@ -131,7 +133,6 @@
             <Grid Padding="20">
 
                 <Button
-                    
                         Text="="
                         WidthRequest="200"
                         HeightRequest="70"
@@ -142,17 +143,12 @@
                         BorderColor="Black"
                         BorderWidth="3"
                         FontFamily="MoreSugarExtras"
-                    
                         Grid.Column="0"
-                    
                         IsVisible="True"
                         IsEnabled="True"
                         CornerRadius="20"
-                    
-                    
+                        local:HoverBehavior.CursorHoverType="Hand"
                         />
-
-
 
             </Grid>
         </VerticalStackLayout>
