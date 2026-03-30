@@ -13,6 +13,8 @@ namespace Game
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("MoreSugar-Regular.ttf", "MoreSugar");
+                    fonts.AddFont("MoreSugar-Extras.ttf", "MoreSugarExtras");
                 });
 
 #if DEBUG
