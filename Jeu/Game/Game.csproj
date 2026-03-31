@@ -71,13 +71,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="PagePseudos.xaml.cs">
-	    <DependentUpon>PagePseudos.xaml</DependentUpon>
+	  <Compile Update="PageJoueurVSJoueur.xaml.cs">
+	    <DependentUpon>PageJoueurVSJoueur.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="PagePseudos.xaml">
+	  <MauiXaml Update="PageJoueurVSIA.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="PageJoueurVSJoueur.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

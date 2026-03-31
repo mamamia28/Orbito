@@ -74,6 +74,7 @@
                     BorderWidth="2"
                     FontFamily="MoreSugar"
                     local:HoverBehavior.CursorHoverType="Hand"
+                    Clicked="OnJoueurVSIAClicked"
                 />
                 <Button
                     Text="IA VS IA"
