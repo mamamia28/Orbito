@@ -32,44 +32,48 @@
                 Grid.RowSpan="2"
                 Margin="0,150,0,0"
                 HorizontalOptions="End"
-                WidthRequest="420"
+                WidthRequest="260"
                 HeightRequest="400"
-                BackgroundColor="DarkViolet"
-                Stroke="White"
-                StrokeShape="20"
+                Stroke="Transparent"
+                StrokeShape="0"
                 StrokeThickness="2">
                 
                 <Grid Padding="30" RowDefinitions="Auto, auto" RowSpacing="15">
                     
                     <Button
                         Text="HISTORIQUE"
-                        WidthRequest="400"
-                        HeightRequest="60"
+                        WidthRequest="250"
+                        HeightRequest="100"
                         FontFamily="MoreSugar"
                         FontSize="30"
                         BorderColor="White"
                         BorderWidth="2"
                         Grid.Row="0"
                         TextColor="White"
+                        VerticalOptions="Center"
                         local:HoverBehavior.CursorHoverType="Hand"
                     />
                     <Button
                         Text="STATS"
-                        WidthRequest="400"
+                        WidthRequest="250"
                         FontFamily="MoreSugar"
-                        HeightRequest="60"
+                        HeightRequest="100"
                         FontSize="30"
                         BorderColor="White"
                         BorderWidth="2"
                         Grid.Row="1"
+                        VerticalOptions="Center"
                         TextColor="White"
+                        Margin="0,40,0,0"
                         local:HoverBehavior.CursorHoverType="Hand"
                     />
                 </Grid>
                 
             </Border>
             <Grid Padding="30"
-                  Grid.Row="2"
+                  Grid.Row="1"
+                  Grid.RowSpan="2"
+                  VerticalOptions="End"
                   Margin="0,00,0,0">
                 <Button
                     Text="Quitter"
@@ -82,8 +86,9 @@
                     HorizontalOptions="Start"
                     BorderColor="Black"
                     BorderWidth="3"
-                    Margin="0, 200, 0, 0"
+                    Margin="0, 350, 0, 0"
                     Grid.Column="0"
+                    CornerRadius="15"
                     local:HoverBehavior.CursorHoverType="Hand"
                     />
 
@@ -97,10 +102,12 @@
                     BorderColor="Black"
                     BorderWidth="3"
                     WidthRequest="600"
+                    HeightRequest="300"
                     FontSize="150"
                     Margin="0, 00, 0, 0"
                     Grid.Column="1"
                     HorizontalOptions="Center"
+                    CornerRadius="45"
                     local:HoverBehavior.CursorHoverType="Hand"
                     />
             </Grid>

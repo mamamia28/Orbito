@@ -101,7 +101,8 @@
                 local:HoverBehavior.CursorHoverType="Hand"
                 />
 
-            <Grid Padding="30">
+            <Grid Padding="30"
+                  Margin="0,120,0,0">
 
                 <Button
                     Text="="
@@ -115,6 +116,7 @@
                     BorderColor="Black"
                     BorderWidth="3"
                     Grid.Column="0"
+                    CornerRadius="15"
                     Clicked="OnRetourClicked"
                     local:HoverBehavior.CursorHoverType="Hand"
                     />
