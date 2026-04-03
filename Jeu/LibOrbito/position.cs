@@ -4,31 +4,11 @@ using System.Text;
 
 namespace LibOrbito
 {
-    internal class Position
+    public class Position
     {
-        private int x;
-        private int y;
+        private int x { get; set; }
+        private int y { get; set; }
 
-
-        public int GetX()
-        {
-            return x;
-        }
-        public int SetX(int value)
-        {
-            x = value;
-            return x;
-        }
-
-        public int GetY()
-        {
-            return y;
-        }
-        public int SetY(int value)
-        {
-            y = value;
-            return y;
-        }
 
         public Position(int x, int y)
         {
