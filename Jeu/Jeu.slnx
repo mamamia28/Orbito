@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="ConsoleAppOrbito/ConsoleAppOrbito.csproj" Id="634589a4-1579-4c06-98c6-c946d3096d73" />
   <Project Path="Game/Game.csproj" />
+  <Project Path="LibOrbito/LibOrbito.csproj" Id="d137e9a1-fbbd-41ca-a070-d2c850f0c4f2" />
 </Solution>
