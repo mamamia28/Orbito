@@ -7,6 +7,8 @@ namespace LibOrbito
 {
     public class Plateau
     {
+        Position[,] tabJeu;
+
         int _rayon;
         public int Rayon
         {
@@ -22,7 +24,7 @@ namespace LibOrbito
         Plateau(int rayon=2)
         {
             this.Rayon = rayon;
-            Position[,] tabJeu = new
+            tabJeu = new Position [4, 4];
 
 
         }
