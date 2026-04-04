@@ -13,12 +13,12 @@ namespace LibOrbito
         this.couleur = couleur;
         }
 
-        public bool IsNotNull()
+ /*       public bool IsNotNull()
         {
             if (couleur == null) return false;
             return true;
         }
-
+*/
         public override string ToString()
         {
             string name = couleur ? "Blanc" : "Noir";

@@ -15,5 +15,11 @@ namespace LibOrbito
 
             X = x; Y = y;
         }
+
+    /*    public bool EstAdjacente(Position autre)
+        {
+            if(autre)
+        }
     }
 }
+*/
