@@ -72,5 +72,10 @@ namespace LibOrbito
                 Pseudo = pseudo;
             }
         }
+
+        public void placerBille(Position pos)
+        {
+
+        }
     }
 }

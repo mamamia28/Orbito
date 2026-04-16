@@ -13,13 +13,24 @@ namespace LibOrbito
         public Position(int x, int y)
         {
 
-            X = x; Y = y;
+            X = x; 
+            Y = y;
         }
 
-    /*    public bool EstAdjacente(Position autre)
+        
+      public bool EstAdjacente(Position autre)
         {
-            if(autre)
+            if (this.X == autre.X && this.Y == autre.Y)
+            {
+                return false;
+            }
+
+            bool xProche = (autre.X == this.X - 1) || (autre.X == this.X) || (autre.X == this.X + 1);
+
+            bool yProche = (autre.Y == this.Y - 1) || (autre.Y == this.Y) || (autre.Y == this.Y + 1);
+
+            return xProche && yProche;
         }
+        
     }
 }
-*/
