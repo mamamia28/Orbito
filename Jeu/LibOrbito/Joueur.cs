@@ -6,25 +6,29 @@ namespace LibOrbito
 {
     public class Joueur
     {
-        private string _pseudo;
+        private string _pseudo = null!;
         public string Pseudo{
             get
             {
                 return _pseudo;
             }
+            set
+            {
+                _pseudo = value;
+            }
         }
 
-        private string _avatar;
+        private Couleur _couleurBilles;
 
-        public string Avatar
+        public Couleur CouleurBilles
         {
             get
             {
-                return _avatar;
+                return _couleurBilles;
             }
             set
             {
-                _avatar = value;
+                _couleurBilles = value;
             }
         }
 
@@ -35,58 +39,38 @@ namespace LibOrbito
             {
                 return _billesRestantes;
             }
-        }
-
-        private List<Billes> _sesBilles;
-
-        public List<Billes> SesBilles
-        {
-            get
+            set
             {
-                return _sesBilles;
+                _billesRestantes = value;
             }
         }
 
-        private Couleur _saCouleur;
+        private bool _estIA;
 
-        public Couleur SaCouleur
+        public bool EstIa
         {
             get
             {
-                return _saCouleur;
+                return _estIA;
+            }
+            set
+            {
+                _estIA = value;
             }
         }
 
-        public Joueur(string pseudo, string avatar, Couleur couleur)
+        public Joueur(string pseudo, Couleur couleur, bool estIa)
         {
-            _pseudo= pseudo;
-            _avatar= avatar;
-            _billesRestantes=8;
-            _sesBilles = new List<Billes>();
-            _saCouleur = couleur;
-        }
-
-        public static bool PoserBille(Position p)
-        {
-            Billes[,] plateau = new Billes[4,4];
-            if (p == null) return false;
-            plateau[p.X,p.Y] = Billes.couleur((du joueur))
-            return false;
-        }
-
-        public static bool DeplacerBilleAdverse(Position depart, Position destination)
-        {
-            Billes[,] plateau = new Billes[4, 4];
-            if (depart == null && destination ==null) return false;
-            var pos = plateau.(plateau.[destination.X][destination.Y]);
-                 // = plateau.[depart.X][depart.Y];
-            //plateau.Rayon[depart.X][depart.Y] =  
-            return false;
-        }
-
-        public void ActionnerOrbito()
-        {
-            
+            CouleurBilles = couleur;
+            EstIa = estIa;
+            BillesRestantes = 8;
+            if (EstIa == true)
+            {
+                Pseudo = "Joueur IA";
+            } else
+            {
+                Pseudo = pseudo;
+            }
         }
     }
 }

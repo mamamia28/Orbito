@@ -6,11 +6,23 @@ namespace LibOrbito
 {
     public class Billes
     {
-        private bool couleur { get; set; }
-        
-        public Billes(bool couleur) 
+        private Couleur _couleur;
+
+        public Couleur Couleur
         {
-        this.couleur = couleur;
+            get
+            {
+                return _couleur;
+            }
+            set
+            {
+                _couleur = Couleur;
+            }
+        }
+        
+        public Billes(Couleur couleur) 
+        {
+            this.Couleur = couleur;
         }
 
  /*       public bool IsNotNull()
@@ -18,12 +30,13 @@ namespace LibOrbito
             if (couleur == null) return false;
             return true;
         }
-*/
+
         public override string ToString()
         {
             string name = couleur ? "Blanc" : "Noir";
             return $"La couleur de la bille est {name}.";
         }
+ */
 
     }
 }
