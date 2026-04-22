@@ -42,6 +42,7 @@ namespace LibOrbito
 
         private Joueur Joueur1;
         private Joueur Joueur2;
+        private Joueur JoueurCourant;
 
 
 
@@ -66,5 +67,26 @@ namespace LibOrbito
             if (Etat != EtatPartie.EnCours) return;
             CompteurTours++;
         }
-    }
+        public Joueur VerifierVictoire()
+        {
+            Couleur gagnant;
+            gagnant=lePlateau.DetecterAlignement();
+            
+            if(gagnant == Couleur.Aucune ) { Etat = EtatPartie.Egalite; return null; } 
+            
+            Etat = EtatPartie.Terminee;
+            if(gagnant == Joueur1.CouleurBilles)
+            {
+                return Joueur1; 
+            }
+            return Joueur2;  
+            }
+
+       
+        }
+
+            
+            
+       
+    
 }
