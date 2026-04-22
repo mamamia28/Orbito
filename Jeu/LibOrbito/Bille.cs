@@ -7,7 +7,7 @@ namespace LibOrbito
     public class Bille
     {
         private Couleur couleur;
-        public Couleur Couleur
+        public Couleur CouleurB
         {
            get
             {
@@ -20,6 +20,10 @@ namespace LibOrbito
                     couleur = value;
                 }
             }
+        }
+        public Bille(Couleur c)
+        {
+            CouleurB = c;
         }
     }
 }
