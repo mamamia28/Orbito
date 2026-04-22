@@ -7,13 +7,14 @@ namespace LibOrbito
 {
     public class Plateau
     {
-        Position[,] tabJeu;
+        private Bille[,] _tabJeu;
+        public Bille[,] TabJeu { get => _tabJeu; }
 
-        int _rayon;
+        private int _rayon;
         public int Rayon
         {
             get => _rayon;
-            set
+            private set
             {
                 if (value == 2)
                 {
@@ -21,15 +22,16 @@ namespace LibOrbito
                 }
             }
         }
-        Plateau(int rayon=2)
+
+        public void Initialiser()
         {
-            this.Rayon = rayon;
-            tabJeu = new Position [4, 4];
-
-
+            _tabJeu = new Bille[4, 4];
         }
 
-
-
+        public Plateau(int rayon = 2)
+        {
+            Rayon = rayon;
+            Initialiser();
+        }
     }
 }
