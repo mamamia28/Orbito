@@ -24,12 +24,15 @@ namespace LibOrbito
             {
                 return false;
             }
-
-            bool xProche = (autre.X == this.X - 1) || (autre.X == this.X) || (autre.X == this.X + 1);
-
-            bool yProche = (autre.Y == this.Y - 1) || (autre.Y == this.Y) || (autre.Y == this.Y + 1);
-
-            return xProche && yProche;
+            if (this.X == autre.X)
+            {
+                return (autre.Y == this.Y - 1) || (autre.Y == this.Y) || (autre.Y == this.Y + 1);
+            }
+            if (this.Y == autre.Y)
+            {
+                return (autre.X == this.X - 1) || (autre.X == this.X) || (autre.X == this.X + 1);
+            }
+            return false;
         }
         
     }
