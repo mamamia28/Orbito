@@ -21,9 +21,9 @@ namespace LibOrbito
             set { _destination = value; }
         }
 
-        private Position _orbitoActionne;
+        private Boolean _orbitoActionne;
 
-        public Position OrbitoActionne
+        public Boolean OrbitoActionne
         {
             get
             {
@@ -45,12 +45,11 @@ namespace LibOrbito
                 _responsable = value;
             }
         }
-        public Coup(Position origine, Position destination, Position orbitoActionne, Joueur responsable)
+        public Coup(Position origine, Position destination, Boolean orbitoActionne)
         {
             Origine = origine;
             Destination = destination;
             OrbitoActionne = orbitoActionne;
-            Responsable = responsable;
         }
     }
 }
