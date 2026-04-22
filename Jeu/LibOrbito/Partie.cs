@@ -50,5 +50,21 @@ namespace LibOrbito
             Mode = mode;
 
         }
+        public void demarrer()
+        {
+            if (Joueur1 == null || Joueur2 == null)
+            {
+                throw new Exception("Il faut 2 joueurs pour démarrer.");
+            }
+
+            lePlateau.Initialiser();
+            Etat = EtatPartie.EnCours;
+            Console.WriteLine("La partie a démarré."); ;
+        }
+        public void Jouer()
+        {
+            if (Etat != EtatPartie.EnCours) return;
+            CompteurTours++;
+        }
     }
 }
