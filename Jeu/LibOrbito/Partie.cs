@@ -60,19 +60,19 @@ namespace LibOrbito
             
             lePlateau.Initialiser();
             Etat = EtatPartie.EnCours;
-            Console.WriteLine("La partie a démarré."); ;
         }
         public void Jouer()
         {
             if (Etat != EtatPartie.EnCours) return;
             CompteurTours++;
         }
+        /*
         public Joueur VerifierVictoire()
         {
-            Couleur gagnant;
+            Couleur? gagnant;
             gagnant=lePlateau.DetecterAlignement();
             
-            if(gagnant == Couleur.Aucune ) { Etat = EtatPartie.Egalite; return null; } 
+            if(gagnant == null ) { Etat = EtatPartie.Egalite; return null; } 
             
             Etat = EtatPartie.Terminee;
             if(gagnant == Joueur1.CouleurBilles)

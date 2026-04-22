@@ -7,7 +7,6 @@ namespace LibOrbito
     public enum Couleur
     {
         Blanc,
-        Noir,
-        Aucune
+        Noir
     }
 }
