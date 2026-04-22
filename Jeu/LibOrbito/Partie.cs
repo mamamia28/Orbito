@@ -23,7 +23,8 @@ namespace LibOrbito
 
         private EtatPartie _etat;
 
-        public EtatPartie Etat {
+        public EtatPartie Etat
+        {
             get { return _etat; }
             set { _etat = value; }
         }
@@ -42,6 +43,7 @@ namespace LibOrbito
 
         private Joueur Joueur1;
         private Joueur Joueur2;
+        private Joueur JoueurCourant;
 
 
 
@@ -50,5 +52,43 @@ namespace LibOrbito
             Mode = mode;
 
         }
+        public void demarrer()
+        {
+            if (Joueur1 == null || Joueur2 == null)
+            {
+                throw new Exception("Il faut 2 joueurs pour démarrer.");
+            }
+
+            lePlateau.Initialiser();
+            Etat = EtatPartie.EnCours;
+        }
+        public void Jouer()
+        {
+            if (Etat != EtatPartie.EnCours) return;
+            CompteurTours++;
+        }
+        /*
+        public Joueur VerifierVictoire()
+        {
+            Couleur? gagnant;
+            gagnant=lePlateau.DetecterAlignement();
+            
+            if(gagnant == null ) { Etat = EtatPartie.Egalite; return null; } 
+            
+            Etat = EtatPartie.Terminee;
+            if(gagnant == Joueur1.CouleurBilles)
+            {
+                return Joueur1; 
+            }
+            return Joueur2;  
+            }
+
+       
+        }
+
+            
+            
+       */
+
     }
 }
