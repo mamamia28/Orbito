@@ -23,7 +23,8 @@ namespace LibOrbito
 
         private EtatPartie _etat;
 
-        public EtatPartie Etat {
+        public EtatPartie Etat
+        {
             get { return _etat; }
             set { _etat = value; }
         }
@@ -57,7 +58,7 @@ namespace LibOrbito
             {
                 throw new Exception("Il faut 2 joueurs pour démarrer.");
             }
-            
+
             lePlateau.Initialiser();
             Etat = EtatPartie.EnCours;
         }
@@ -87,6 +88,7 @@ namespace LibOrbito
 
             
             
-       
-    
+       */
+
+    }
 }
