@@ -40,7 +40,9 @@ namespace LibOrbito
 
         private Plateau lePlateau;
 
-        private Joueur lesJoueurs;
+        private Joueur Joueur1;
+        private Joueur Joueur2;
+
 
 
         public Partie(ModeJeu mode)
