@@ -56,7 +56,7 @@ namespace LibOrbito
             {
                 throw new Exception("Il faut 2 joueurs pour démarrer.");
             }
-
+            
             lePlateau.Initialiser();
             Etat = EtatPartie.EnCours;
             Console.WriteLine("La partie a démarré."); ;
