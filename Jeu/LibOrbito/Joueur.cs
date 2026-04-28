@@ -75,7 +75,14 @@ namespace LibOrbito
 
         public void placerBille(Position pos)
         {
-
+            if (_billesRestantes > 0)
+            {
+                _billesRestantes--;
+            }
+            else
+            {
+                throw new Exception("Ce joueur n'a plus de billes.");
+            }
         }
     }
 }
