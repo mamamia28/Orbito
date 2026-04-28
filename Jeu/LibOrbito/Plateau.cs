@@ -155,11 +155,63 @@ namespace LibOrbito
 
             TabJeu[2, 1] = tempInt;
         }
+        public Couleur? DetecterAlignement()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                // Verif Horizontale (Lignes)
+                if (TabJeu[i, 0] != null &&
+                    TabJeu[i, 0]?.CouleurB == TabJeu[i, 1]?.CouleurB &&
+                    TabJeu[i, 1]?.CouleurB == TabJeu[i, 2]?.CouleurB &&
+                    TabJeu[i, 2]?.CouleurB == TabJeu[i, 3]?.CouleurB)
+                {
+                    return TabJeu[i, 0]!.CouleurB;
+                }
+
+                // Verif Verticale (Colonnes)
+                if (TabJeu[0, i] != null &&
+                    TabJeu[0, i]?.CouleurB == TabJeu[1, i]?.CouleurB &&
+                    TabJeu[1, i]?.CouleurB == TabJeu[2, i]?.CouleurB &&
+                    TabJeu[2, i]?.CouleurB == TabJeu[3, i]?.CouleurB)
+                {
+                    return TabJeu[0, i]!.CouleurB;
+                }
+            }
+
+            // Diagonale descendante 
+            if (TabJeu[0, 0] != null &&
+                TabJeu[0, 0]?.CouleurB == TabJeu[1, 1]?.CouleurB &&
+                TabJeu[1, 1]?.CouleurB == TabJeu[2, 2]?.CouleurB &&
+                TabJeu[2, 2]?.CouleurB == TabJeu[3, 3]?.CouleurB)
+            {
+                return TabJeu[0, 0]!.CouleurB;
+            }
+
+            // Diagonale montante 
+            if (TabJeu[3, 0] != null &&
+                TabJeu[3, 0]?.CouleurB == TabJeu[2, 1]?.CouleurB &&
+                TabJeu[2, 1]?.CouleurB == TabJeu[1, 2]?.CouleurB &&
+                TabJeu[1, 2]?.CouleurB == TabJeu[0, 3]?.CouleurB)
+            {
+                return TabJeu[3, 0]!.CouleurB;
+            }
+
+            return null;
+        }
+
+
     }
+    
 }
 
-
 /*
+ using LibOrbito;
+using System.Text;
+using System.Text.Json.Serialization;
+
+Console.WriteLine("Hello, World!");
+
+
 Plateau p = new Plateau();
 
 Bille b = new Bille(Couleur.Blanc);
@@ -201,7 +253,35 @@ Console.WriteLine(p);
 p.ActionnerOrbite();
 
 
-Console.WriteLine(p); 
- 
- 
- */
+Console.WriteLine(p);
+
+
+
+Console.OutputEncoding = Encoding.UTF8;
+Plateau plateau = new Plateau();
+
+Console.WriteLine(plateau.ToString());
+
+
+plateau.AjouterBille(new Bille(Couleur.Blanc), new Position(0, 0));
+plateau.AjouterBille(new Bille(Couleur.Noir), new Position(1, 1));
+plateau.AjouterBille(new Bille(Couleur.Blanc), new Position(3, 3));
+Console.WriteLine(plateau.ToString());
+
+
+plateau.ActionnerOrbite();
+Console.WriteLine(plateau.ToString());
+
+
+Plateau pVictoire = new Plateau();
+pVictoire.AjouterBille(new Bille(Couleur.Blanc), new Position(0, 0));
+pVictoire.AjouterBille(new Bille(Couleur.Blanc), new Position(1, 0));
+pVictoire.AjouterBille(new Bille(Couleur.Blanc), new Position(2, 0));
+pVictoire.AjouterBille(new Bille(Couleur.Noir), new Position(3, 0));
+
+Console.WriteLine(pVictoire.ToString());
+
+Couleur? gagnant = pVictoire.DetecterAlignement();
+
+*/
+
