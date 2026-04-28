@@ -100,7 +100,7 @@ namespace LibOrbito
             if(EtatPartie.EnCours == Etat)
             {
                 JoueurCourant = (JoueurCourant == Joueur1) ? Joueur2 : Joueur1;
-                CompteurTour++;
+                CompteurTours++;
             }
         }
         
