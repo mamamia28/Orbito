@@ -84,5 +84,9 @@ namespace LibOrbito
                 throw new Exception("Ce joueur n'a plus de billes.");
             }
         }
+        public void appuyerBoutonOrbito(Plateau plateau)
+        {
+            plateau.ActionnerOrbite();
+        }
     }
 }
