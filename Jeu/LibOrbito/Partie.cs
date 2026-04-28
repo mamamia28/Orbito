@@ -7,12 +7,14 @@ namespace LibOrbito
 {
     public class Partie
     {
+        /*
         private string _id;
         public string Id
         {
             get { return _id; }
             set { _id = value; }
         }
+        */
 
         private ModeJeu _mode;
         public ModeJeu Mode
@@ -35,23 +37,30 @@ namespace LibOrbito
             set { _compteurTours = value; }
         }
 
+        /*
         private Vector<Coup> coupsJoues;
 
         private List<Coup> historiquesCoups;
+        */
+        private Plateau lePlateau { get; set; }
 
-        private Plateau lePlateau;
-
-        private Joueur Joueur1;
-        private Joueur Joueur2;
-        private Joueur JoueurCourant;
-
+        private Joueur Joueur1 { get; set; }
+        private Joueur Joueur2 { get; set; }
+        private Joueur JoueurCourant { get; set; }
+        private Joueur? JouerGagnant { get; set; }
 
 
-        public Partie(ModeJeu mode)
+
+        public Partie(ModeJeu mode, Joueur j1, Joueur j2)
         {
             Mode = mode;
+            Joueur1 = j1;
+            Joueur2 = j2;
 
+            lePlateau = new Plateau();
+            Etat = EtatPartie.Configuration;
         }
+
         public void demarrer()
         {
             if (Joueur1 == null || Joueur2 == null)
@@ -59,16 +68,43 @@ namespace LibOrbito
                 throw new Exception("Il faut 2 joueurs pour démarrer.");
             }
 
+            if (Joueur1.CouleurBilles == Couleur.Blanc)
+            {
+                JoueurCourant = Joueur1;
+            } else
+            {
+                JoueurCourant = Joueur2;
+            }
+
+            CompteurTours = 0;
             lePlateau.Initialiser();
             Etat = EtatPartie.EnCours;
         }
-        public void Jouer()
+        public void JouerTour(Position posAjoutBille, Position? posOrigineBille, Position? posDestinationBille)
         {
             if (Etat != EtatPartie.EnCours) return;
             CompteurTours++;
+
+            if(posOrigineBille != null && posDestinationBille != null)
+            {
+                lePlateau.DeplacerBille(posOrigineBille, posDestinationBille);
+            }
+
+            JoueurCourant.placerBille(posAjoutBille);
+            lePlateau.AjouterBille(new Bille(JoueurCourant.CouleurBilles), posAjoutBille);
+
+            lePlateau.ActionnerOrbite();
+
+            VerifierVictoire();
+
+            if(EtatPartie.EnCours == Etat)
+            {
+                JoueurCourant = (JoueurCourant == Joueur1) ? Joueur2 : Joueur1;
+                CompteurTour++;
+            }
         }
-        /*
-        public Joueur VerifierVictoire()
+        
+        public Joueur? VerifierVictoire()
         {
             Couleur? gagnant;
             gagnant=lePlateau.DetecterAlignement();
@@ -82,13 +118,5 @@ namespace LibOrbito
             }
             return Joueur2;  
             }
-
-       
-        }
-
-            
-            
-       */
-
     }
 }
