@@ -6,7 +6,7 @@ namespace LibOrbito
 {
     public class Joueur
     {
-        private string _pseudo = null!;
+        private string _pseudo = null!; 
         public string Pseudo{
             get
             {
