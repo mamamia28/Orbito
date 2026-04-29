@@ -80,7 +80,7 @@ namespace LibOrbito
             {
                 return null; 
             }
-            return (Joueur1.CouleurBilles == gagnant) ? Joueur2 : Joueur1;  
+            return (Joueur1.CouleurBilles == gagnant) ? Joueur1 : Joueur2;  
         }
 
         public bool EstTerminee()
@@ -106,7 +106,7 @@ namespace LibOrbito
         /// </summary>
         /// <param name="c">Couleur de la bille</param>
         /// <param name="p">Position à laquelle la future bille sera posée</param>
-        public void PoserBille(Couleur c,Position p)
+        public void PoserBille(Position p)
         {
             if (Etat == EtatPartie.Terminee) return;
             try
@@ -117,7 +117,7 @@ namespace LibOrbito
             {
                 return;
             }
-            lePlateau.AjouterBille(new Bille(c),p);
+            lePlateau.AjouterBille(new Bille(JoueurCourant.CouleurBilles),p);
         }
 
 
