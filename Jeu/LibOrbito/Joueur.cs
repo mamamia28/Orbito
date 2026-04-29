@@ -12,9 +12,19 @@ namespace LibOrbito
             {
                 return _pseudo;
             }
-            set
+            private set
             {
                 _pseudo = value;
+            }
+        }
+
+        private string _avatar = null!;
+        public string Avatar
+        {
+            get => _avatar;
+            private set
+            {
+                _avatar = value;
             }
         }
 
@@ -26,7 +36,7 @@ namespace LibOrbito
             {
                 return _couleurBilles;
             }
-            set
+            private set
             {
                 _couleurBilles = value;
             }
@@ -39,7 +49,7 @@ namespace LibOrbito
             {
                 return _billesRestantes;
             }
-            set
+            private set
             {
                 _billesRestantes = value;
             }
@@ -53,27 +63,22 @@ namespace LibOrbito
             {
                 return _estIA;
             }
-            set
+            private set
             {
                 _estIA = value;
             }
         }
 
-        public Joueur(string pseudo, Couleur couleur, bool estIa)
+        public Joueur(string pseudo, string avatar, Couleur couleur, bool estIa = false)
         {
             CouleurBilles = couleur;
             EstIa = estIa;
             BillesRestantes = 8;
-            if (EstIa == true)
-            {
-                Pseudo = "Joueur IA";
-            } else
-            {
-                Pseudo = pseudo;
-            }
+            Avatar = avatar;
+            Pseudo = (EstIa == true) ? "Joueur IA" : pseudo;
         }
 
-        public void placerBille(Position pos)
+        public void placerBille()
         {
             if (_billesRestantes > 0)
             {

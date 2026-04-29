@@ -87,6 +87,11 @@ namespace LibOrbito
             TabJeu[origine.Y, origine.X] = null;
         }
 
+        public Bille? At(Position p)
+        {
+            return TabJeu[p.Y, p.X];
+        }
+
 
         public override string ToString()
         {
