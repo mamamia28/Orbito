@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,7 +6,7 @@ namespace LibOrbito
 {
     public class Joueur
     {
-        private string _pseudo = null!; 
+        private string _pseudo = null!;
         public string Pseudo{
             get
             {
@@ -88,10 +88,6 @@ namespace LibOrbito
             {
                 throw new Exception("Ce joueur n'a plus de billes.");
             }
-        }
-        public void appuyerBoutonOrbito(Plateau plateau)
-        {
-            plateau.ActionnerOrbite();
         }
     }
 }
