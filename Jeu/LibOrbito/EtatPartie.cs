@@ -13,15 +13,4 @@ namespace LibOrbito
         Egalite
     }
 
-    public static class EtatPartieS
-    {
-        public static string toChaine(this EtatPartie etat)
-        {
-            return etat switch
-            {
-                EtatPartie.EnCours => "En Cours",
-                _ => etat.ToString()
-            };
-        }
-    }
 }

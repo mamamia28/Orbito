@@ -43,11 +43,11 @@ namespace LibOrbito
 
         private List<Coup> historiquesCoups;
         */
-        private Plateau lePlateau { get; set; }
+        private Plateau LePlateau { get; set; }
 
         private Joueur Joueur1 { get; set; }
         private Joueur Joueur2 { get; set; }
-        private Joueur JoueurCourant { get; set; }
+        public Joueur JoueurCourant { get; set; }
         private Joueur? JoueurGagnant { get; set; }
 
 
@@ -58,13 +58,13 @@ namespace LibOrbito
             Joueur1 = new Joueur(nomJ1,avatarJ1,Couleur.Blanc);
             Joueur2 = new Joueur(nomJ2,avatarJ2,Couleur.Noir);
 
-            lePlateau = new Plateau();
+            LePlateau = new Plateau();
 
             JoueurCourant = Joueur1;
 
 
             CompteurTours = 1;
-            lePlateau.Initialiser();
+            LePlateau.Initialiser();
             Etat = EtatPartie.EnCours;
         }
 
@@ -74,7 +74,7 @@ namespace LibOrbito
         public Joueur? VerifierVictoire()
         {
             Couleur? gagnant;
-            gagnant=lePlateau.DetecterAlignement();
+            gagnant=LePlateau.DetecterAlignement();
             
             if(gagnant == null && CompteurTours>20) { Etat = EtatPartie.Egalite; return null; } 
             if (gagnant == null)
@@ -118,7 +118,7 @@ namespace LibOrbito
             {
                 return false;
             }
-            return lePlateau.AjouterBille(new Bille(JoueurCourant.CouleurBilles),p);
+            return LePlateau.AjouterBille(new Bille(JoueurCourant.CouleurBilles),p);
         }
 
 
@@ -133,19 +133,19 @@ namespace LibOrbito
         public bool DeplacerBilleAdverse(Position source, Position dest)
         {
             if (Etat == EtatPartie.Terminee) return false;
-            if (lePlateau.EstCaseLibre(source)){
+            if (LePlateau.EstCaseLibre(source)){
                 return false; 
             }
-            if (lePlateau.At(source)!.CouleurB == JoueurCourant.CouleurBilles)
+            if (LePlateau.At(source)!.CouleurB == JoueurCourant.CouleurBilles)
             {
                 return false;
             }
-            return lePlateau.DeplacerBille(source, dest);
+            return LePlateau.DeplacerBille(source, dest);
         }
         public bool AppuyerBoutonOrbito()
         {
             
-            if (!lePlateau.ActionnerOrbite()) return false ;
+            if (!LePlateau.ActionnerOrbite()) return false ;
 
             if (EstTerminee())
             {
@@ -163,6 +163,10 @@ namespace LibOrbito
             Etat = EtatPartie.Terminee;
 
 
+        }
+        public string AffichagePlateau()
+        {
+            return LePlateau.ToString();
         }
     }
 }

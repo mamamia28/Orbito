@@ -10,13 +10,38 @@ namespace ConsoleAppOrbito
         private readonly Partie _partie;
         private Position? _positionSource;
         private PhaseTour phaseActuelle;
-        private string MessageEtat
+        public string MessagePhase
         {
             get
             {
-                return "";
-                //return ToString(_partie.Etat);
+                string nom = _partie.JoueurCourant.Pseudo;
+                return phaseActuelle switch
+                {
+                    PhaseTour.ChoixDeplacementAdverse => $"{nom}, choisissez une bille adverse à déplacer (ou passez).",
+                    PhaseTour.DestinationDeplacement => "Choisissez la destination du déplacement.",
+                    PhaseTour.PlacementBille => $"{nom}, placez l'une de vos billes.",
+                    PhaseTour.AttenteBouton => "Appuyez sur le bouton Orbito pour terminer le tour.",
+                    _=>""
+                };
             }
+        }
+        public string MessageEtat
+        {
+            get
+            {
+                return _partie.Etat.ToString();
+            }
+        }
+        public string NomJoueur { get => _partie.JoueurCourant.Pseudo; }
+
+        public string AffichagePlateau
+        {
+            get => _partie.AffichagePlateau();
+        }
+
+        public bool EstTerminee()
+        {
+            return _partie.EstTerminee();
         }
 
 
