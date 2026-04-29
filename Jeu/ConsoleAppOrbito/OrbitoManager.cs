@@ -29,7 +29,7 @@ namespace ConsoleAppOrbito
         public void ActionnerBouton()
         {
             if (phaseActuelle != PhaseTour.AttenteBouton) return;
-            _partie.AppuyerBoutonOrbito();
+            if (!_partie.AppuyerBoutonOrbito()) return;
             
             if (!_partie.EstTerminee())
             {
@@ -54,15 +54,21 @@ namespace ConsoleAppOrbito
             {
                 return;
             }
-            _partie.DeplacerBilleAdverse(_positionSource, p);
-            phaseActuelle = PhaseTour.PlacementBille;
+            if (_partie.DeplacerBilleAdverse(_positionSource, p))
+            {
+                phaseActuelle = PhaseTour.PlacementBille;
+            }
+            
             _positionSource = null;
         }
         private void TraiterPlacementBille(Position p)
         {
             if (p is null) return;
-            _partie.PoserBille(p);
-            phaseActuelle = PhaseTour.AttenteBouton;
+            if (_partie.PoserBille(p))
+            {
+                phaseActuelle = PhaseTour.AttenteBouton;
+            }
+            
         }
 
 

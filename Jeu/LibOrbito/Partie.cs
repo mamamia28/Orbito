@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
 namespace LibOrbito
@@ -106,18 +107,18 @@ namespace LibOrbito
         /// </summary>
         /// <param name="c">Couleur de la bille</param>
         /// <param name="p">Position à laquelle la future bille sera posée</param>
-        public void PoserBille(Position p)
+        public bool PoserBille(Position p)
         {
-            if (Etat == EtatPartie.Terminee) return;
+            if (Etat == EtatPartie.Terminee) return false;
             try
             {
                 JoueurCourant.placerBille();
             }
             catch (Exception)
             {
-                return;
+                return false;
             }
-            lePlateau.AjouterBille(new Bille(JoueurCourant.CouleurBilles),p);
+            return lePlateau.AjouterBille(new Bille(JoueurCourant.CouleurBilles),p);
         }
 
 
@@ -129,31 +130,32 @@ namespace LibOrbito
         /// bille appartenant au joueur courant.</remarks>
         /// <param name="source">La position actuelle de la bille adverse à déplacer. Doit contenir une bille appartenant à l'adversaire.</param>
         /// <param name="dest">La position de destination vers laquelle la bille adverse doit être déplacée. Doit contenir une case vide</param>
-        public void DeplacerBilleAdverse(Position source, Position dest)
+        public bool DeplacerBilleAdverse(Position source, Position dest)
         {
-            if (Etat == EtatPartie.Terminee) return;
+            if (Etat == EtatPartie.Terminee) return false;
             if (lePlateau.EstCaseLibre(source)){
-                return; 
+                return false; 
             }
             if (lePlateau.At(source)!.CouleurB == JoueurCourant.CouleurBilles)
             {
-                return;
+                return false;
             }
-            lePlateau.DeplacerBille(source, dest);
+            return lePlateau.DeplacerBille(source, dest);
         }
-        public void AppuyerBoutonOrbito()
+        public bool AppuyerBoutonOrbito()
         {
             
-            lePlateau.ActionnerOrbite();
+            if (!lePlateau.ActionnerOrbite()) return false ;
 
             if (EstTerminee())
             {
                 FinDePartie();
-                return;
+                return true;
             }
 
             ChangerJoueurCourant();
             CompteurTours++;
+            return true;
         }
         public void FinDePartie()
         {

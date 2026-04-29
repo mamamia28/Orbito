@@ -56,35 +56,37 @@ namespace LibOrbito
         }
 
 
-        public void AjouterBille(Bille b, Position p)
+        public bool AjouterBille(Bille b, Position p)
         {
             if (!EstCaseLibre(p))
             {
-                throw new InvalidProgramException("La case demandée a être occupée est déjà occupée");
+                
+                return false;
             }
-            else
-            {
-                TabJeu[p.Y, p.X] = b;
-            }
+            
+            TabJeu[p.Y, p.X] = b;
+            return true;
+            
         }
 
 
-        public void DeplacerBille(Position origine, Position destination)
+        public bool DeplacerBille(Position origine, Position destination)
         {
             if (origine == destination)
             {
-                return;
+                return false;
             }
             else if (EstCaseLibre(origine))
             {
-                return;
+                return false;
             }
             else if (!EstCaseLibre(destination))
             {
-                return;
+                return false;
             }
             TabJeu[destination.Y, destination.X] = TabJeu[origine.Y, origine.X];
             TabJeu[origine.Y, origine.X] = null;
+            return true;
         }
 
         public Bille? At(Position p)
@@ -131,7 +133,7 @@ namespace LibOrbito
         }
 
 
-        public void ActionnerOrbite()
+        public bool ActionnerOrbite()
         {
             Bille? tempExt = TabJeu[0, 0];
 
@@ -159,6 +161,7 @@ namespace LibOrbito
             TabJeu[2, 2] = TabJeu[2, 1];
 
             TabJeu[2, 1] = tempInt;
+            return true;
         }
         public Couleur? DetecterAlignement()
         {
