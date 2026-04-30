@@ -1,0 +1,49 @@
+stages:
+    - 🏗️build
+    - 🧪tests
+    - ☢️code-analysis
+
+include:
+  - project: 'IUT_INF63/generic-ci'
+    ref: 'main'
+    file:
+      - 'build/.documentation-build.yml'
+      - 'deploy/.docker-deploy.yml'
+
+build:
+  stage: 🏗️build
+  image: mcr.microsoft.com/dotnet/sdk:10.0
+  script:
+    - cd Jeu/ConsoleAppOrbito/
+    - dotnet restore ConsoleAppOrbito.csproj
+    - dotnet build ConsoleAppOrbito.csproj -c Release --no-restore
+    - dotnet publish ConsoleAppOrbito.csproj -c Release --no-restore -o $CI_PROJECT_DIR/build/release
+
+tests:
+  stage: 🧪tests
+  image: mcr.microsoft.com/dotnet/sdk:10.0
+  script:
+    - cd Jeu/OrbitoTests/
+    - dotnet restore OrbitoTests.csproj
+    - dotnet test OrbitoTests.csproj -c Release --no-restore
+  needs:
+    - job: build
+
+sonar_analysis:
+  stage: ☢️code-analysis
+  image: codefirst.iut.uca.fr/macheval/codefirstimages/dotnet10:main
+  variables:
+    SONAR_PROJECT_KEY: OrbitoTheGame
+  script:
+    - cd Jeu/
+    - dotnet restore OrbitoTests/OrbitoTests.csproj
+    - dotnet sonarscanner begin /k:$SONAR_PROJECT_KEY /d:sonar.host.url=$SONAR_HOST /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.coverage.exclusions="Tests/**" /d:sonar.login=$SONAR_TOKEN
+    - dotnet build OrbitoTests/OrbitoTests.csproj -c Release --no-restore
+    - dotnet test OrbitoTests/OrbitoTests.csproj --logger trx --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect "XPlat Code Coverage"
+    - reportgenerator -reports:"**/coverage.cobertura.xml" -reporttypes:SonarQube -targetdir:"coveragereport"
+    - dotnet publish OrbitoTests/OrbitoTests.csproj -c Release --no-restore -o $CI_PROJECT_DIR/build/release
+    - dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN
+
+  needs:
+    - job: build
+
