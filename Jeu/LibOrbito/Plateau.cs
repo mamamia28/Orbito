@@ -49,9 +49,8 @@ namespace LibOrbito
             if (p.X < 0 || p.X >= TabJeu.GetLength(0) ||
                 p.Y < 0 || p.Y >= TabJeu.GetLength(1))
             {
-                throw new IndexOutOfRangeException();
+                return false;
             }
-
             return TabJeu[p.Y, p.X] == null;
         }
 
@@ -163,48 +162,51 @@ namespace LibOrbito
             TabJeu[2, 1] = tempInt;
             return true;
         }
-        public Couleur? DetecterAlignement()
+        public (bool, bool) DetecterAlignement()
         {
+            bool blancGagne = false;
+            bool noirGagne = false;
+
             for (int i = 0; i < 4; i++)
             {
-                // Verif Horizontale (Lignes)
                 if (TabJeu[i, 0] != null &&
                     TabJeu[i, 0]?.CouleurB == TabJeu[i, 1]?.CouleurB &&
                     TabJeu[i, 1]?.CouleurB == TabJeu[i, 2]?.CouleurB &&
                     TabJeu[i, 2]?.CouleurB == TabJeu[i, 3]?.CouleurB)
                 {
-                    return TabJeu[i, 0]!.CouleurB;
+                    if (TabJeu[i, 0]!.CouleurB == Couleur.Blanc) blancGagne = true;
+                    else noirGagne = true;
                 }
 
-                // Verif Verticale (Colonnes)
                 if (TabJeu[0, i] != null &&
                     TabJeu[0, i]?.CouleurB == TabJeu[1, i]?.CouleurB &&
                     TabJeu[1, i]?.CouleurB == TabJeu[2, i]?.CouleurB &&
                     TabJeu[2, i]?.CouleurB == TabJeu[3, i]?.CouleurB)
                 {
-                    return TabJeu[0, i]!.CouleurB;
+                    if (TabJeu[0, i]!.CouleurB == Couleur.Blanc) blancGagne = true;
+                    else noirGagne = true;
                 }
             }
 
-            // Diagonale descendante 
             if (TabJeu[0, 0] != null &&
                 TabJeu[0, 0]?.CouleurB == TabJeu[1, 1]?.CouleurB &&
                 TabJeu[1, 1]?.CouleurB == TabJeu[2, 2]?.CouleurB &&
                 TabJeu[2, 2]?.CouleurB == TabJeu[3, 3]?.CouleurB)
             {
-                return TabJeu[0, 0]!.CouleurB;
+                if (TabJeu[0, 0]!.CouleurB == Couleur.Blanc) blancGagne = true;
+                else noirGagne = true;
             }
 
-            // Diagonale montante 
             if (TabJeu[3, 0] != null &&
                 TabJeu[3, 0]?.CouleurB == TabJeu[2, 1]?.CouleurB &&
                 TabJeu[2, 1]?.CouleurB == TabJeu[1, 2]?.CouleurB &&
                 TabJeu[1, 2]?.CouleurB == TabJeu[0, 3]?.CouleurB)
             {
-                return TabJeu[3, 0]!.CouleurB;
+                if (TabJeu[3, 0]!.CouleurB == Couleur.Blanc) blancGagne = true;
+                else noirGagne = true;
             }
 
-            return null;
+            return (blancGagne, noirGagne);
         }
 
 

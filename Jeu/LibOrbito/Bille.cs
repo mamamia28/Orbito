@@ -15,7 +15,7 @@ namespace LibOrbito
             }
             set
             {
-                if (value == Couleur.Blanc | value == Couleur.Noir)
+                if (value == Couleur.Blanc || value == Couleur.Noir)
                 {
                     couleur = value;
                 }

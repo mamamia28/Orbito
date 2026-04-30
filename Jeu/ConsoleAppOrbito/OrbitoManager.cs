@@ -9,13 +9,18 @@ namespace ConsoleAppOrbito
     {
         private readonly Partie _partie;
         private Position? _positionSource;
-        private PhaseTour phaseActuelle;
+        public PhaseTour PhaseActuelle;
         public string MessagePhase
         {
             get
             {
                 string nom = _partie.JoueurCourant.Pseudo;
-                return phaseActuelle switch
+                if (_partie.CompteurTours > 16 && PhaseActuelle == PhaseTour.AttenteBouton)
+                {
+                    int rotationsRestantes = 22 - _partie.CompteurTours; // 17e tour = 5, 21e tour = 1
+                    return $"Plateau plein ! {nom}, actionnez l'orbite ({rotationsRestantes} rotations restantes).";
+                }
+                return PhaseActuelle switch
                 {
                     PhaseTour.ChoixDeplacementAdverse => $"{nom}, choisissez une bille adverse à déplacer (ou passez).",
                     PhaseTour.DestinationDeplacement => "Choisissez la destination du déplacement.",
@@ -32,7 +37,11 @@ namespace ConsoleAppOrbito
                 return _partie.Etat.ToString();
             }
         }
+
+        public string MessageErreur { get; private set; } = "";
         public string NomJoueur { get => _partie.JoueurCourant.Pseudo; }
+
+        public string NomGagnant { get => _partie.JoueurGagnant?.Pseudo ?? "Aucun"; }
 
         public string AffichagePlateau
         {
@@ -48,17 +57,24 @@ namespace ConsoleAppOrbito
         public OrbitoManager(string nomJ1, string avatarJ1, string nomJ2, string avatarJ2, ModeJeu mode)
         {
             _partie = new Partie(nomJ1, avatarJ1, nomJ2, avatarJ2, mode);
-            phaseActuelle = PhaseTour.ChoixDeplacementAdverse;
+            PhaseActuelle = PhaseTour.ChoixDeplacementAdverse;
 
         }
         public void ActionnerBouton()
         {
-            if (phaseActuelle != PhaseTour.AttenteBouton) return;
+            if (PhaseActuelle != PhaseTour.AttenteBouton) return;
             if (!_partie.AppuyerBoutonOrbito()) return;
             
             if (!_partie.EstTerminee())
             {
-                phaseActuelle = PhaseTour.ChoixDeplacementAdverse;
+                if (_partie.CompteurTours <= 16)
+                {
+                    PhaseActuelle = PhaseTour.ChoixDeplacementAdverse;
+                }
+                else
+                {
+                    PhaseActuelle = PhaseTour.AttenteBouton;
+                }
             }
         }
 
@@ -66,40 +82,70 @@ namespace ConsoleAppOrbito
 
         private void TraiterSelectionAdverse(Position p)
         {
-            _positionSource = p;
-            phaseActuelle = PhaseTour.DestinationDeplacement;
+            if (p.X < 0 || p.X > 3 || p.Y < 0 || p.Y > 3)
+            {
+                PhaseActuelle = PhaseTour.PlacementBille;
+                MessageErreur = "";
+                return;
+            }
+
+            if (_partie.EstBilleAdverse(p))
+            {
+                _positionSource = p;
+                PhaseActuelle = PhaseTour.DestinationDeplacement;
+                MessageErreur = "";
+            }
+            else
+            {
+                MessageErreur = "Sélection invalide : la case est vide ou contient votre propre bille.";
+            }
         }
+
         private void TraiterDestinationAdverse(Position p)
         {
             if (_positionSource is null)
             {
                 return;
             }
-            if (_positionSource == p)
+            if (_positionSource.X == p.X && _positionSource.Y == p.Y)
             {
+                PhaseActuelle = PhaseTour.ChoixDeplacementAdverse;
+                MessageErreur = "";
+                _positionSource = null;
                 return;
             }
+
             if (_partie.DeplacerBilleAdverse(_positionSource, p))
             {
-                phaseActuelle = PhaseTour.PlacementBille;
+                PhaseActuelle = PhaseTour.PlacementBille;
+                MessageErreur = "";
+                _positionSource = null;
             }
-            
-            _positionSource = null;
+            else
+            {
+                PhaseActuelle = PhaseTour.ChoixDeplacementAdverse;
+                MessageErreur = "Déplacement invalide. Veuillez resélectionner une bille adverse (ou -1 -1 pour passer).";
+                _positionSource = null;
+            }
         }
         private void TraiterPlacementBille(Position p)
         {
             if (p is null) return;
             if (_partie.PoserBille(p))
             {
-                phaseActuelle = PhaseTour.AttenteBouton;
+                PhaseActuelle = PhaseTour.AttenteBouton;
+                MessageErreur = ""; 
             }
-            
+            else
+            {
+                MessageErreur = "Action impossible : La case est déjà occupée ou invalide.";
+            }
         }
 
 
         public void GererAction(int X, int Y) 
         {
-            switch(phaseActuelle)
+            switch(PhaseActuelle)
             {
                 case PhaseTour.ChoixDeplacementAdverse:
                     TraiterSelectionAdverse(new Position(X, Y));
@@ -114,6 +160,7 @@ namespace ConsoleAppOrbito
                     break;
             }
         }
+
     }
 
     public enum PhaseTour

@@ -48,7 +48,7 @@ namespace LibOrbito
         private Joueur Joueur1 { get; set; }
         private Joueur Joueur2 { get; set; }
         public Joueur JoueurCourant { get; set; }
-        private Joueur? JoueurGagnant { get; set; }
+        public Joueur? JoueurGagnant { get; private set; }
 
 
 
@@ -68,33 +68,48 @@ namespace LibOrbito
             Etat = EtatPartie.EnCours;
         }
 
-        
-        
-        
+
+
+
         public Joueur? VerifierVictoire()
         {
-            Couleur? gagnant;
-            gagnant=LePlateau.DetecterAlignement();
-            
-            if(gagnant == null && CompteurTours>20) { Etat = EtatPartie.Egalite; return null; } 
-            if (gagnant == null)
+            var (blancGagne, noirGagne) = LePlateau.DetecterAlignement();
+
+            if (blancGagne && noirGagne)
             {
-                return null; 
+                Etat = EtatPartie.Egalite;
+                return null;
             }
-            return (Joueur1.CouleurBilles == gagnant) ? Joueur1 : Joueur2;  
+
+            if (!blancGagne && !noirGagne)
+            {
+                if (CompteurTours >= 21)
+                {
+                    Etat = EtatPartie.Egalite;
+                }
+                return null;
+            }
+
+            Etat = EtatPartie.Terminee;
+
+            if (blancGagne)
+            {
+                JoueurGagnant = (Joueur1.CouleurBilles == Couleur.Blanc) ? Joueur1 : Joueur2;
+            }
+            else
+            {
+                JoueurGagnant = (Joueur1.CouleurBilles == Couleur.Noir) ? Joueur1 : Joueur2;
+            }
+
+            return JoueurGagnant;
         }
 
         public bool EstTerminee()
         {
-            Joueur? statut = VerifierVictoire();
-            if (statut == null && Etat == EtatPartie.Egalite || statut !=null)
-            {
-                return true;
-            }
-            return false;
+            return Etat == EtatPartie.Terminee || Etat == EtatPartie.Egalite;
         }
 
-            
+
 
         public void ChangerJoueurCourant()
         {
@@ -110,6 +125,8 @@ namespace LibOrbito
         public bool PoserBille(Position p)
         {
             if (Etat == EtatPartie.Terminee) return false;
+            if (!LePlateau.EstCaseLibre(p)) return false;
+
             try
             {
                 JoueurCourant.placerBille();
@@ -118,7 +135,7 @@ namespace LibOrbito
             {
                 return false;
             }
-            return LePlateau.AjouterBille(new Bille(JoueurCourant.CouleurBilles),p);
+            return LePlateau.AjouterBille(new Bille(JoueurCourant.CouleurBilles), p);
         }
 
 
@@ -133,8 +150,11 @@ namespace LibOrbito
         public bool DeplacerBilleAdverse(Position source, Position dest)
         {
             if (Etat == EtatPartie.Terminee) return false;
-            if (LePlateau.EstCaseLibre(source)){
-                return false; 
+            if (!source.EstAdjacente(dest)) return false;
+
+            if (LePlateau.EstCaseLibre(source))
+            {
+                return false;
             }
             if (LePlateau.At(source)!.CouleurB == JoueurCourant.CouleurBilles)
             {
@@ -144,12 +164,12 @@ namespace LibOrbito
         }
         public bool AppuyerBoutonOrbito()
         {
-            
-            if (!LePlateau.ActionnerOrbite()) return false ;
+            if (!LePlateau.ActionnerOrbite()) return false;
+
+            Joueur? gagnant = VerifierVictoire();
 
             if (EstTerminee())
             {
-                FinDePartie();
                 return true;
             }
 
@@ -157,16 +177,19 @@ namespace LibOrbito
             CompteurTours++;
             return true;
         }
-        public void FinDePartie()
-        {
-            JoueurGagnant = VerifierVictoire();
-            Etat = EtatPartie.Terminee;
 
-
-        }
         public string AffichagePlateau()
         {
             return LePlateau.ToString();
+        }
+
+        public bool EstBilleAdverse(Position p)
+        {
+            if (p.X < 0 || p.X > 3 || p.Y < 0 || p.Y > 3) return false;
+
+            if (LePlateau.EstCaseLibre(p)) return false;
+
+            return LePlateau.At(p)!.CouleurB != JoueurCourant.CouleurBilles;
         }
     }
 }
