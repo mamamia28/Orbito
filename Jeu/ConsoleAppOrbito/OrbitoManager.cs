@@ -17,7 +17,7 @@ namespace ConsoleAppOrbito
                 string nom = _partie.JoueurCourant.Pseudo;
                 if (_partie.CompteurTours > 16 && PhaseActuelle == PhaseTour.AttenteBouton)
                 {
-                    int rotationsRestantes = 22 - _partie.CompteurTours; // 17e tour = 5, 21e tour = 1
+                    int rotationsRestantes = 22 - _partie.CompteurTours; 
                     return $"Plateau plein ! {nom}, actionnez l'orbite ({rotationsRestantes} rotations restantes).";
                 }
                 return PhaseActuelle switch
