@@ -71,7 +71,7 @@ namespace LibOrbito
 
         public bool DeplacerBille(Position origine, Position destination)
         {
-            if (origine == destination)
+            if (origine.X == destination.X && origine.Y == destination.Y)
             {
                 return false;
             }
@@ -134,77 +134,46 @@ namespace LibOrbito
 
         public bool ActionnerOrbite()
         {
-            Bille? tempExt = TabJeu[0, 0];
+            (int Y, int X)[][] orbites = {
+        new[] { (0,0), (0,1), (0,2), (0,3), (1,3), (2,3), (3,3), (3,2), (3,1), (3,0), (2,0), (1,0) },
+        new[] { (1,1), (1,2), (2,2), (2,1) }
+    };
 
-            TabJeu[0, 0] = TabJeu[0, 1];
-            TabJeu[0, 1] = TabJeu[0, 2];
-            TabJeu[0, 2] = TabJeu[0, 3];
+            foreach (var anneau in orbites)
+            {
+                Bille? temp = TabJeu[anneau[0].Y, anneau[0].X];
 
-            TabJeu[0, 3] = TabJeu[1, 3];
-            TabJeu[1, 3] = TabJeu[2, 3];
-            TabJeu[2, 3] = TabJeu[3, 3];
+                for (int i = 0; i < anneau.Length - 1; i++)
+                {
+                    TabJeu[anneau[i].Y, anneau[i].X] = TabJeu[anneau[i + 1].Y, anneau[i + 1].X];
+                }
 
-            TabJeu[3, 3] = TabJeu[3, 2];
-            TabJeu[3, 2] = TabJeu[3, 1];
-            TabJeu[3, 1] = TabJeu[3, 0];
+                TabJeu[anneau[^1].Y, anneau[^1].X] = temp;
+            }
 
-            TabJeu[3, 0] = TabJeu[2, 0];
-            TabJeu[2, 0] = TabJeu[1, 0];
-
-            TabJeu[1, 0] = tempExt;
-
-            Bille? tempInt = TabJeu[1, 1];
-
-            TabJeu[1, 1] = TabJeu[1, 2];
-            TabJeu[1, 2] = TabJeu[2, 2];
-            TabJeu[2, 2] = TabJeu[2, 1];
-
-            TabJeu[2, 1] = tempInt;
             return true;
         }
         public (bool, bool) DetecterAlignement()
         {
-            bool blancGagne = false;
-            bool noirGagne = false;
+            bool blancGagne = false, noirGagne = false;
+
+            void Verifier(Bille? b1, Bille? b2, Bille? b3, Bille? b4)
+            {
+                if (b1 != null && b1.CouleurB == b2?.CouleurB && b1.CouleurB == b3?.CouleurB && b1.CouleurB == b4?.CouleurB)
+                {
+                    if (b1.CouleurB == Couleur.Blanc) blancGagne = true;
+                    else noirGagne = true;
+                }
+            }
 
             for (int i = 0; i < 4; i++)
             {
-                if (TabJeu[i, 0] != null &&
-                    TabJeu[i, 0]?.CouleurB == TabJeu[i, 1]?.CouleurB &&
-                    TabJeu[i, 1]?.CouleurB == TabJeu[i, 2]?.CouleurB &&
-                    TabJeu[i, 2]?.CouleurB == TabJeu[i, 3]?.CouleurB)
-                {
-                    if (TabJeu[i, 0]!.CouleurB == Couleur.Blanc) blancGagne = true;
-                    else noirGagne = true;
-                }
-
-                if (TabJeu[0, i] != null &&
-                    TabJeu[0, i]?.CouleurB == TabJeu[1, i]?.CouleurB &&
-                    TabJeu[1, i]?.CouleurB == TabJeu[2, i]?.CouleurB &&
-                    TabJeu[2, i]?.CouleurB == TabJeu[3, i]?.CouleurB)
-                {
-                    if (TabJeu[0, i]!.CouleurB == Couleur.Blanc) blancGagne = true;
-                    else noirGagne = true;
-                }
+                Verifier(TabJeu[i, 0], TabJeu[i, 1], TabJeu[i, 2], TabJeu[i, 3]);
+                Verifier(TabJeu[0, i], TabJeu[1, i], TabJeu[2, i], TabJeu[3, i]);
             }
 
-            if (TabJeu[0, 0] != null &&
-                TabJeu[0, 0]?.CouleurB == TabJeu[1, 1]?.CouleurB &&
-                TabJeu[1, 1]?.CouleurB == TabJeu[2, 2]?.CouleurB &&
-                TabJeu[2, 2]?.CouleurB == TabJeu[3, 3]?.CouleurB)
-            {
-                if (TabJeu[0, 0]!.CouleurB == Couleur.Blanc) blancGagne = true;
-                else noirGagne = true;
-            }
-
-            if (TabJeu[3, 0] != null &&
-                TabJeu[3, 0]?.CouleurB == TabJeu[2, 1]?.CouleurB &&
-                TabJeu[2, 1]?.CouleurB == TabJeu[1, 2]?.CouleurB &&
-                TabJeu[1, 2]?.CouleurB == TabJeu[0, 3]?.CouleurB)
-            {
-                if (TabJeu[3, 0]!.CouleurB == Couleur.Blanc) blancGagne = true;
-                else noirGagne = true;
-            }
+            Verifier(TabJeu[0, 0], TabJeu[1, 1], TabJeu[2, 2], TabJeu[3, 3]);
+            Verifier(TabJeu[3, 0], TabJeu[2, 1], TabJeu[1, 2], TabJeu[0, 3]);
 
             return (blancGagne, noirGagne);
         }
@@ -213,85 +182,3 @@ namespace LibOrbito
     }
     
 }
-
-/*
- using LibOrbito;
-using System.Text;
-using System.Text.Json.Serialization;
-
-Console.WriteLine("Hello, World!");
-
-
-Plateau p = new Plateau();
-
-Bille b = new Bille(Couleur.Blanc);
-Position pos = new Position(0, 0);
-Position pos2 = new Position(1, 0);
-
-p.AjouterBille(b, pos);
-
-
-
-Console.WriteLine(p.EstCaseLibre(pos));
-
-pos.X = 1;
-
-Console.WriteLine(p.EstCaseLibre(pos));
-
-pos.X = 0;
-
-p.DeplacerBille(pos,pos2);
-
-Console.WriteLine(p.EstCaseLibre(pos));
-
-pos.X = 1;
-
-Console.WriteLine(p.EstCaseLibre(pos));
-
-Console.OutputEncoding = System.Text.Encoding.UTF8;
-
-
-p.AjouterBille(new Bille(Couleur.Noir), new Position(3, 1));
-
-
-p.AjouterBille(new Bille(Couleur.Blanc), new Position(2, 0));
-
-p.AjouterBille(new Bille(Couleur.Noir), new Position(3, 0));
-
-Console.WriteLine(p);
-
-p.ActionnerOrbite();
-
-
-Console.WriteLine(p);
-
-
-
-Console.OutputEncoding = Encoding.UTF8;
-Plateau plateau = new Plateau();
-
-Console.WriteLine(plateau.ToString());
-
-
-plateau.AjouterBille(new Bille(Couleur.Blanc), new Position(0, 0));
-plateau.AjouterBille(new Bille(Couleur.Noir), new Position(1, 1));
-plateau.AjouterBille(new Bille(Couleur.Blanc), new Position(3, 3));
-Console.WriteLine(plateau.ToString());
-
-
-plateau.ActionnerOrbite();
-Console.WriteLine(plateau.ToString());
-
-
-Plateau pVictoire = new Plateau();
-pVictoire.AjouterBille(new Bille(Couleur.Blanc), new Position(0, 0));
-pVictoire.AjouterBille(new Bille(Couleur.Blanc), new Position(1, 0));
-pVictoire.AjouterBille(new Bille(Couleur.Blanc), new Position(2, 0));
-pVictoire.AjouterBille(new Bille(Couleur.Noir), new Position(3, 0));
-
-Console.WriteLine(pVictoire.ToString());
-
-Couleur? gagnant = pVictoire.DetecterAlignement();
-
-*/
-
