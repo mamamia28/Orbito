@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Game.Historique"
+             xmlns:local="clr-namespace:Game.Behaviors"
+             BackgroundColor="#2E073F">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30"
+            Spacing="25">
+
+            <Grid ColumnDefinitions="Auto, *" Padding="0,0,0,10">
+
+                <Button
+                    Text="RETOUR"
+                    Grid.Column="0"
+                    FontFamily="MoreSugar"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    BackgroundColor="Red"
+                    TextColor="Black"
+                    BorderColor="Black"
+                    BorderWidth="3"
+                    HeightRequest="60"
+                    CornerRadius="25"
+                    Padding="15,0"
+                    HorizontalOptions="Start"
+                    local:HoverBehavior.CursorHoverType="Hand"
+                />
+
+                <Label
+                    Text="Historique des parties"
+                    Grid.Column="1"
+                    FontFamily="MoreSugar"
+                    FontSize="30"
+                    FontAttributes="Bold"
+                    TextColor="White"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                />
+
+            </Grid>
+
+            <CollectionView>
+                <CollectionView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>P1</x:String>
+                        <x:String>P2</x:String>
+                        <x:String>P3</x:String>
+                        <x:String>P4</x:String>
+                    </x:Array>
+                </CollectionView.ItemsSource>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            BackgroundColor="DarkViolet"
+                            Stroke="Black"
+                            StrokeThickness="3"
+                            StrokeShape="RoundRectangle 15"
+                            Padding="15"
+                            Margin="0,10">
+
+                            <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+
+                                <Border
+                                    Grid.Column="0"
+                                    Stroke="Black"
+                                    StrokeThickness="3"
+                                    StrokeShape="RoundRectangle 12"
+                                    WidthRequest="140"
+                                    HeightRequest="80"
+                                    Padding="0">
+
+                                    <Grid ColumnDefinitions="*, 2, *">
+
+                                        <Image
+                                            Source="dotnet_bot.png"
+                                            Aspect="AspectFit"
+                                            Grid.Column="0"
+                                            HeightRequest="55"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"
+                                            Margin="6,0"
+                                        />
+
+                                        <BoxView
+                                            Color="Black"
+                                            Grid.Column="1"
+                                            HorizontalOptions="Fill"
+                                            VerticalOptions="Fill"
+                                        />
+
+                                        <Image
+                                            Source="dotnet_bot.png"
+                                            Aspect="AspectFit"
+                                            Grid.Column="2"
+                                            HeightRequest="55"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"
+                                            Margin="6,0"
+                                        />
+
+                                    </Grid>
+                                </Border>
+
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    Spacing="6"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center">
+
+                                    <Label
+                                        Text="Partie du XX/XX à XX:XX"
+                                        FontFamily="MoreSugar"
+                                        FontSize="18"
+                                        FontAttributes="Bold"
+                                        TextColor="Black"
+                                        HorizontalOptions="Center"
+                                    />
+
+                                    <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+                                        <Label
+                                            Text="Joueur X vainqueur"
+                                            Grid.Column="0"
+                                            FontFamily="MoreSugar"
+                                            FontSize="14"
+                                            TextColor="Black"
+                                            HorizontalOptions="End"
+                                        />
+                                        <Label
+                                            Text="Joueur X perdant"
+                                            Grid.Column="1"
+                                            FontFamily="MoreSugar"
+                                            FontSize="14"
+                                            TextColor="Black"
+                                            HorizontalOptions="Start"
+                                        />
+                                    </Grid>
+
+                                </VerticalStackLayout>
+
+                                <Button
+                                    Text="Revoir la partie"
+                                    Grid.Column="2"
+                                    FontFamily="MoreSugar"
+                                    FontSize="14"
+                                    TextColor="Black"
+                                    BorderColor="Black"
+                                    BorderWidth="3"
+                                    BackgroundColor="Transparent"
+                                    HeightRequest="55"
+                                    CornerRadius="10"
+                                    Padding="10,0"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center"
+                                    local:HoverBehavior.CursorHoverType="Hand"
+                                />
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
