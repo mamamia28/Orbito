@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Game.FinDePartie"
+             BackgroundColor="#2D1050">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="20"
+            Spacing="30"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+
+            <Border
+                 BackgroundColor="#8B00CC"
+                WidthRequest="450"
+                Padding="30"
+                Stroke="Black"
+                StrokeThickness="2"
+                StrokeShape="RoundRectangle 25"
+                HorizontalOptions="Center">
+
+                <VerticalStackLayout Spacing="20" HorizontalOptions="Center">
+
+                    <Label
+                        Text="Le joueur X a gagné"
+                        FontFamily="MoreSugar"
+                        FontSize="35"
+                        FontAttributes="Bold"
+                        TextColor="Black"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"/>
+
+                    <Border
+                        BackgroundColor="White"
+                        Stroke="Black"
+                        StrokeThickness="2"
+                        StrokeShape="RoundRectangle 20"
+                        HeightRequest="200"
+                        WidthRequest="250"
+                        HorizontalOptions="Center"
+                        Padding="15">
+                        <Image
+                            Source="dotnet_bot.png"
+                            Aspect="AspectFit"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"/>
+                    </Border>
+
+                    <Label
+                        Text="Carte Joueur X"
+                        FontFamily="MoreSugar"
+                        FontSize="22"
+                        TextColor="Black"
+                        HorizontalOptions="Center"/>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="20"
+                  HorizontalOptions="Center" WidthRequest="450">
+
+                <Button
+                    Text="MENU PRINCIPAL"
+                    Grid.Column="0"
+                    FontFamily="MoreSugar"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    BackgroundColor="#8B00CC"
+                    TextColor="Black"
+                    BorderColor="Black"
+                    BorderWidth="2"
+                    HeightRequest="70"
+                    CornerRadius="15"/>
+
+                <Button
+                    Text="REJOUER"
+                    Grid.Column="1"
+                    FontFamily="MoreSugar"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    BackgroundColor="#8B00CC"
+                    TextColor="Black"
+                    BorderColor="Black"
+                    BorderWidth="2"
+                    HeightRequest="70"
+                    CornerRadius="15"/>
+
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
