@@ -10,5 +10,10 @@
         {
             await Shell.Current.GoToAsync("ChoixMode");
         }
+
+        private async void OnHistoriqueClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("Historique");
+        }
     }
 }

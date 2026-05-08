@@ -44,6 +44,8 @@
                         Text="HISTORIQUE"
                         WidthRequest="250"
                         HeightRequest="100"
+                        Clicked="OnHistoriqueClicked"
+
                         FontFamily="MoreSugar"
                         FontSize="30"
                         BorderColor="White"
