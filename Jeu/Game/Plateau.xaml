@@ -3,10 +3,130 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Game.Plateau"
              Title="Plateau">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+    <Border Stroke="Gray" StrokeThickness="2" Margin="10">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="20" />
+        </Border.StrokeShape>
+
+        <Grid ColumnDefinitions="Auto, *, Auto" RowDefinitions="Auto, *" Margin="10">
+
+            <!-- ================= HEADER ================= -->
+
+            <Button Grid.Row="0" Grid.Column="0"
+                    Text="QUITTER LA PARTIE"
+                    FontFamily="MoreSugar" BackgroundColor="Red" TextColor="White"
+                    CornerRadius="15" HeightRequest="50" Margin="10"
+                    HorizontalOptions="Start" VerticalOptions="Start"/>
+
+            <VerticalStackLayout Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" Spacing="-5">
+                <Label Text="ORBITO" FontFamily="MoreSugar" FontSize="48" FontAttributes="Bold" HorizontalOptions="Center" />
+                <Label Text="Tour de Joueur X" FontFamily="MoreSugar" FontSize="16" HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+
+            <!-- ================= JOUEUR 1 ================= -->
+
+            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Margin="20,10,10,10" Spacing="15" WidthRequest="150">
+                <Border Stroke="Gray" StrokeThickness="2" HeightRequest="130">
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10">
+                        <Border Stroke="Gray" StrokeThickness="2" WidthRequest="60" HeightRequest="60">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="15" />
+                            </Border.StrokeShape>
+                        </Border>
+                        <Label Text="Carte Joueur 1" FontFamily="MoreSugar" HorizontalOptions="Center" FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Stroke="Gray" StrokeThickness="2" Padding="10" VerticalOptions="FillAndExpand">
+                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                        <Label Text="8" FontFamily="MoreSugar" FontSize="36" FontAttributes="Bold" HorizontalOptions="Center" />
+                        <Label Text="COMPTEUR BILLES&#x0a;JOUEUR 1" FontFamily="MoreSugar" FontSize="11" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                        <Ellipse Fill="{StaticResource Primary}" WidthRequest="80" HeightRequest="80" HorizontalOptions="Center" Margin="0,10,0,0"/>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+
+            <!-- ================= LE PLATEAU GRAND FORMAT ================= -->
+
+            <!-- On augmente drastiquement la taille du plateau central (600x600 au lieu de 400x400) -->
+            <Border Grid.Row="1" Grid.Column="1" Stroke="Gray" StrokeThickness="2" Margin="20" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="600" HeightRequest="600">
+
+                <Grid Padding="15" RowSpacing="5" ColumnSpacing="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- ASTUCE : La bordure centrale est attachée aux lignes/colonnes 1 et 2 -->
+                    <!-- Elle s'adaptera dynamiquement à la taille des cases -->
+                    <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2" Stroke="Gray" StrokeThickness="2" Margin="-5" />
+
+                    <!-- LIGNE 0 (AspectFit permet à l'image de remplir sa cellule sans se déformer) -->
+                    <Image Grid.Row="0" Grid.Column="0" Source="case.png" Rotation="90" Aspect="AspectFit" />
+                    <Image Grid.Row="0" Grid.Column="1" Source="case.png" Rotation="180" Aspect="AspectFit" />
+                    <Image Grid.Row="0" Grid.Column="2" Source="case.png" Rotation="180" Aspect="AspectFit" />
+                    <Image Grid.Row="0" Grid.Column="3" Source="case.png" Rotation="180" Aspect="AspectFit" />
+
+                    <!-- LIGNE 1 -->
+                    <Image Grid.Row="1" Grid.Column="0" Source="case.png" Rotation="90" Aspect="AspectFit" />
+                    <Image Grid.Row="1" Grid.Column="1" Source="case.png" Rotation="90" Aspect="AspectFit" />
+                    <Image Grid.Row="1" Grid.Column="2" Source="case.png" Rotation="180" Aspect="AspectFit" />
+                    <Image Grid.Row="1" Grid.Column="3" Source="case.png" Rotation="270" Aspect="AspectFit" />
+
+                    <!-- LIGNE 2 -->
+                    <Image Grid.Row="2" Grid.Column="0" Source="case.png" Rotation="90" Aspect="AspectFit" />
+                    <Image Grid.Row="2" Grid.Column="1" Source="case.png" Rotation="0" Aspect="AspectFit" />
+                    <Image Grid.Row="2" Grid.Column="2" Source="case.png" Rotation="270" Aspect="AspectFit" />
+                    <Image Grid.Row="2" Grid.Column="3" Source="case.png" Rotation="270" Aspect="AspectFit" />
+
+                    <!-- LIGNE 3 -->
+                    <Image Grid.Row="3" Grid.Column="0" Source="case.png" Rotation="0" Aspect="AspectFit" />
+                    <Image Grid.Row="3" Grid.Column="1" Source="case.png" Rotation="0" Aspect="AspectFit" />
+                    <Image Grid.Row="3" Grid.Column="2" Source="case.png" Rotation="0" Aspect="AspectFit" />
+                    <Image Grid.Row="3" Grid.Column="3" Source="case.png" Rotation="270" Aspect="AspectFit" />
+
+                    <!-- Bille rouge centrale centrée sur les 4 cases du milieu -->
+                    <Ellipse Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2" Fill="Red" WidthRequest="65" HeightRequest="65" HorizontalOptions="Center" VerticalOptions="Center" />
+                </Grid>
+
+            </Border>
+
+
+            <!-- ================= JOUEUR 2 ================= -->
+
+            <VerticalStackLayout Grid.Row="1" Grid.Column="2" Margin="10,10,20,10" Spacing="15" WidthRequest="150">
+                <Border Stroke="Gray" StrokeThickness="2" HeightRequest="130">
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10">
+                        <Border Stroke="Gray" StrokeThickness="2" WidthRequest="60" HeightRequest="60">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="15" />
+                            </Border.StrokeShape>
+                        </Border>
+                        <Label Text="Carte Joueur 2" FontFamily="MoreSugar" HorizontalOptions="Center" FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Stroke="Gray" StrokeThickness="2" Padding="10" VerticalOptions="FillAndExpand">
+                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                        <Label Text="8" FontFamily="MoreSugar" FontSize="36" FontAttributes="Bold" HorizontalOptions="Center" />
+                        <Label Text="COMPTEUR BILLES&#x0a;JOUEUR 2" FontFamily="MoreSugar" FontSize="11" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                        <Ellipse Fill="{StaticResource Secondary}" WidthRequest="80" HeightRequest="80" HorizontalOptions="Center" Margin="0,10,0,0"/>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+        </Grid>
+    </Border>
+
 </ContentPage>
