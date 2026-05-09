@@ -9,8 +9,69 @@ namespace ConsoleAppOrbito
     {
         static void Main(string[] args)
         {
-            
             Console.OutputEncoding = Encoding.UTF8;
+
+            bool quitterApp = false;
+            while (!quitterApp)
+            {
+                Console.Clear();
+                Console.WriteLine("   ACCUEIL ORBITO    ");
+                Console.WriteLine("1. Jouer");
+                Console.WriteLine("2. Statistiques");
+                Console.WriteLine("3. Historique");
+                Console.WriteLine("4. Quitter");
+                Console.Write("\nChoix : ");
+
+                string choix = Console.ReadLine() ?? "";
+                if (choix == "1") MenuChoixMode();
+                else if (choix == "2") MenuStats();
+                else if (choix == "3") MenuHistorique();
+                else if (choix == "4") quitterApp = true;
+            }
+        } 
+        static void MenuChoixMode()
+        {
+            Console.Clear();
+            Console.WriteLine("    CHOIX MODE    ");
+            Console.WriteLine("1. Humain VS Humain");
+            Console.WriteLine("2. Humain VS IA");
+            Console.WriteLine("3. IA VS IA");
+            Console.WriteLine("4. Retour");
+
+            string choix = Console.ReadLine() ?? "";
+            if (choix == "1") LancerLaPartieDOrigine();
+            else if (choix == "4") return;
+        }
+
+        static void MenuStats()
+        {
+            Console.Clear();
+            Console.WriteLine("    STATISTIQUES    ");
+            Console.WriteLine("1. Stats Globales");
+            Console.WriteLine("2. Stats Joueur");
+            Console.WriteLine("3. Retour");
+            Console.Write("\nChoix : ");
+
+            string choix = Console.ReadLine() ?? ""; 
+            if (choix == "3") return;
+
+        }
+
+        static void MenuHistorique()
+        {
+            Console.Clear();
+            Console.WriteLine("    HISTORIQUE    ");
+            Console.WriteLine("1. Dernières parties");
+            Console.WriteLine("2. Parties joueur");
+            Console.WriteLine("3. Retour");
+            Console.Write("\nChoix : ");
+
+            string choix = Console.ReadLine() ?? ""; 
+            if (choix == "3") return;
+        }
+
+        static void LancerLaPartieDOrigine()
+            {
 
             
             bool modeHardcode = true; 
@@ -95,6 +156,8 @@ namespace ConsoleAppOrbito
             }
 
             Console.ReadLine();
+
+
         }
     }
 }

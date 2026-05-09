@@ -6,66 +6,34 @@ namespace LibOrbito
 {
     public class Statistiques
     {
-        private int _partieJouees;
-        public int PartieJouees
-        {
-            get { return _partieJouees; }
-        }
-
+        private int _partiesJoueees;
         private int _victoires;
-
-        public int Victoires
-        {
-            get
-            {
-                return _victoires;
-            }
-            set
-            {
-                _victoires = value;
-            }
-        }
-
         private int _defaites;
-
-        public int Defaites
-        {
-            get
-            {
-                return _defaites;
-            }
-            set
-            {
-                _defaites = value;
-            }
-        }
-
         private float _tauxVictoire;
 
-        public float TauxVictoire
+        public int PartiesJouees => _partiesJoueees;
+        public int Victoires => _victoires;
+        public int Defaites => _defaites;
+        public float TauxVictoire => _tauxVictoire;
+
+        public Statistiques( int partieJoueees, int victoires, int defaites)
         {
-            get
+            _partiesJoueees = partieJoueees;
+            _victoires = victoires;
+            _defaites = defaites;
+
+            if(partieJoueees > 0)
             {
-                return _tauxVictoire;
-            } 
-            set
+                _tauxVictoire = (float)victoires / partieJoueees * 100;
+            } else
             {
-                _tauxVictoire = value;
+                _tauxVictoire = 0;
             }
         }
 
-        void incrementerVictoire()
+        public override string ToString()
         {
-            Victoires++;
-        }
-
-        void incrementerDefaite()
-        {
-            Defaites++;
-        }
-        float calculerTaux()
-        {
-            return TauxVictoire = Victoires / PartieJouees;
+            return $"Stats : {_partiesJoueees} parties -> {_victoires} Victoires / {_defaites} Defaites -> {_tauxVictoire}% Taux de Victoire";
         }
     }
 }
