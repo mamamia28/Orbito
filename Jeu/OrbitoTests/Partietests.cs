@@ -96,6 +96,8 @@ namespace OrbitoTests
         {
             var partie = new Partie("J1", "av1", "J2", "av2", ModeJeu.HumainVsHumain);
 
+            partie.PoserBille(new Position(0, 0));
+
             bool resultat = partie.AppuyerBoutonOrbito();
 
             Assert.True(resultat);
@@ -107,11 +109,11 @@ namespace OrbitoTests
         public void Test_VerifierVictoire_Egalite_TourMax()
         {
             var partie = new Partie("J1", "av1", "J2", "av2", ModeJeu.HumainVsHumain);
+            var field = typeof(Partie).GetField("_compteurTours", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            field!.SetValue(partie, 21);
 
-            for (int i = 0; i < 21; i++)
-            {
-                partie.AppuyerBoutonOrbito();
-            }
+
+            partie.VerifierVictoire();
 
             Assert.Equal(EtatPartie.Egalite, partie.Etat);
             Assert.True(partie.EstTerminee());

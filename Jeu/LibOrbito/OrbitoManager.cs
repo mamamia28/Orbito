@@ -1,9 +1,8 @@
-﻿using LibOrbito;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsoleAppOrbito
+namespace LibOrbito
 {
     public class OrbitoManager
     {

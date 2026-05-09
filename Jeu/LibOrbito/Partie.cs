@@ -38,11 +38,13 @@ namespace LibOrbito
             private set { _compteurTours = value; }
         }
 
-        /*
-        private Vector<Coup> coupsJoues;
+        private List<Coup> _coupsJoues = new List<Coup>();
+        public IReadOnlyList<Coup> CoupsJoues => _coupsJoues.AsReadOnly();
 
-        private List<Coup> historiquesCoups;
-        */
+        private Position? _bufferOrigine = null;
+        private Position? _bufferDestination = null;
+        private Position? _bufferPlacement = null;
+        public DateTime DateDeCreation { get; } = DateTime.Now;
         private Plateau LePlateau { get; set; }
 
         private Joueur Joueur1 { get; set; }
@@ -135,7 +137,12 @@ namespace LibOrbito
             {
                 return false;
             }
-            return LePlateau.AjouterBille(new Bille(JoueurCourant.CouleurBilles), p);
+            if (LePlateau.AjouterBille(new Bille(JoueurCourant.CouleurBilles), p))
+            {
+                _bufferPlacement = p;
+                return true;
+            }
+            return false;
         }
 
 
@@ -160,11 +167,32 @@ namespace LibOrbito
             {
                 return false;
             }
-            return LePlateau.DeplacerBille(source, dest);
+            if (LePlateau.DeplacerBille(source, dest))
+            {
+                _bufferOrigine = source;
+                _bufferDestination = dest;
+                return true;
+            }
+            return false;
         }
         public bool AppuyerBoutonOrbito()
         {
+            if (_bufferPlacement == null && CompteurTours <= 16)
+            {
+                throw new InvalidOperationException("Impossible d'actionner l'orbite sans avoir posé de bille.");
+            }
+
             if (!LePlateau.ActionnerOrbite()) return false;
+
+            if (_bufferPlacement != null)
+            {
+                Coup nouveauCoup = new Coup(_bufferOrigine, _bufferDestination, _bufferPlacement, JoueurCourant);
+                _coupsJoues.Add(nouveauCoup);
+            }
+
+            _bufferOrigine = null;
+            _bufferDestination = null;
+            _bufferPlacement = null;
 
             Joueur? gagnant = VerifierVictoire();
 

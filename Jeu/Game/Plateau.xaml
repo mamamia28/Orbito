@@ -73,28 +73,28 @@
                     <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2" Stroke="Gray" StrokeThickness="2" Margin="-5" />
 
                     <!-- LIGNE 0 (AspectFit permet à l'image de remplir sa cellule sans se déformer) -->
-                    <Image Grid.Row="0" Grid.Column="0" Source="case.png" Rotation="90" Aspect="AspectFit" />
-                    <Image Grid.Row="0" Grid.Column="1" Source="case.png" Rotation="180" Aspect="AspectFit" />
-                    <Image Grid.Row="0" Grid.Column="2" Source="case.png" Rotation="180" Aspect="AspectFit" />
-                    <Image Grid.Row="0" Grid.Column="3" Source="case.png" Rotation="180" Aspect="AspectFit" />
+                    <Image Grid.Row="0" Grid.Column="0" Source="boite.png" Rotation="90" Aspect="AspectFit" />
+                    <Image Grid.Row="0" Grid.Column="1" Source="boite.png" Rotation="180" Aspect="AspectFit" />
+                    <Image Grid.Row="0" Grid.Column="2" Source="boite.png" Rotation="180" Aspect="AspectFit" />
+                    <Image Grid.Row="0" Grid.Column="3" Source="boite.png" Rotation="180" Aspect="AspectFit" />
 
                     <!-- LIGNE 1 -->
-                    <Image Grid.Row="1" Grid.Column="0" Source="case.png" Rotation="90" Aspect="AspectFit" />
-                    <Image Grid.Row="1" Grid.Column="1" Source="case.png" Rotation="90" Aspect="AspectFit" />
-                    <Image Grid.Row="1" Grid.Column="2" Source="case.png" Rotation="180" Aspect="AspectFit" />
-                    <Image Grid.Row="1" Grid.Column="3" Source="case.png" Rotation="270" Aspect="AspectFit" />
+                    <Image Grid.Row="1" Grid.Column="0" Source="boite.png" Rotation="90" Aspect="AspectFit" />
+                    <Image Grid.Row="1" Grid.Column="1" Source="boite.png" Rotation="90" Aspect="AspectFit" />
+                    <Image Grid.Row="1" Grid.Column="2" Source="boite.png" Rotation="180" Aspect="AspectFit" />
+                    <Image Grid.Row="1" Grid.Column="3" Source="boite.png" Rotation="270" Aspect="AspectFit" />
 
                     <!-- LIGNE 2 -->
-                    <Image Grid.Row="2" Grid.Column="0" Source="case.png" Rotation="90" Aspect="AspectFit" />
-                    <Image Grid.Row="2" Grid.Column="1" Source="case.png" Rotation="0" Aspect="AspectFit" />
-                    <Image Grid.Row="2" Grid.Column="2" Source="case.png" Rotation="270" Aspect="AspectFit" />
-                    <Image Grid.Row="2" Grid.Column="3" Source="case.png" Rotation="270" Aspect="AspectFit" />
+                    <Image Grid.Row="2" Grid.Column="0" Source="boite.png" Rotation="90" Aspect="AspectFit" />
+                    <Image Grid.Row="2" Grid.Column="1" Source="boite.png" Rotation="0" Aspect="AspectFit" />
+                    <Image Grid.Row="2" Grid.Column="2" Source="boite.png" Rotation="270" Aspect="AspectFit" />
+                    <Image Grid.Row="2" Grid.Column="3" Source="boite.png" Rotation="270" Aspect="AspectFit" />
 
                     <!-- LIGNE 3 -->
-                    <Image Grid.Row="3" Grid.Column="0" Source="case.png" Rotation="0" Aspect="AspectFit" />
-                    <Image Grid.Row="3" Grid.Column="1" Source="case.png" Rotation="0" Aspect="AspectFit" />
-                    <Image Grid.Row="3" Grid.Column="2" Source="case.png" Rotation="0" Aspect="AspectFit" />
-                    <Image Grid.Row="3" Grid.Column="3" Source="case.png" Rotation="270" Aspect="AspectFit" />
+                    <Image Grid.Row="3" Grid.Column="0" Source="boite.png" Rotation="0" Aspect="AspectFit" />
+                    <Image Grid.Row="3" Grid.Column="1" Source="boite.png" Rotation="0" Aspect="AspectFit" />
+                    <Image Grid.Row="3" Grid.Column="2" Source="boite.png" Rotation="0" Aspect="AspectFit" />
+                    <Image Grid.Row="3" Grid.Column="3" Source="boite.png" Rotation="270" Aspect="AspectFit" />
 
                     <!-- Bille rouge centrale centrée sur les 4 cases du milieu -->
                     <Ellipse Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2" Fill="Red" WidthRequest="65" HeightRequest="65" HorizontalOptions="Center" VerticalOptions="Center" />
