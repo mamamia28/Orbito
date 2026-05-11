@@ -107,7 +107,7 @@ namespace LibOrbito
                 if(partie.Mode == ModeJeu.HumainVsIA)
                 {
                     totalPartiesIA++;
-                    if(partie.JoueurGagnant != null && !partie.JoueurGagnant.EstIa)
+                    if(partie.JoueurGagnant != null && partie.JoueurGagnant.ComportementIA != null)
                     {
                         victoiresHumain++;
                     }

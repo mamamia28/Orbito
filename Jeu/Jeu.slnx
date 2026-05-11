@@ -1,13 +1,9 @@
 <Solution>
-  <Project Path="ConsoleAppOrbito/ConsoleAppOrbito.csproj" Id="634589a4-1579-4c06-98c6-c946d3096d73">
-    <Build Solution="Debug|*" Project="false" />
-  </Project>
+  <Project Path="ConsoleAppOrbito/ConsoleAppOrbito.csproj" Id="634589a4-1579-4c06-98c6-c946d3096d73" />
   <Project Path="Game/Game.csproj">
     <Deploy Solution="Debug|*" />
   </Project>
-  <Project Path="LibOrbito/LibOrbito.csproj" Id="d137e9a1-fbbd-41ca-a070-d2c850f0c4f2">
-    <Build Solution="Debug|*" Project="false" />
-  </Project>
+  <Project Path="LibOrbito/LibOrbito.csproj" Id="d137e9a1-fbbd-41ca-a070-d2c850f0c4f2" />
   <Project Path="OrbitoTests/OrbitoTests.csproj" Id="623e7501-4fa6-44a4-a69c-30c12ac86f4a">
     <Build Solution="Debug|*" Project="false" />
   </Project>

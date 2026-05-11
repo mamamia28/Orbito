@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace LibOrbito
 {
@@ -21,14 +22,15 @@ namespace LibOrbito
                 }
                 return PhaseActuelle switch
                 {
-                    PhaseTour.ChoixDeplacementAdverse => $"{nom}, choisissez une bille adverse à déplacer (ou passez).",
+                    PhaseTour.ChoixDeplacementAdverse => $"{nom}, choisissez une bille adverse à déplacer (ou passez (4 4)).",
                     PhaseTour.DestinationDeplacement => "Choisissez la destination du déplacement.",
                     PhaseTour.PlacementBille => $"{nom}, placez l'une de vos billes.",
-                    PhaseTour.AttenteBouton => "Appuyez sur le bouton Orbito pour terminer le tour.",
+                    PhaseTour.AttenteBouton => "Appuyez sur le bouton Orbito pour terminer le tour.(Entrée)",
                     _=>""
                 };
             }
         }
+        public event Action<string>? OnActionIADetaillee;
         public string MessageEtat
         {
             get
@@ -52,21 +54,36 @@ namespace LibOrbito
             return _partie.EstTerminee();
         }
 
+        public bool EstTourIA => _partie.JoueurCourant.EstIA;
 
-        public OrbitoManager(string nomJ1, string avatarJ1, string nomJ2, string avatarJ2, ModeJeu mode)
+        /// <summary>
+        /// Initialise une nouvelle instance de la classe OrbitoManager pour une partie entre deux joueurs avec les
+        /// avatars et le mode de jeu spécifiés.
+        /// Note : La phase du tour est initialisée au placement car impossible de déplacer une bille adverse au premier tour
+        /// </summary>
+        /// <param name="nomJ1">Le nom du premier joueur. Ne peut pas être null ou vide.</param>
+        /// <param name="avatarJ1">L'avatar associé au premier joueur. Ne peut pas être null ou vide.</param>
+        /// <param name="nomJ2">Le nom du second joueur. Ne peut pas être null ou vide.</param>
+        /// <param name="avatarJ2">L'avatar associé au second joueur. Ne peut pas être null ou vide.</param>
+        /// <param name="mode">Le mode de jeu à utiliser pour la partie.</param>
+        public OrbitoManager(string nomJ1, string avatarJ1, string nomJ2, string avatarJ2, ModeJeu mode, DifficulteIA? difficulte)
         {
-            _partie = new Partie(nomJ1, avatarJ1, nomJ2, avatarJ2, mode);
-            PhaseActuelle = PhaseTour.ChoixDeplacementAdverse;
+            _partie = new Partie(nomJ1, avatarJ1, nomJ2, avatarJ2, mode, difficulte);
+            PhaseActuelle = PhaseTour.PlacementBille;
 
         }
         public void ActionnerBouton()
         {
             if (PhaseActuelle != PhaseTour.AttenteBouton) return;
             if (!_partie.AppuyerBoutonOrbito()) return;
-            
+
             if (!_partie.EstTerminee())
             {
-                if (_partie.CompteurTours <= 16)
+                if (_partie.CompteurTours <= 2)
+                {
+                    PhaseActuelle = PhaseTour.PlacementBille;
+                }
+                else if (_partie.CompteurTours <= 16)
                 {
                     PhaseActuelle = PhaseTour.ChoixDeplacementAdverse;
                 }
@@ -147,6 +164,11 @@ namespace LibOrbito
             switch(PhaseActuelle)
             {
                 case PhaseTour.ChoixDeplacementAdverse:
+                    if (_partie.CompteurTours < 2) 
+                    { 
+                        PhaseActuelle = PhaseTour.PlacementBille;
+                        return;
+                    }
                     TraiterSelectionAdverse(new Position(X, Y));
                     break;
                 case PhaseTour.DestinationDeplacement:
@@ -157,6 +179,53 @@ namespace LibOrbito
                     break;
                 case PhaseTour.AttenteBouton:
                     break;
+            }
+        }
+        public void FaireJouerIA()
+        {
+            if (!EstTourIA) return;
+
+            OnActionIADetaillee?.Invoke($"{NomJoueur} réfléchit à sa stratégie...");
+            Action coupIA = _partie.JoueurCourant.ComportementIA!.CalculerCoup(_partie);
+
+            if (coupIA.origineDeplacement != null && coupIA.destinationDeplacement != null)
+            {
+                OnActionIADetaillee?.Invoke($"{NomJoueur} déplace une bille de ({coupIA.origineDeplacement.X}, {coupIA.origineDeplacement.Y}) vers ({coupIA.destinationDeplacement.X}, {coupIA.destinationDeplacement.Y}).");
+                _partie.DeplacerBilleAdverse(coupIA.origineDeplacement, coupIA.destinationDeplacement);
+            }
+            else if (_partie.CompteurTours > 2 && _partie.CompteurTours <= 16)
+            {
+                OnActionIADetaillee?.Invoke($"{NomJoueur} décide de ne déplacer aucune bille.");
+            }
+
+            if (coupIA.placement != null)
+            {
+                OnActionIADetaillee?.Invoke($"{NomJoueur} pose une bille en ({coupIA.placement.X}, {coupIA.placement.Y}).");
+                bool poseReussie = _partie.PoserBille(coupIA.placement);
+                if (!poseReussie)
+                {
+                    MessageErreur = "L'IA a tenté un coup illégal.";
+                    return;
+                }
+            }
+
+            OnActionIADetaillee?.Invoke($"{NomJoueur} appuie sur le bouton Orbito !");
+            _partie.AppuyerBoutonOrbito();
+
+            if (!_partie.EstTerminee())
+            {
+                if (_partie.CompteurTours <= 2)
+                {
+                    PhaseActuelle = PhaseTour.PlacementBille;
+                }
+                else if (_partie.CompteurTours <= 16)
+                {
+                    PhaseActuelle = PhaseTour.ChoixDeplacementAdverse;
+                }
+                else
+                {
+                    PhaseActuelle = PhaseTour.AttenteBouton;
+                }
             }
         }
 
