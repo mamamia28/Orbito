@@ -6,11 +6,11 @@ namespace LibOrbito
 {
     public class Action
     {
-        protected Position? origineDeplacement;
-        protected Position? destinationDeplacement;
-        protected Position placement;
+        public Position? origineDeplacement { get; private set; }
+        public Position? destinationDeplacement { get; private set; }
+        public Position? placement { get; private set; }
 
-        public Action(Position? origineDeplacement, Position? destinationDeplacement, Position placement)
+        public Action(Position? origineDeplacement, Position? destinationDeplacement, Position? placement)
         {
             this.origineDeplacement = origineDeplacement;
             this.destinationDeplacement = destinationDeplacement;

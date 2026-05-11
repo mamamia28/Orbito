@@ -55,27 +55,16 @@ namespace LibOrbito
             }
         }
 
-        private bool _estIA;
+        public IComportementIA? ComportementIA { get; private set; }
+        public bool EstIA => ComportementIA != null;
 
-        public bool EstIa
-        {
-            get
-            {
-                return _estIA;
-            }
-            private set
-            {
-                _estIA = value;
-            }
-        }
-
-        public Joueur(string pseudo, string avatar, Couleur couleur, bool estIa = false)
+        public Joueur(string pseudo, string avatar, Couleur couleur, IComportementIA? comportement = null)
         {
             CouleurBilles = couleur;
-            EstIa = estIa;
+            ComportementIA = comportement;
             BillesRestantes = 8;
             Avatar = avatar;
-            Pseudo = (EstIa == true) ? "Joueur IA" : pseudo;
+            Pseudo = (comportement is not null) ? "IA" : pseudo;
         }
 
         public void placerBille()

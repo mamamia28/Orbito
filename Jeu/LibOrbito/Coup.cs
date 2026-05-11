@@ -8,7 +8,7 @@ namespace LibOrbito
     public class Coup : Action
     {
         public Joueur Responsable { get; private set; }
-        public Coup(Position? origine, Position? destination, Position placement, Joueur responsable) : base(origine,destination,placement)
+        public Coup(Position? origine, Position? destination, Position? placement, Joueur responsable) : base(origine,destination,placement)
         {
             this.Responsable = responsable;
         }

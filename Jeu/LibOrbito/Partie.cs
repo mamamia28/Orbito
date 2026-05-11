@@ -45,7 +45,7 @@ namespace LibOrbito
         private Position? _bufferDestination = null;
         private Position? _bufferPlacement = null;
         public DateTime DateDeCreation { get; } = DateTime.Now;
-        private Plateau LePlateau { get; set; }
+        public Plateau LePlateau { get; private set; }
 
         private Joueur Joueur1 { get; set; }
         private Joueur Joueur2 { get; set; }
@@ -54,18 +54,32 @@ namespace LibOrbito
 
 
 
-        public Partie(string nomJ1, string avatarJ1, string nomJ2, string avatarJ2, ModeJeu mode)
+        public Partie(string nomJ1, string avatarJ1, string nomJ2, string avatarJ2, ModeJeu mode, DifficulteIA? difficulte = null)
         {
             Mode = mode;
-            Joueur1 = new Joueur(nomJ1,avatarJ1,Couleur.Blanc);
-            Joueur2 = new Joueur(nomJ2,avatarJ2,Couleur.Noir);
+            IComportementIA? GenererIA()  
+            {
+                switch (difficulte)
+                {
+                    case DifficulteIA.Facile:
+                        return new IAFacile();
+                    case DifficulteIA.Moyen:
+                        return new IAFacile();   // A chngger après
+                    
+                }
+                return null;   
+            }
+
+            IComportementIA? iaJ1 = (mode == ModeJeu.IAVsIA) ? GenererIA() : null;
+            IComportementIA? iaJ2 = (mode == ModeJeu.HumainVsIA || mode == ModeJeu.IAVsIA) ? GenererIA() : null;
+
+            Joueur1 = new Joueur(nomJ1, avatarJ1, Couleur.Blanc, iaJ1);
+            Joueur2 = new Joueur(nomJ2, avatarJ2, Couleur.Noir, iaJ2);
 
             LePlateau = new Plateau();
-
             JoueurCourant = Joueur1;
-
-
             CompteurTours = 1;
+
             LePlateau.Initialiser();
             Etat = EtatPartie.EnCours;
         }
