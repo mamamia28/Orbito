@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LibOrbito\LibOrbito.csproj" />
+    <ProjectReference Include="..\Stub\Stub.csproj" />
   </ItemGroup>
 
 </Project>

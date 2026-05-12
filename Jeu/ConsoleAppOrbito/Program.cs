@@ -2,11 +2,14 @@
 using System.Text;
 using System.Threading;
 using LibOrbito;
+using Stub;
+using Microsoft.Win32.SafeHandles;
 
 namespace ConsoleAppOrbito
 {
     class Program
     {
+        static Historique historique = new Stub.Stub();
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
@@ -66,25 +69,223 @@ namespace ConsoleAppOrbito
             Console.Clear();
             Console.WriteLine("    STATISTIQUES    ");
             Console.WriteLine("1. Stats Globales");
-            Console.WriteLine("2. Stats Joueur");
-            Console.WriteLine("3. Retour");
+            Console.WriteLine("2. Stats des Joueurs");
+            Console.WriteLine("3. Stats Joueur");
+            Console.WriteLine("4. Retour");
             Console.Write("\nChoix : ");
 
             string choix = Console.ReadLine() ?? "";
-            if (choix == "3") return;
+            if (choix == "1") afficherStatsGlobales();
+            else if (choix == "2") afficherStats();
+            else if (choix == "3") afficherStatsJoueur();
+            else if (choix == "3") return;
+        }
+
+        static void afficherStatsGlobales()
+        {
+            Console.Clear();
+            Console.WriteLine("STATISTIQUES GLOBALES (LOCAL)\n");
+
+            if(historique.NbParties <= 0)
+            {
+                Console.WriteLine("\nAucune partie enregistrée.");
+            } 
+            else
+            {
+                Console.WriteLine(historique.ToString());
+            }
+
+            Console.WriteLine("Appuyer sur Entrée pour revenir");
+            Console.ReadLine();
+        }
+        static void afficherStats()
+        {
+            Console.Clear();
+            Console.WriteLine("STATISTIQUES DES JOUEURS\n");
+
+            if (historique.lesJoueurs.Count <= 0) 
+            {
+                Console.WriteLine("\nAucun joueur enregistrée.");
+            } else
+            {
+                foreach (var j in historique.lesJoueurs)
+                {
+                    Console.Write($"- {j.Pseudo} ");
+                    Statistiques stats = historique.RecupererStats(j.Pseudo);
+                    Console.WriteLine(stats.ToString());
+                }
+            }
+
+            Console.WriteLine("\nAppuyer sur Entrée pour revenir");
+            Console.ReadLine();
+        }
+
+        static void afficherStatsJoueur()
+        {
+            Console.Clear();
+            Console.Write("Entrez le pseudo du joueur : ");
+            string pseudo = Console.ReadLine() ?? "";
+            Statistiques stats = historique.RecupererStats(pseudo);
+            Console.WriteLine();
+
+            if(stats.PartiesJouees <= 0)
+            {
+                Console.WriteLine($"\nLe joueur {pseudo} n'a aucune partie enregistrée.");
+            }
+            else
+            {
+                Console.WriteLine($"STATISTIQUES DE {pseudo}");
+                Console.WriteLine(stats.ToString());
+            }
+
+            Console.WriteLine("\nAppuyer sur Entrée pour revenir");
+            Console.ReadLine();
         }
 
         static void MenuHistorique()
         {
             Console.Clear();
             Console.WriteLine("    HISTORIQUE    ");
-            Console.WriteLine("1. Dernières parties");
-            Console.WriteLine("2. Parties joueur");
-            Console.WriteLine("3. Retour");
+            Console.WriteLine("1. Parties jouées");
+            Console.WriteLine("2. 5 Dernieres parties jouées");
+            Console.WriteLine("3. Parties joueur");
+            Console.WriteLine("4. 5 Dernieres parties joueur");
+            Console.WriteLine("5. Retour");
             Console.Write("\nChoix : ");
 
             string choix = Console.ReadLine() ?? "";
-            if (choix == "3") return;
+            if (choix == "1") AfficherParties();
+            else if (choix == "2") AfficherDernieresParties();
+            else if (choix == "3") AfficherPartiesJoueur();
+            else if (choix == "4") AfficherDernieresPartiesJoueur();
+            else if (choix == "5") return;
+        }
+
+        static void AfficherParties()
+        {
+            Console.Clear();
+            Console.WriteLine("PARTIES JOUEES\n");
+            var parties = historique.LesParties;
+
+            if (parties.Count == 0)
+            {
+                Console.WriteLine("\nAucune partie enregistrée");
+            }
+            else
+            {
+                for (int i = parties.Count - 1; i >= 0; i--)
+                {
+                    AfficherLigneHistorique(parties[i]);
+                }
+            }
+
+            Console.WriteLine("\nAppuyer sur Entrée pour revenir");
+            Console.ReadLine();
+        }
+
+        static void AfficherDernieresParties()
+        {
+            Console.Clear();
+            Console.WriteLine("5 DERNIERES PARTIES \n");
+            var parties = historique.LesParties;
+
+            if (parties.Count == 0)
+            {
+                Console.WriteLine("Aucune partie enregistrée.");
+            }
+            else
+            {
+                int aAfficher = Math.Min(5, parties.Count);
+                for (int i = parties.Count - 1; i >= parties.Count - aAfficher; i--)
+                {
+                    AfficherLigneHistorique(parties[i]);
+                }
+            }
+
+            Console.WriteLine("\nAppuyer sur Entrée pour revenir");
+            Console.ReadLine();
+        }
+
+        static void AfficherPartiesJoueur()
+        {
+            Console.Clear();
+            Console.Write("Entrez le pseudo du joueur : ");
+            string pseudo = Console.ReadLine() ?? "";
+            var parties = historique.RecupererHistorique(pseudo);
+            Console.WriteLine();
+
+            if (parties.Count == 0)
+            {
+                Console.WriteLine($"\nAucune partie trouvée pour {pseudo}.");
+            }
+            else
+            {
+                Console.WriteLine($"PARTIES DE {pseudo}");
+                for (int i = parties.Count - 1; i >= 0; i--)
+                {
+                    AfficherLigneHistorique(parties[i]);
+                }
+            }
+
+            Console.WriteLine("\nAppuyer sur Entrée pour revenir");
+            Console.ReadLine();
+        }
+        static void AfficherDernieresPartiesJoueur()
+        {
+            Console.Clear();
+            Console.Write("Entrez le pseudo : ");
+            string pseudo = Console.ReadLine() ?? "";
+            Console.WriteLine($"5 DERNIÈRES PARTIES DE {pseudo}\n");
+            var parties = historique.RecupererHistorique(pseudo);
+
+            if (parties.Count == 0)
+            {
+                Console.WriteLine($"\nAucune partie trouvée pour {pseudo}.");
+            }
+            else
+            {
+
+                int limite = parties.Count - 5;
+                if (limite < 0)
+                {
+                    limite = 0;
+                }
+
+                for (int i = parties.Count - 1; i >= limite; i--)
+                {
+                    AfficherLigneHistorique(parties[i]);
+                }
+            }
+
+            Console.WriteLine("\nAppuyer sur entrée pour revenir au menu principal ..");
+            Console.ReadLine();
+        }
+
+        static void AfficherLigneHistorique(Partie p)
+        {
+            Joueur j1Inst = p.JoueurCourant;
+            p.ChangerJoueurCourant();
+            Joueur j2Inst = p.JoueurCourant;
+            p.ChangerJoueurCourant();
+
+            string j1 = (j1Inst.CouleurBilles == Couleur.Blanc) ? j1Inst.Pseudo : j2Inst.Pseudo;
+            string j2 = (j1Inst.CouleurBilles == Couleur.Noir) ? j1Inst.Pseudo : j2Inst.Pseudo;
+
+            string date = p.DateDeCreation.ToString("dd/MM");
+            int nbCoups = p.CoupsJoues.Count;
+            string mode = p.Mode.ToString();
+
+            if (p.Etat == EtatPartie.Egalite)
+            {
+                Console.WriteLine($"{date} - Mode: {mode} - {nbCoups} coups - Égalité ({j1} et {j2})");
+            }
+            else if (p.JoueurGagnant != null)
+            {
+                string gagnant = p.JoueurGagnant.Pseudo;
+                string perdant = (gagnant == j1) ? j2 : j1;
+
+                Console.WriteLine($"{date} - Mode: {mode} - {nbCoups} coups - Gagnant: {gagnant} / Perdant: {perdant}");
+            }
         }
 
         static void AfficherActionIA(string message)
@@ -94,18 +295,24 @@ namespace ConsoleAppOrbito
         }
         static void LancerPartie(ModeJeu mode,DifficulteIA? difficulte)
         {
-            bool modeHardcode = true;
+            bool modeHardcode = false;
 
-            string pseudo1 = "Alice";
-            string pseudo2 = mode == ModeJeu.HumainVsHumain ? "Bob" : "OrbitoBot (IA)";
+            string pseudo1 = "";
+            string pseudo2 = mode == ModeJeu.HumainVsHumain ? "" : "IA";
 
             if (!modeHardcode)
             {
                 Console.WriteLine("=== BIENVENUE DANS ORBITO ===");
-                Console.Write("Nom du Joueur 1 (Blancs) : ");
-                pseudo1 = Console.ReadLine() ?? "Joueur 1";
-                Console.Write("Nom du Joueur 2 (Noirs) : ");
-                pseudo2 = Console.ReadLine() ?? "Joueur 2";
+                if (mode != ModeJeu.IAVsIA)
+                {
+                    Console.Write("Nom du Joueur 1 (Blancs) : ");
+                    pseudo1 = Console.ReadLine() ?? "Joueur 1";
+                }
+                if (mode == ModeJeu.HumainVsHumain)
+                {
+                    Console.Write("Nom du Joueur 2 (Noirs) : ");
+                    pseudo2 = Console.ReadLine() ?? "Joueur 2";
+                }
             }
 
             OrbitoManager manager = new OrbitoManager(pseudo1, "avatar1.png", pseudo2, "avatar2.png", mode, difficulte);
@@ -169,6 +376,7 @@ namespace ConsoleAppOrbito
             Console.Clear();
             Console.WriteLine("=== FIN DE LA PARTIE ===");
             Console.WriteLine(manager.AffichagePlateau);
+            historique.AjouterPartie(manager._partie);
 
             if (manager.MessageEtat == "Egalite")
             {

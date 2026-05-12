@@ -10,6 +10,7 @@ namespace LibOrbito
         public float TauxVictoireHumainContreIA => CalculerTauxVictoireHumainContreIA();
         public List<Joueur> lesJoueurs { get; set; } = new List<Joueur>();
         private List<Partie> _lesSessions = new List<Partie>();
+        public IReadOnlyList<Partie> LesParties => _lesSessions.AsReadOnly();
         public int NbParties => _lesSessions.Count;
 
         public void AjouterPartie(Partie partie)
@@ -121,10 +122,9 @@ namespace LibOrbito
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("HISTORIQUE Local - Orbito");
-            sb.AppendLine($"-Nombre total de parties : {NbParties}");
-            sb.AppendLine($"-Joueurs enregistrés : {lesJoueurs.Count}");
-            sb.AppendLine($"-Taux de victoire (Humain vs IA) : {TauxVictoireHumainContreIA}%");
+            sb.AppendLine($"- Nombre total de parties : {NbParties}");
+            sb.AppendLine($"- Joueurs enregistrés : {lesJoueurs.Count}");
+            sb.AppendLine($"- Taux de victoire (Humain vs IA) : {TauxVictoireHumainContreIA}%");
             return sb.ToString();
         }
     }

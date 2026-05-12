@@ -7,7 +7,7 @@ namespace LibOrbito
 {
     public class OrbitoManager
     {
-        private readonly Partie _partie;
+        public readonly Partie _partie;
         private Position? _positionSource;
         public PhaseTour PhaseActuelle;
         public string MessagePhase
