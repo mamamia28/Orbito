@@ -33,7 +33,7 @@ namespace LibOrbito
 
         public override string ToString()
         {
-            return $"Stats : {_partiesJoueees} parties -> {_victoires} Victoires / {_defaites} Defaites -> {_tauxVictoire}% Taux de Victoire";
+            return $"Stats : {_partiesJoueees} parties -> {_victoires} Victoires / {_defaites} Defaites / {_partiesJoueees-(_victoires+_defaites)} Egalité -> {_tauxVictoire}% Taux de Victoire";
         }
     }
 }
