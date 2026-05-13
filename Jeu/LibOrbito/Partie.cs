@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Reflection.Metadata.Ecma335;
@@ -64,7 +64,7 @@ namespace LibOrbito
                     case DifficulteIA.Facile:
                         return new IAFacile();
                     case DifficulteIA.Moyen:
-                        return new IAFacile();   // A chngger après
+                        return new IAMoyenne();   
                     
                 }
                 return null;   
