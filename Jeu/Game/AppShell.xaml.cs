@@ -10,7 +10,9 @@
             Routing.RegisterRoute("ChoixMode", typeof(ChoixMode));
             Routing.RegisterRoute("PageJoueurVSIA", typeof(PageJoueurVSIA));
             Routing.RegisterRoute("Historique", typeof(Historique));
-
+            Routing.RegisterRoute("Statistiques", typeof(Statistiques));
+            Routing.RegisterRoute("Plateau", typeof(Plateau));
+            Routing.RegisterRoute("FinDePartie", typeof(FinDePartie));
         }
     }
 }

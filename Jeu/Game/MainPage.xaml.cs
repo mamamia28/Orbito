@@ -15,5 +15,10 @@
         {
             await Shell.Current.GoToAsync("Historique");
         }
+
+        private async void OnStatistiquesClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("Statistiques");
+        }
     }
 }

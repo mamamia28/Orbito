@@ -28,6 +28,7 @@
                     />
             
             <Border
+                ZIndex="1"
                 Grid.Row="0"
                 Grid.RowSpan="2"
                 Margin="0,150,0,0"
@@ -56,6 +57,7 @@
                         local:HoverBehavior.CursorHoverType="Hand"
                     />
                     <Button
+                        Clicked="OnStatistiquesClicked"
                         Text="STATS"
                         WidthRequest="250"
                         FontFamily="MoreSugar"
