@@ -127,6 +127,7 @@
                     FontFamily="MoreSugar"
                     LineBreakMode="WordWrap"
                     FontSize="50"
+                    Clicked="OnPlateauClicked"
                     />
             </Border>
 

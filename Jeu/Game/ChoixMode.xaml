@@ -5,140 +5,184 @@
              xmlns:local="clr-namespace:Game.Behaviors"
              BackgroundColor="#2E073F">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="30,0" Spacing="25">
 
-            <Grid Padding="30,0,30,30">
-                <Border
-                    Grid.Column="1"
-                    Stroke="Transparent">
-                <Button
-                    Text="?"
-                    TextColor="Black"
-                    FontSize="40"
-                    BackgroundColor="White"
-                    WidthRequest="50"
-                    HeightRequest="60"
-                    BorderColor="Black"
-                    BorderWidth="3"
-                    Padding="0"
-                    
-                    HorizontalOptions="Start"
-                    FontFamily="MoreSugar"
-                    local:HoverBehavior.CursorHoverType="Help"
-                    />
+                <Grid Padding="30,0,30,30">
+                    <Border Grid.Column="1" Stroke="Transparent">
+                        <Button x:Name="BtnRegles" Text="?" TextColor="Black" FontSize="40" BackgroundColor="White"
+                                WidthRequest="50" HeightRequest="60" BorderColor="Black" BorderWidth="3"
+                                Padding="0" HorizontalOptions="Start" FontFamily="MoreSugar"
+                                local:HoverBehavior.CursorHoverType="Hand"
+                                Clicked="OnReglesClicked" />
+                    </Border>
+
+                    <Label Text="Orbito" FontFamily="MoreSugar" FontSize="150" HeightRequest="200"
+                           SemanticProperties.Description="Logo Orbito" Grid.Column="3" HorizontalOptions="Center" />
+                </Grid>
+
+                <Border BackgroundColor="DarkViolet" WidthRequest="600" StrokeShape="RoundRectangle 10">
+                    <Label Text="Choisissez un Mode de Jeu" FontAttributes="Bold" FontSize="30"
+                           HorizontalOptions="Center" TextColor="White" Padding="30" FontFamily="MoreSugar"
+                           local:HoverBehavior.CursorHoverType="IBeam" />
                 </Border>
 
-                <Label
-                    Text="Orbito"
-                    FontFamily="MoreSugar"
-                    FontSize="150"
-                    HeightRequest="200"
-                    
-                    SemanticProperties.Description="Logo Orbito" 
-                    Grid.Column="3"
-                    HorizontalOptions="Center"
-                    />
-                
-            </Grid>
-            <Border
-                BackgroundColor="DarkViolet"
-                WidthRequest="600"
-                StrokeShape="RoundRectangle 10">
-                <Label
-                Text="Choisissez un Mode de Jeu"
-                FontAttributes="Bold"
-                FontSize="30"
-                HorizontalOptions="Center"
-                TextColor="White"
-                Padding="30"
-                FontFamily="MoreSugar"
-                local:HoverBehavior.CursorHoverType="IBeam"
-                />
+                <HorizontalStackLayout Padding="30" Spacing="25" HorizontalOptions="Center">
+                    <Button Text="Joueur VS IA" WidthRequest="500" HeightRequest="60" FontSize="30"
+                            BorderColor="White" BorderWidth="2" FontFamily="MoreSugar"
+                            local:HoverBehavior.CursorHoverType="Hand" Clicked="OnJoueurVSIAClicked" />
+
+                    <Button Text="IA VS IA" WidthRequest="500" HeightRequest="60" FontSize="30"
+                            BorderColor="White" BorderWidth="2" FontFamily="MoreSugar"
+                            local:HoverBehavior.CursorHoverType="Hand" />
+                </HorizontalStackLayout>
+
+                <Button Text="Joueur VS Joueur" WidthRequest="700" HeightRequest="70" FontSize="40"
+                        BorderColor="White" BorderWidth="2" Clicked="OnJoueurVSJoueurClicked"
+                        FontFamily="MoreSugar" local:HoverBehavior.CursorHoverType="Hand" />
+
+                <Grid Padding="30" Margin="0,120,0,0">
+                    <Button Text="=" FontFamily="MoreSugarExtras" WidthRequest="200" HeightRequest="70"
+                            FontSize="30" BackgroundColor="Red" TextColor="Black" HorizontalOptions="Start"
+                            BorderColor="Black" BorderWidth="3" Grid.Column="0" CornerRadius="15"
+                            Clicked="OnRetourClicked" local:HoverBehavior.CursorHoverType="Hand" />
+
+                    <Button x:Name="BtnVariantes" Text="Variantes" WidthRequest="200" HeightRequest="70"
+                            FontSize="30" BackgroundColor="White" TextColor="Purple" HorizontalOptions="End"
+                            BorderColor="Purple" BorderWidth="3" Grid.Column="1" FontAttributes="Bold"
+                            FontFamily="MoreSugar" local:HoverBehavior.CursorHoverType="Hand"
+                            Clicked="OnVariantesClicked" />
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Grid x:Name="PopupVariantes" IsVisible="False" BackgroundColor="#B3000000" Padding="50">
+
+            <Border BackgroundColor="#2E073F" Stroke="White" StrokeThickness="3" StrokeShape="RoundRectangle 20"
+                    VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="1000" HeightRequest="800" Padding="30">
+
+                <Grid RowDefinitions="Auto, *" RowSpacing="30">
+
+                    <Grid Grid.Row="0">
+                        <Border Stroke="White" StrokeThickness="2" StrokeShape="RoundRectangle 10" Padding="15" HorizontalOptions="Center">
+                            <Label Text="CHOISISSEZ UNE VARIANTE" FontSize="40" FontFamily="MoreSugar"
+                                   FontAttributes="Bold" HorizontalOptions="Center" TextColor="White" />
+                        </Border>
+
+                        <Button Text="X" FontSize="35" FontAttributes="Bold" TextColor="White" BackgroundColor="Transparent"
+                                WidthRequest="60" HeightRequest="60" 
+                                HorizontalOptions="End" VerticalOptions="Center"
+                                Clicked="OnCloseVariantesClicked" local:HoverBehavior.CursorHoverType="Hand" />
+                    </Grid>
+
+                    <ScrollView Grid.Row="1">
+                        <FlexLayout Wrap="Wrap" JustifyContent="SpaceEvenly" AlignItems="Start" AlignContent="Start">
+
+                            <Border Stroke="White" StrokeThickness="2" StrokeShape="RoundRectangle 10" BackgroundColor="Transparent"
+                                    WidthRequest="280" HeightRequest="250" Margin="15" Padding="20">
+                                <VerticalStackLayout VerticalOptions="Center" Spacing="15">
+                                    <Label Text="VARIANTE 1" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White" FontFamily="MoreSugar"/>
+                                    <Label Text="Description de la variante..." FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White"/>
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <Border Stroke="White" StrokeThickness="2" StrokeShape="RoundRectangle 10" BackgroundColor="Transparent"
+                                    WidthRequest="280" HeightRequest="250" Margin="15" Padding="20">
+                                <VerticalStackLayout VerticalOptions="Center" Spacing="15">
+                                    <Label Text="VARIANTE 2" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White" FontFamily="MoreSugar"/>
+                                    <Label Text="Description de la variante..." FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White"/>
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <Border Stroke="White" StrokeThickness="2" StrokeShape="RoundRectangle 10" BackgroundColor="Transparent"
+                                    WidthRequest="280" HeightRequest="250" Margin="15" Padding="20">
+                                <VerticalStackLayout VerticalOptions="Center" Spacing="15">
+                                    <Label Text="VARIANTE 3" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White" FontFamily="MoreSugar"/>
+                                    <Label Text="Description de la variante..." FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White"/>
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <Border Stroke="White" StrokeThickness="2" StrokeShape="RoundRectangle 10" BackgroundColor="Transparent"
+                                    WidthRequest="280" HeightRequest="250" Margin="15" Padding="20">
+                                <VerticalStackLayout VerticalOptions="Center" Spacing="15">
+                                    <Label Text="VARIANTE 4" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White" FontFamily="MoreSugar"/>
+                                    <Label Text="Description de la variante..." FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White"/>
+                                </VerticalStackLayout>
+                            </Border>
+
+                        </FlexLayout>
+                    </ScrollView>
+                </Grid>
             </Border>
+        </Grid>
 
-            <HorizontalStackLayout
-                Padding="30"
-                Spacing="25"
-                HorizontalOptions="Center"
-                
-                >
-                <Button 
-                    Text="Joueur VS IA"
-                    WidthRequest="500"
-                    HeightRequest="60"
-                    FontSize="30"
-                    BorderColor="White"
-                    BorderWidth="2"
-                    FontFamily="MoreSugar"
-                    local:HoverBehavior.CursorHoverType="Hand"
-                    Clicked="OnJoueurVSIAClicked"
-                />
-                <Button
-                    Text="IA VS IA"
-                    WidthRequest="500"
-                    HeightRequest="60"
-                    FontSize="30"
-                    BorderColor="White"
-                    BorderWidth="2"
-                    FontFamily="MoreSugar"
-                    local:HoverBehavior.CursorHoverType="Hand"
-                    />
+        <Grid x:Name="PopupRegles" IsVisible="False" BackgroundColor="#B3000000" Padding="50">
 
-            </HorizontalStackLayout>
+            <Border BackgroundColor="#2E073F" Stroke="White" StrokeThickness="3" StrokeShape="RoundRectangle 20"
+                    VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="900" HeightRequest="700" Padding="30">
 
-            <Button
-                Text="Joueur VS Joueur"
-                WidthRequest="700"
-                HeightRequest="70"
-                FontSize="40"
-                BorderColor="White"
-                BorderWidth="2"
-                Clicked="OnJoueurVSJoueurClicked"
-                FontFamily="MoreSugar"
-                local:HoverBehavior.CursorHoverType="Hand"
-                />
+                <Grid RowDefinitions="Auto, *" RowSpacing="20">
 
-            <Grid Padding="30"
-                  Margin="0,120,0,0">
+                    <Grid Grid.Row="0">
+                        <Border Stroke="White" StrokeThickness="2" StrokeShape="RoundRectangle 10" Padding="15" HorizontalOptions="Center">
+                            <Label Text="RÈGLES DU JEU" FontSize="40" FontFamily="MoreSugar" FontAttributes="Bold" TextColor="White" />
+                        </Border>
 
-                <Button
-                    Text="="
-                    FontFamily="MoreSugarExtras"
-                    WidthRequest="200"
-                    HeightRequest="70"
-                    FontSize="30"
-                    BackgroundColor="Red"
-                    TextColor="Black"
-                    HorizontalOptions="Start"
-                    BorderColor="Black"
-                    BorderWidth="3"
-                    Grid.Column="0"
-                    CornerRadius="15"
-                    Clicked="OnRetourClicked"
-                    local:HoverBehavior.CursorHoverType="Hand"
-                    />
+                        <Button Text="X" FontSize="35" FontAttributes="Bold" TextColor="White" BackgroundColor="Transparent"
+                                WidthRequest="60" HeightRequest="60" 
+                                HorizontalOptions="End" VerticalOptions="Center"
+                                Clicked="OnCloseReglesClicked" local:HoverBehavior.CursorHoverType="Hand" />
+                    </Grid>
 
-                <Button
-                    Text="Variantes"
-                    WidthRequest="200"
-                    HeightRequest="70"
-                    FontSize="30"
-                    BackgroundColor="White"
-                    TextColor="Purple"
-                    HorizontalOptions="End"
-                    BorderColor="Purple"
-                    BorderWidth="3"
-                    Grid.Column="1"
-                    FontAttributes="Bold"
-                    FontFamily="MoreSugar"
-                    local:HoverBehavior.CursorHoverType="Hand"
-                    />
+                    <ScrollView Grid.Row="1">
+                        <VerticalStackLayout Spacing="15" Padding="10">
 
-            </Grid>
-        </VerticalStackLayout>
-    </ScrollView>
+                            <Label Text="But du jeu :" FontSize="24" FontAttributes="Bold" TextColor="White" FontFamily="MoreSugar"/>
+                            <Label Text="Être le premier à aligner 4 billes de sa couleur horizontalement, verticalement ou en diagonale." 
+                                   FontSize="18" TextColor="White" LineHeight="1.2" />
 
+                            <Label Text="Déroulement d'un tour :" FontSize="24" FontAttributes="Bold" TextColor="White" FontFamily="MoreSugar" Margin="0,15,0,0"/>
+                            <Label Text="Chaque joueur joue à tour de rôle. Un tour se compose de 3 étapes :" 
+                                   FontSize="18" TextColor="White" LineHeight="1.2" />
+
+                            <VerticalStackLayout Margin="20,5,0,0" Spacing="5">
+                                <Label Text="1. Déplacer une bille adverse (Facultatif)" FontSize="20" FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="Vous pouvez déplacer une bille de votre adversaire vers une case adjacente libre (uniquement à l'horizontale ou à la verticale, pas en diagonale).&#x0a;Exceptions : Cette étape est impossible au premier tour ou si toutes les cases adjacentes aux billes adverses sont occupées." 
+                                       FontSize="18" TextColor="White" LineHeight="1.2"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Margin="20,10,0,0" Spacing="5">
+                                <Label Text="2. Placer sa propre bille (Obligatoire)" FontSize="20" FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="Placez une de vos billes sur n'importe quelle case libre du plateau.&#x0a;Note : Une fois posée, vous ne pouvez plus déplacer vos propres billes ; seul votre adversaire peut le faire durant son tour." 
+                                       FontSize="18" TextColor="White" LineHeight="1.2"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Margin="20,10,0,0" Spacing="5">
+                                <Label Text="3. Actionner le bouton Orbito (Obligatoire)" FontSize="20" FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="Pour terminer votre tour, vous devez appuyer sur le bouton Orbito. Toutes les billes sur le plateau se déplacent alors d'une position. Le mouvement suit deux orbites (intérieure et extérieure) qui tournent dans le sens antihoraire.&#x0a;Important : Un alignement de 4 billes n'est valide qu'après avoir appuyé sur le bouton Orbito. Il n'est jamais comptabilisé durant le tour d'un joueur, avant la rotation." 
+                                       FontSize="18" TextColor="White" LineHeight="1.2"/>
+                            </VerticalStackLayout>
+
+                            <Label Text="Fin de partie :" FontSize="24" FontAttributes="Bold" TextColor="White" FontFamily="MoreSugar" Margin="0,15,0,0"/>
+                            <Label Text="La partie s'arrête dans les situations suivantes :" 
+                                   FontSize="18" TextColor="White" LineHeight="1.2" />
+
+                            <VerticalStackLayout Margin="20,5,0,20" Spacing="10">
+                                <Label Text="• Victoire immédiate : Un joueur aligne 4 billes de sa couleur après la rotation du plateau. Attention : Si la rotation crée un alignement de 4 billes pour votre adversaire, c'est lui qui gagne." 
+                                       FontSize="18" TextColor="White" LineHeight="1.2"/>
+                                <Label Text="• Égalité : Si les deux joueurs obtiennent simultanément un alignement de 4 billes après la rotation, la partie est nulle." 
+                                       FontSize="18" TextColor="White" LineHeight="1.2"/>
+                                <Label Text="• Prolongations : Si toutes les billes sont placées sans qu'il y ait de gagnant, appuyez 5 fois de plus sur le bouton Orbito. Le premier à obtenir un alignement gagne. Si aucun alignement n'apparaît après ces 5 pressions, c'est un match nul." 
+                                       FontSize="18" TextColor="White" LineHeight="1.2"/>
+                            </VerticalStackLayout>
+
+                        </VerticalStackLayout>
+                    </ScrollView>
+                </Grid>
+            </Border>
+        </Grid>
+
+    </Grid>
 </ContentPage>

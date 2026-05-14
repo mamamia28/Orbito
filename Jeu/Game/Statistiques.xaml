@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Game.Statistiques"
+             xmlns:local="clr-namespace:Game.Behaviors"
+             BackgroundColor="#2E073F">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30"
+            Spacing="25">
+
+            <Grid ColumnDefinitions="Auto, *" Padding="0,0,0,10">
+
+                <Button
+                    Text="RETOUR"
+                    Grid.Column="0"
+                    FontFamily="MoreSugar"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    BackgroundColor="Red"
+                    Clicked="OnRetourClicked"
+                    TextColor="Black"
+                    BorderColor="Black"
+                    BorderWidth="3"
+                    HeightRequest="60"
+                    CornerRadius="25"
+                    Padding="15,0"
+                    HorizontalOptions="Start"
+                    local:HoverBehavior.CursorHoverType="Hand"
+                />
+
+                <Label
+                    Text="Statistiques Joueurs"
+                    Grid.Column="1"
+                    FontFamily="MoreSugar"
+                    FontSize="30"
+                    FontAttributes="Bold"
+                    TextColor="White"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                />
+
+            </Grid>
+
+            <CollectionView>
+                <CollectionView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>J1</x:String>
+                        <x:String>J2</x:String>
+                        <x:String>J3</x:String>
+                    </x:Array>
+                </CollectionView.ItemsSource>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            BackgroundColor="DarkViolet"
+                            Stroke="Black"
+                            StrokeThickness="3"
+                            StrokeShape="RoundRectangle 15"
+                            Padding="15"
+                            Margin="0,10">
+
+                            <Grid ColumnDefinitions="Auto, Auto, *, *, *, *" ColumnSpacing="15" VerticalOptions="Center">
+
+                                <Border
+                                    Grid.Column="0"
+                                    Stroke="Black"
+                                    StrokeThickness="3"
+                                    StrokeShape="RoundRectangle 15"
+                                    WidthRequest="110"
+                                    HeightRequest="110"
+                                    BackgroundColor="Transparent"
+                                    VerticalOptions="Center">
+
+                                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Label Text="avatar" FontFamily="MoreSugar" FontSize="18" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center"/>
+                                        <Label Text="joueur" FontFamily="MoreSugar" FontSize="18" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center"/>
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <Label
+                                    Grid.Column="1"
+                                    Text="Pseudo"
+                                    FontFamily="MoreSugar"
+                                    FontSize="26"
+                                    FontAttributes="Bold"
+                                    TextColor="Black"
+                                    VerticalOptions="Center"
+                                    Margin="10,0,20,0"
+                                />
+
+                                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Spacing="5">
+                                    <Label Text="Parties jouées" FontFamily="MoreSugar" FontSize="18" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                                    <Label Text="00" FontFamily="MoreSugar" FontSize="42" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" Spacing="5">
+                                    <Label Text="P gagnées" FontFamily="MoreSugar" FontSize="18" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                                    <Label Text="00" FontFamily="MoreSugar" FontSize="42" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="4" HorizontalOptions="Center" VerticalOptions="Center" Spacing="5">
+                                    <Label Text="P perdus" FontFamily="MoreSugar" FontSize="18" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                                    <Label Text="00" FontFamily="MoreSugar" FontSize="42" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="5" HorizontalOptions="Center" VerticalOptions="Center" Spacing="5">
+                                    <Label Text="Taux de victoire" FontFamily="MoreSugar" FontSize="18" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                                    <Label Text="0.0%" FontFamily="MoreSugar" FontSize="42" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                                </VerticalStackLayout>
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

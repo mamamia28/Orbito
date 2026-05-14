@@ -6,4 +6,13 @@ public partial class FinDePartie : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private async void OnMainClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//MainPage");
+    }
+    private async void OnAgainClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("ChoixMode");
+    }
 }

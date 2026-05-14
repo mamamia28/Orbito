@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Game.FinDePartie"
-             BackgroundColor="#2D1050">
+             BackgroundColor="#2E073F">
 
     <ScrollView>
         <VerticalStackLayout
@@ -71,7 +71,10 @@
                     BorderColor="Black"
                     BorderWidth="2"
                     HeightRequest="70"
-                    CornerRadius="15"/>
+                    Clicked="OnMainClicked"
+                    CornerRadius="15"
+                    />
+
 
                 <Button
                     Text="REJOUER"
@@ -84,6 +87,7 @@
                     BorderColor="Black"
                     BorderWidth="2"
                     HeightRequest="70"
+                    Clicked="OnAgainClicked"
                     CornerRadius="15"/>
 
             </Grid>

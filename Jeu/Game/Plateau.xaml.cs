@@ -6,4 +6,9 @@ public partial class Plateau : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private async void OnRetourClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("FinDePartie");
+    }
 }
