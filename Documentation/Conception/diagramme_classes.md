@@ -319,7 +319,7 @@ Pour organiser notre code de la manière la plus propre possible, nous avons fai
 
 ---
 
-## Mise à jour (Mai 2026) - Diagramme de classes mis à jour
+## Mise à jour (Jalon 3) - Diagramme de classes mis à jour
 
 Voici le diagramme de classes correspondant à l'état actuel de la base de code, qui inclut les modifications récentes (comme la nouvelle classe `PartieTerminee`, l'ajout de méthodes asynchrones pour l'IA, et la variante de rotation).
 
@@ -339,20 +339,20 @@ namespace LibOrbito {
         - _victoires : int
         - _defaites : int
         - _tauxVictoire : float
-        + PartiesJouees : int
-        + Victoires : int
-        + Defaites : int
-        + TauxVictoire : float
+        + /PartiesJouees : int
+        + /Victoires : int
+        + /Defaites : int
+        + /TauxVictoire : float
         + Statistiques(partieJoueees : int, victoires : int, defaites : int)
         + ToString() : string
     }
 
     Class Historique {
         - _lesSessions : List<PartieTerminee>
-        + TauxVictoireHumainContreIA : float
-        + lesJoueurs : List<Joueur>
-        + LesParties : IReadOnlyList<PartieTerminee>
-        + NbParties : int
+        + /TauxVictoireHumainContreIA : float
+        + /lesJoueurs : List<Joueur>
+        + /LesParties : IReadOnlyList<PartieTerminee>
+        + /NbParties : int
         + AjouterPartie(partie : Partie) : void
         + RecupererHistorique(joueur : string) : List<PartieTerminee> 
         + RecupererStats(joueur : string) : Statistiques
@@ -364,15 +364,15 @@ namespace LibOrbito {
     }
 
     Class PartieTerminee {
-        + Joueur1 : Joueur
-        + Joueur2 : Joueur
-        + JoueurGagnant : Joueur?
-        + JoueurPerdant : Joueur?
-        + Mode : ModeJeu
-        + DateDeFin : DateTime
-        + NombreDeTours : int
-        + HistoriqueCoups : List<Coup>
-        + Etat : EtatPartie
+        + /Joueur1 : Joueur
+        + /Joueur2 : Joueur
+        + /JoueurGagnant : Joueur?
+        + /JoueurPerdant : Joueur?
+        + /Mode : ModeJeu
+        + /DateDeFin : DateTime
+        + /NombreDeTours : int
+        + /HistoriqueCoups : List<Coup>
+        + /Etat : EtatPartie
         + PartieTerminee(partie : Partie)
     }
     
@@ -387,14 +387,14 @@ namespace LibOrbito {
         + readonly _partie : Partie 
         - _positionSource : Position? 
         + PhaseActuelle : PhaseTour 
-        + MessagePhase : string
-        + MessageEtat : string 
-        + MessageErreur : string
-        + NomJoueur : string 
-        + NomGagnant : string
-        + AffichagePlateau : string 
-        + EstTourIA : bool
-        + varianteInverse : bool
+        + /MessagePhase : string
+        + /MessageEtat : string 
+        + /MessageErreur : string
+        + /NomJoueur : string 
+        + /NomGagnant : string
+        + /AffichagePlateau : string 
+        + /EstTourIA : bool
+        + /varianteInverse : bool
         + event OnMiseAJourUI : DelegueMiseAJourUI?
         + event OnActionIADetaillee : Action<string>?
         + event OnActionIADetailleeAsync : Func<string, Task>?
@@ -443,16 +443,16 @@ namespace LibOrbito {
         - _bufferPlacement : Position?
         - Joueur1 : Joueur 
         - Joueur2 : Joueur 
-        + Mode : ModeJeu 
-        + Etat : EtatPartie 
-        + CompteurTours : int 
-        + CoupsJoues : IReadOnlyList<Coup>
-        + DateDeCreation : DateTime 
-        + LePlateau : Plateau
-        + JoueurCourant : Joueur
-        + JoueurGagnant : Joueur? 
-        + JoueurPerdant : Joueur?
-        + VarianteInverse : bool
+        + /Mode : ModeJeu 
+        + /Etat : EtatPartie 
+        + /CompteurTours : int 
+        + /CoupsJoues : IReadOnlyList<Coup>
+        + /DateDeCreation : DateTime 
+        + /LePlateau : Plateau
+        + /JoueurCourant : Joueur
+        + /JoueurGagnant : Joueur? 
+        + /JoueurPerdant : Joueur?
+        + /VarianteInverse : bool
         
         + Partie(nomJ1 : string, avatarJ1 : string, nomJ2 : string, avatarJ2 : string, mode : ModeJeu, difficulte : DifficulteIA?)
         + VerifierVictoire() : Joueur?
@@ -470,12 +470,12 @@ namespace LibOrbito {
         - _avatar : string
         - _couleurBilles : Couleur
         - _billesRestantes : int
-        + Pseudo : string 
-        + Avatar : string  
-        + CouleurBilles : Couleur 
-        + BillesRestantes : int 
-        + ComportementIA : IComportementIA?
-        + EstIA : bool 
+        + /Pseudo : string 
+        + /Avatar : string  
+        + /CouleurBilles : Couleur 
+        + /BillesRestantes : int 
+        + /ComportementIA : IComportementIA?
+        + /EstIA : bool 
         + Joueur(pseudo : string, avatar : string, couleur : Couleur, comportement : IComportementIA?)
         + placerBille() : void 
     }
@@ -505,8 +505,8 @@ namespace LibOrbito {
         - _tabJeu : Bille?[,]? 
         - _tabJeuSauvegarde : Bille?[][]?
         - _rayon : int 
-        + TabJeu : Bille?[,] 
-        + Rayon : int
+        + /TabJeu : Bille?[,] 
+        + /Rayon : int
         + Plateau(rayon : int = 2)
         + Initialiser() : void 
         + EstCaseLibre(p : Position) : bool 
@@ -520,28 +520,28 @@ namespace LibOrbito {
 
     Class Bille {
         - couleur : Couleur
-        + CouleurB : Couleur
+        + /CouleurB : Couleur
         + Bille(c : Couleur)
     }
 
     Class Position {
-        + X : int
-        + Y : int
+        + /X : int
+        + /Y : int
         + Position(x : int, y : int)
         + EstAdjacente(autre : Position) : bool
         + ToString() : string
     }
 
     Class Action {
-        + origineDeplacement : Position? 
-        + destinationDeplacement : Position? 
-        + placement : Position?
+        + /origineDeplacement : Position? 
+        + /destinationDeplacement : Position? 
+        + /placement : Position?
         + Action(origineDeplacement : Position?, destinationDeplacement : Position?, placement : Position?)
     }
 
     Class Coup {
-        + Responsable : Joueur
-        + SensRotationInverse : bool
+        + /Responsable : Joueur
+        + /SensRotationInverse : bool
         + Coup(origine : Position?, destination : Position?, placement : Position?, responsable : Joueur, sensRotationInverse : bool)
     }
 }
@@ -580,3 +580,85 @@ LibOrbito.OrbitoManager --> LibOrbito.Position : "manipule"
 
 3. **La variante de rotation** :
    La classe `Partie` possède désormais une propriété `VarianteInverse` (et `Coup` un `SensRotationInverse`). Cela a nécessité de mettre à jour `Plateau.ActionnerOrbite(bool)` pour faire tourner les billes dans l'autre sens selon cette variante du jeu.
+
+---
+
+## Diagramme des ajouts personnels à jour
+
+Voici le diagramme ciblé sur nos ajouts personnels mis à jour pour le Jalon 3 (les classes en vert sont nos ajouts majeurs). Il inclut la gestion de l'historique (avec la nouvelle classe `PartieTerminee`) et le système d'IA.
+
+```plantuml
+@startuml
+hide circle
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #ffffff
+skinparam classBorderColor #000000
+
+skinparam class {
+    BackgroundColor<<Ajout>> #e8f5e9
+    BorderColor<<Ajout>> #2e7d32
+    HeaderBackgroundColor<<Ajout>> #c8e6c9
+}
+
+namespace LibOrbito {
+    Class Statistiques <<Ajout>> {
+        - _partiesJoueees : int
+        - _victoires : int
+        - _defaites : int
+        - _tauxVictoire : float
+        + Statistiques(partieJoueees : int, victoires : int, defaites : int)
+    }
+
+    Class Historique <<Ajout>> {
+        - _lesSessions : List<PartieTerminee>
+        + /TauxVictoireHumainContreIA : float
+        + AjouterPartie(partie : Partie) : void
+        + RecupererHistorique(joueur : string) : List<PartieTerminee> 
+        + RecupererStats(joueur : string) : Statistiques
+    }
+
+    Class PartieTerminee <<Ajout>> {
+        + /Joueur1 : Joueur
+        + /Joueur2 : Joueur
+        + /JoueurGagnant : Joueur?
+        + /JoueurPerdant : Joueur?
+        + /Mode : ModeJeu
+        + /DateDeFin : DateTime
+        + /NombreDeTours : int
+        + /HistoriqueCoups : List<Coup>
+        + /Etat : EtatPartie
+        + PartieTerminee(partie : Partie)
+    }
+    
+    interface IComportementIA <<Ajout>> {
+        + CalculerCoup(partie : Partie) : Action
+    }
+
+    Class IAFacile <<Ajout>> {
+        + CalculerCoup(partie : Partie) : Action
+    }
+
+    Class IAMoyenne <<Ajout>> {
+        + CalculerCoup(partie : Partie) : Action
+    }
+
+    Class Joueur {
+        - _pseudo : string
+        + /ComportementIA : IComportementIA?
+    }
+    
+    Class Partie {
+        - _etat : EtatPartie
+    }
+}
+
+LibOrbito.Historique o--- "*" LibOrbito.PartieTerminee
+LibOrbito.Historique --> LibOrbito.Statistiques
+
+LibOrbito.PartieTerminee --> LibOrbito.Joueur
+
+LibOrbito.IAFacile ..|> LibOrbito.IComportementIA
+LibOrbito.IAMoyenne ..|> LibOrbito.IComportementIA
+LibOrbito.Joueur o-- LibOrbito.IComportementIA
+@enduml
+```

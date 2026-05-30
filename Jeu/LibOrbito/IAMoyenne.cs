@@ -5,12 +5,24 @@ using System.Runtime.Serialization;
 
 namespace LibOrbito
 {
+    /// <summary>
+    /// Représente une intelligence artificielle de niveau moyen.
+    /// Contrairement à l'IA facile, cette IA analyse les coups : elle cherche d'abord un coup gagnant immédiat,
+    /// puis évalue les réponses possibles de l'adversaire pour privilégier des coups "sécurisés" (qui ne permettent pas à l'adversaire de gagner au tour suivant).
+    /// </summary>
     [DataContract]
     public class IAMoyenne : IComportementIA
     {
+        /// <summary>
+        /// Générateur de nombres pseudo-aléatoires utilisé pour départager les coups équivalents ou faire des choix par défaut.
+        /// </summary>
         [DataMember]
         private Random _rnd = new Random();
-
+        /// <summary>
+        /// Calcule le meilleur coup possible en fonction de l'état actuel de la partie.
+        /// </summary>
+        /// <param name="partie">L'instance de la partie en cours.</param>
+        /// <returns>Une instance de <see cref="Action"/> représentant le coup choisi.</returns>
         public Action CalculerCoup(Partie partie)
         {
             if (partie.CompteurTours >= 17)
@@ -81,7 +93,14 @@ namespace LibOrbito
             }
             return allMoves[_rnd.Next(allMoves.Count)];
         }
-
+        /// <summary>
+        /// Simule le tour de l'adversaire pour déterminer s'il possède un coup gagnant à partir d'un état de plateau donné.
+        /// </summary>
+        /// <param name="plateau">L'état du plateau à tester.</param>
+        /// <param name="couleurAdverse">La couleur de l'adversaire.</param>
+        /// <param name="maCouleur">La couleur de l'IA.</param>
+        /// <param name="tour">Le numéro du tour simulé.</param>
+        /// <returns><c>true</c> si l'adversaire peut gagner au prochain tour ; sinon, <c>false</c>.</returns>
         private bool AdversairePeutGagner(Plateau plateau, Couleur couleurAdverse, Couleur maCouleur, int tour)
         {
             if (tour >= 17)
@@ -106,7 +125,11 @@ namespace LibOrbito
             }
             return false;
         }
-
+        /// <summary>
+        /// Crée une copie profonde (clone) du plateau pour effectuer des simulations sans altérer l'état réel de la partie.
+        /// </summary>
+        /// <param name="original">Le plateau original à copier.</param>
+        /// <returns>Une nouvelle instance de <see cref="Plateau"/> identique à l'original.</returns>
         private Plateau CopierPlateau(Plateau original)
         {
             Plateau copie = new Plateau(original.Rayon);
@@ -124,7 +147,12 @@ namespace LibOrbito
             }
             return copie;
         }
-
+        /// <summary>
+        /// Applique une action complète (déplacement optionnel, placement de bille et déclenchement de l'orbite) sur un plateau.
+        /// </summary>
+        /// <param name="plateau">Le plateau sur lequel appliquer le coup.</param>
+        /// <param name="action">Le coup à jouer.</param>
+        /// <param name="couleur">La couleur de la bille placée.</param>
         private void AppliquerCoup(Plateau plateau, Action action, Couleur couleur)
         {
             if (action.origineDeplacement != null && action.destinationDeplacement != null)
@@ -137,7 +165,14 @@ namespace LibOrbito
             }
             plateau.ActionnerOrbite();
         }
-
+        /// <summary>
+        /// Génère de manière exhaustive toutes les actions légales (combinaisons de déplacements et de placements) pour un tour donné.
+        /// </summary>
+        /// <param name="plateau">L'état actuel du plateau.</param>
+        /// <param name="couleurJoueur">La couleur du joueur simulant le coup.</param>
+        /// <param name="couleurAdverse">La couleur de l'adversaire (pour identifier les billes déplaçables).</param>
+        /// <param name="tour">Le numéro du tour actuel.</param>
+        /// <returns>Une liste exhaustive de toutes les <see cref="Action"/> légales possibles.</returns>
         private List<Action> GenererTousLesCoupsLegaux(Plateau plateau, Couleur couleurJoueur, Couleur couleurAdverse, int tour)
         {
             List<Action> actions = new List<Action>();
@@ -185,7 +220,11 @@ namespace LibOrbito
 
             return actions;
         }
-
+        /// <summary>
+        /// Parcourt le plateau pour identifier et retourner la liste de toutes les cases non occupées.
+        /// </summary>
+        /// <param name="plateau">Le plateau de jeu à analyser.</param>
+        /// <returns>Une liste de <see cref="Position"/> représentant les coordonnées des cases vides.</returns>
         private List<Position> ObtenirCasesVides(Plateau plateau)
         {
             var casesVides = new List<Position>();
