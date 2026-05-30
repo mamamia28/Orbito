@@ -13,15 +13,6 @@ namespace LibOrbito
     [DataContract]
     public class Partie
     {
-        /*
-        private string _id;
-        public string Id
-        {
-            get { return _id; }
-            set { _id = value; }
-        }
-        */
-
         [DataMember]
         private ModeJeu _mode;
         /// <summary>

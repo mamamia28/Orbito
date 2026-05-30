@@ -5,8 +5,6 @@
   </Project>
   <Project Path="LibOrbito/LibOrbito.csproj" Id="d137e9a1-fbbd-41ca-a070-d2c850f0c4f2" />
   <Project Path="OrbitoPersistance/OrbitoPersistance.csproj" Id="074d254d-cfed-41cb-b878-6cbc4d2d66d5" />
-  <Project Path="OrbitoTests/OrbitoTests.csproj" Id="623e7501-4fa6-44a4-a69c-30c12ac86f4a">
-    <Build Solution="Debug|*" Project="false" />
-  </Project>
+  <Project Path="OrbitoTests/OrbitoTests.csproj" Id="623e7501-4fa6-44a4-a69c-30c12ac86f4a" />
   <Project Path="Stub/Stub.csproj" Id="539269b7-b280-4430-97d2-2aac8f2c437e" />
 </Solution>

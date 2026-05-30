@@ -388,7 +388,7 @@ Ici, on voit comment le code réagit aux clics du joueur. Selon le moment du tou
 
 ---
 
-## Mise à jour (Mai 2026) - Nouveaux diagrammes de séquence
+## Mise à jour (Jalon 3) - Nouveaux diagrammes de séquence
 
 Suite aux dernières évolutions du code, voici les versions mises à jour des diagrammes de séquence les plus importants.
 
