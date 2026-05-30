@@ -1,37 +1,35 @@
-﻿using System;
+using System;
 using LibOrbito;
 using Action = LibOrbito.Action;
 
 namespace Stub
 {
-    public class Stub : Historique
+    public static class StubGenerator
     {
-        private IAFacile _cerveauFacile = new IAFacile();
-        public Stub()
+        public static Historique CreerHistoriqueBouchon()
         {
-            GenererDonnees();
-        }
+            Historique historique = new Historique();
+            IAFacile cerveauFacile = new IAFacile();
 
-        private void GenererDonnees()
-        { 
             for (int i = 0; i < 15; i++)
             {
-                Partie p = new Partie("Bob", "bob.png", "Ali", "chat.png", ModeJeu.HumainVsHumain);
-                SimulerPartie(p, _cerveauFacile, _cerveauFacile);
-                this.AjouterPartie(p);
+                Partie p = new Partie("Bob", "chien.png", "Ali", "chat.png", ModeJeu.HumainVsHumain);
+                SimulerPartie(p, cerveauFacile, cerveauFacile);
+                historique.AjouterPartie(p);
             }
             for (int i = 0; i < 10; i++)
             { 
-                Partie p = new Partie("Bob", "bob.png", "IA", "IA.png", ModeJeu.HumainVsIA, DifficulteIA.Facile);
-                SimulerPartie(p, _cerveauFacile, null);
-                this.AjouterPartie(p);
+                Partie p = new Partie("Bob", "chien.png", "IA", "ia.png", ModeJeu.HumainVsIA, DifficulteIA.Facile);
+                SimulerPartie(p, cerveauFacile, null);
+                historique.AjouterPartie(p);
             }
+            return historique;
         }
 
         /// <summary>
         /// Joue une partie pour la stocker dans l'historique.
         /// </summary>
-        private void SimulerPartie(Partie partie, IComportementIA cerveauJ1, IComportementIA? cerveauJ2)
+        private static void SimulerPartie(Partie partie, IComportementIA cerveauJ1, IComportementIA? cerveauJ2)
         {
             while (!partie.EstTerminee() && partie.CompteurTours <= 21)
             {

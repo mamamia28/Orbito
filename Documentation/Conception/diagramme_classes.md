@@ -316,3 +316,267 @@ Pour organiser notre code de la manière la plus propre possible, nous avons fai
 
 4. **Sauvegarder les actions avec la classe Coup** :
    Au lieu de juste retenir des coordonnées, nous avons créé une classe `Coup` (qui hérite de `Action`). Cela nous permet de garder en mémoire l'historique exact de tout ce qui a été joué pendant un tour (qui a joué, déplacement de où vers où, et où a été placée la nouvelle bille).
+
+---
+
+## Mise à jour (Mai 2026) - Diagramme de classes mis à jour
+
+Voici le diagramme de classes correspondant à l'état actuel de la base de code, qui inclut les modifications récentes (comme la nouvelle classe `PartieTerminee`, l'ajout de méthodes asynchrones pour l'IA, et la variante de rotation).
+
+```plantuml
+@startuml
+hide circle
+allowmixing
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #ffffff
+skinparam classFontColor #black
+skinparam classFontName Tahoma
+left to right direction
+
+namespace LibOrbito {
+    Class Statistiques {
+        - _partiesJoueees : int
+        - _victoires : int
+        - _defaites : int
+        - _tauxVictoire : float
+        + PartiesJouees : int
+        + Victoires : int
+        + Defaites : int
+        + TauxVictoire : float
+        + Statistiques(partieJoueees : int, victoires : int, defaites : int)
+        + ToString() : string
+    }
+
+    Class Historique {
+        - _lesSessions : List<PartieTerminee>
+        + TauxVictoireHumainContreIA : float
+        + lesJoueurs : List<Joueur>
+        + LesParties : IReadOnlyList<PartieTerminee>
+        + NbParties : int
+        + AjouterPartie(partie : Partie) : void
+        + RecupererHistorique(joueur : string) : List<PartieTerminee> 
+        + RecupererStats(joueur : string) : Statistiques
+        - EstPresentDansPartie(p : PartieTerminee, pseudo : string) : bool
+        - AjouterSiExistant(j : Joueur) : void
+        - ActualiserListeJoueurs(p : PartieTerminee) : void
+        - CalculerTauxVictoireHumainContreIA() : float
+        + ToString() : string
+    }
+
+    Class PartieTerminee {
+        + Joueur1 : Joueur
+        + Joueur2 : Joueur
+        + JoueurGagnant : Joueur?
+        + JoueurPerdant : Joueur?
+        + Mode : ModeJeu
+        + DateDeFin : DateTime
+        + NombreDeTours : int
+        + HistoriqueCoups : List<Coup>
+        + Etat : EtatPartie
+        + PartieTerminee(partie : Partie)
+    }
+    
+    enum PhaseTour {
+        ChoixDeplacementAdverse
+        DestinationDeplacement
+        PlacementBille
+        AttenteBouton
+    }
+
+    class OrbitoManager {
+        + readonly _partie : Partie 
+        - _positionSource : Position? 
+        + PhaseActuelle : PhaseTour 
+        + MessagePhase : string
+        + MessageEtat : string 
+        + MessageErreur : string
+        + NomJoueur : string 
+        + NomGagnant : string
+        + AffichagePlateau : string 
+        + EstTourIA : bool
+        + varianteInverse : bool
+        + event OnMiseAJourUI : DelegueMiseAJourUI?
+        + event OnActionIADetaillee : Action<string>?
+        + event OnActionIADetailleeAsync : Func<string, Task>?
+        + OrbitoManager(nomJ1 : string, avatarJ1 : string, nomJ2 : string, avatarJ2 : string, mode : ModeJeu, difficulte : DifficulteIA?)
+        + OrbitoManager(partieSauvegardee : Partie)
+        + ActionnerBouton() : void
+        - TraiterSelectionAdverse(p : Position) : void
+        - TraiterDestinationAdverse(p : Position) : void
+        - TraiterPlacementBille(p : Position) : void
+        + GererAction(X : int, Y : int) : void
+        + FaireJouerIA() : void
+        + FaireJouerIAAsync() : Task
+        + EstTerminee() : bool 
+    }
+    
+    enum Couleur {
+        Blanc
+        Noir
+    }
+
+    enum ModeJeu {
+        HumainVsHumain
+        HumainVsIA
+        IAVsIA
+    }
+
+    enum EtatPartie {
+        Configuration
+        EnCours
+        Terminee
+        Egalite
+    }
+    
+    enum DifficulteIA {
+        Facile
+        Moyen
+    }
+
+    Class Partie {
+        - _mode : ModeJeu
+        - _etat : EtatPartie
+        - _compteurTours : int 
+        - _coupsJoues : List<Coup> 
+        - _bufferOrigine : Position?
+        - _bufferDestination : Position?
+        - _bufferPlacement : Position?
+        - Joueur1 : Joueur 
+        - Joueur2 : Joueur 
+        + Mode : ModeJeu 
+        + Etat : EtatPartie 
+        + CompteurTours : int 
+        + CoupsJoues : IReadOnlyList<Coup>
+        + DateDeCreation : DateTime 
+        + LePlateau : Plateau
+        + JoueurCourant : Joueur
+        + JoueurGagnant : Joueur? 
+        + JoueurPerdant : Joueur?
+        + VarianteInverse : bool
+        
+        + Partie(nomJ1 : string, avatarJ1 : string, nomJ2 : string, avatarJ2 : string, mode : ModeJeu, difficulte : DifficulteIA?)
+        + VerifierVictoire() : Joueur?
+        + EstTerminee() : bool 
+        + ChangerJoueurCourant() : void 
+        + PoserBille(p : Position) : bool 
+        + DeplacerBilleAdverse(source : Position, dest : Position) : bool
+        + AppuyerBoutonOrbito() : bool
+        + AffichagePlateau() : string
+        + EstBilleAdverse(p : Position) : bool
+    }
+
+    Class Joueur {
+        - _pseudo : string
+        - _avatar : string
+        - _couleurBilles : Couleur
+        - _billesRestantes : int
+        + Pseudo : string 
+        + Avatar : string  
+        + CouleurBilles : Couleur 
+        + BillesRestantes : int 
+        + ComportementIA : IComportementIA?
+        + EstIA : bool 
+        + Joueur(pseudo : string, avatar : string, couleur : Couleur, comportement : IComportementIA?)
+        + placerBille() : void 
+    }
+
+    interface IComportementIA {
+        + CalculerCoup(partie : Partie) : Action
+    }
+
+    Class IAFacile {
+        - _rnd : Random
+        + CalculerCoup(partie : Partie) : Action
+        - ObtenirCasesVides(plateau : Plateau) : List<Position>
+        - ObtenirDeplacementsValides(plateau : Plateau, couleurAdverse : Couleur) : List<(Position, Position)>
+    }
+
+    Class IAMoyenne {
+        - _rnd : Random
+        + CalculerCoup(partie : Partie) : Action
+        - AdversairePeutGagner(plateau : Plateau, couleurAdverse : Couleur, maCouleur : Couleur, tour : int) : bool
+        - CopierPlateau(original : Plateau) : Plateau
+        - AppliquerCoup(plateau : Plateau, action : Action, couleur : Couleur) : void
+        - GenererTousLesCoupsLegaux(plateau : Plateau, couleurJoueur : Couleur, couleurAdverse : Couleur, tour : int) : List<Action>
+        - ObtenirCasesVides(plateau : Plateau) : List<Position>
+    }
+
+    Class Plateau {
+        - _tabJeu : Bille?[,]? 
+        - _tabJeuSauvegarde : Bille?[][]?
+        - _rayon : int 
+        + TabJeu : Bille?[,] 
+        + Rayon : int
+        + Plateau(rayon : int = 2)
+        + Initialiser() : void 
+        + EstCaseLibre(p : Position) : bool 
+        + AjouterBille(b : Bille, p : Position) : bool 
+        + DeplacerBille(origine : Position, destination : Position) : bool 
+        + At(p : Position) : Bille? 
+        + ToString() : string
+        + ActionnerOrbite(varianteInverse : bool) : bool 
+        + DetecterAlignement() : (bool, bool) 
+    }
+
+    Class Bille {
+        - couleur : Couleur
+        + CouleurB : Couleur
+        + Bille(c : Couleur)
+    }
+
+    Class Position {
+        + X : int
+        + Y : int
+        + Position(x : int, y : int)
+        + EstAdjacente(autre : Position) : bool
+        + ToString() : string
+    }
+
+    Class Action {
+        + origineDeplacement : Position? 
+        + destinationDeplacement : Position? 
+        + placement : Position?
+        + Action(origineDeplacement : Position?, destinationDeplacement : Position?, placement : Position?)
+    }
+
+    Class Coup {
+        + Responsable : Joueur
+        + SensRotationInverse : bool
+        + Coup(origine : Position?, destination : Position?, placement : Position?, responsable : Joueur, sensRotationInverse : bool)
+    }
+}
+
+LibOrbito.Partie *-- "- LePlateau" LibOrbito.Plateau
+LibOrbito.Partie --> LibOrbito.Joueur
+LibOrbito.Partie *-- "- _coupsJoues *" LibOrbito.Coup
+LibOrbito.Coup --|> LibOrbito.Action  
+
+LibOrbito.IAFacile ..|> LibOrbito.IComportementIA
+LibOrbito.IAMoyenne ..|> LibOrbito.IComportementIA
+LibOrbito.Joueur o-- LibOrbito.IComportementIA
+
+LibOrbito.Plateau --> LibOrbito.Bille
+LibOrbito.Bille --> LibOrbito.Couleur
+
+LibOrbito.Historique o--- "- _lesSessions *" LibOrbito.PartieTerminee
+LibOrbito.Historique --> LibOrbito.Joueur
+LibOrbito.Historique --> LibOrbito.Statistiques
+
+LibOrbito.PartieTerminee --> LibOrbito.Joueur
+LibOrbito.PartieTerminee *-- "- HistoriqueCoups *" LibOrbito.Coup
+
+LibOrbito.OrbitoManager --> LibOrbito.Partie : "utilise"
+LibOrbito.OrbitoManager --> LibOrbito.Position : "manipule"
+@enduml
+```
+
+### Explications des changements récents
+
+1. **Apparition de `PartieTerminee`** : 
+   Au lieu de sauvegarder toute la classe `Partie` dans l'historique (qui contient beaucoup de détails inutiles après la fin du jeu), nous avons créé `PartieTerminee`. C'est une classe plus légère qui mémorise uniquement l'essentiel (qui a joué, qui a gagné, l'historique des coups).
+
+2. **L'Asynchronisme dans l'IA (`OrbitoManager`)** :
+   Le manager possède maintenant de nouvelles méthodes comme `FaireJouerIAAsync` et des événements asynchrones. Cela sert à faire réfléchir l'IA en arrière-plan pour éviter que l'interface graphique ne fige pendant le tour de l'ordinateur.
+
+3. **La variante de rotation** :
+   La classe `Partie` possède désormais une propriété `VarianteInverse` (et `Coup` un `SensRotationInverse`). Cela a nécessité de mettre à jour `Plateau.ActionnerOrbite(bool)` pour faire tourner les billes dans l'autre sens selon cette variante du jeu.

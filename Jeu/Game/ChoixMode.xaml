@@ -35,7 +35,7 @@
 
                     <Button Text="IA VS IA" WidthRequest="500" HeightRequest="60" FontSize="30"
                             BorderColor="White" BorderWidth="2" FontFamily="MoreSugar"
-                            local:HoverBehavior.CursorHoverType="Hand" />
+                            local:HoverBehavior.CursorHoverType="Hand" Clicked="OnIAVSIAClicked"/>
                 </HorizontalStackLayout>
 
                 <Button Text="Joueur VS Joueur" WidthRequest="700" HeightRequest="70" FontSize="40"
@@ -80,11 +80,14 @@
                     <ScrollView Grid.Row="1">
                         <FlexLayout Wrap="Wrap" JustifyContent="SpaceEvenly" AlignItems="Start" AlignContent="Start">
 
-                            <Border Stroke="White" StrokeThickness="2" StrokeShape="RoundRectangle 10" BackgroundColor="Transparent"
+                            <Border x:Name="VarianteInverse" Stroke="White" StrokeThickness="2" StrokeShape="RoundRectangle 10" BackgroundColor="#7A1CAC"
                                     WidthRequest="280" HeightRequest="250" Margin="15" Padding="20">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnVarianteTapped"/>
+                                </Border.GestureRecognizers>
                                 <VerticalStackLayout VerticalOptions="Center" Spacing="15">
-                                    <Label Text="VARIANTE 1" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White" FontFamily="MoreSugar"/>
-                                    <Label Text="Description de la variante..." FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White"/>
+                                    <Label x:Name="TitreVariante" Text="50' Reverse" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White" FontFamily="MoreSugar"/>
+                                    <Label x:Name="DescVariante" Text="Le sens de rotation de l'obrite est choisi alétoirement." FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White"/>
                                 </VerticalStackLayout>
                             </Border>
 
@@ -92,7 +95,7 @@
                                     WidthRequest="280" HeightRequest="250" Margin="15" Padding="20">
                                 <VerticalStackLayout VerticalOptions="Center" Spacing="15">
                                     <Label Text="VARIANTE 2" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White" FontFamily="MoreSugar"/>
-                                    <Label Text="Description de la variante..." FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White"/>
+                                    <Label Text="Coming soon...." FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White"/>
                                 </VerticalStackLayout>
                             </Border>
 
@@ -100,7 +103,7 @@
                                     WidthRequest="280" HeightRequest="250" Margin="15" Padding="20">
                                 <VerticalStackLayout VerticalOptions="Center" Spacing="15">
                                     <Label Text="VARIANTE 3" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White" FontFamily="MoreSugar"/>
-                                    <Label Text="Description de la variante..." FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White"/>
+                                    <Label Text="Coming soon...." FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White"/>
                                 </VerticalStackLayout>
                             </Border>
 
@@ -108,7 +111,7 @@
                                     WidthRequest="280" HeightRequest="250" Margin="15" Padding="20">
                                 <VerticalStackLayout VerticalOptions="Center" Spacing="15">
                                     <Label Text="VARIANTE 4" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White" FontFamily="MoreSugar"/>
-                                    <Label Text="Description de la variante..." FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White"/>
+                                    <Label Text="Coming soon...." FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White"/>
                                 </VerticalStackLayout>
                             </Border>
 

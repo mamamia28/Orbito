@@ -1,15 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
 namespace LibOrbito
 {
+    public delegate void DelegueMiseAJourUI();
+    /// <summary>
+    /// Gère la logique de haut niveau entre l'interface utilisateur et le noyau du jeu (Partie).
+    /// </summary>
     public class OrbitoManager
     {
+        /// <summary>
+        /// Événement déclenché lorsqu'une mise à jour de l'interface utilisateur est requise (changement de phase, etc.).
+        /// </summary>
+        public event DelegueMiseAJourUI? OnMiseAJourUI;
+        /// <summary>
+        /// Obtient la partie en cours.
+        /// </summary>
         public readonly Partie _partie;
         private Position? _positionSource;
         public PhaseTour PhaseActuelle;
+        public bool varianteInverse
+        {
+            get => _partie.VarianteInverse;
+            set => _partie.VarianteInverse = value;
+        }
         public string MessagePhase
         {
             get
@@ -17,20 +34,26 @@ namespace LibOrbito
                 string nom = _partie.JoueurCourant.Pseudo;
                 if (_partie.CompteurTours > 16 && PhaseActuelle == PhaseTour.AttenteBouton)
                 {
-                    int rotationsRestantes = 22 - _partie.CompteurTours; 
+                    int rotationsRestantes = 22 - _partie.CompteurTours;
                     return $"Plateau plein ! {nom}, actionnez l'orbite ({rotationsRestantes} rotations restantes).";
                 }
                 return PhaseActuelle switch
                 {
-                    PhaseTour.ChoixDeplacementAdverse => $"{nom}, choisissez une bille adverse à déplacer (ou passez (4 4)).",
+                    PhaseTour.ChoixDeplacementAdverse => $"{nom}, choisissez une bille adverse à déplacer.",
                     PhaseTour.DestinationDeplacement => "Choisissez la destination du déplacement.",
                     PhaseTour.PlacementBille => $"{nom}, placez l'une de vos billes.",
-                    PhaseTour.AttenteBouton => "Appuyez sur le bouton Orbito pour terminer le tour.(Entrée)",
-                    _=>""
+                    PhaseTour.AttenteBouton => "Appuyez sur le bouton Orbito pour terminer le tour.",
+                    _ => ""
                 };
             }
         }
+        /// <summary>
+        /// Événement déclenché lors d'une action détaillée de l'IA (pour affichage de texte).
+        /// </summary>
         public event Action<string>? OnActionIADetaillee;
+        /// <summary>
+        /// Obtient le message descriptif de l'état actuel de la partie.
+        /// </summary>
         public string MessageEtat
         {
             get
@@ -38,12 +61,22 @@ namespace LibOrbito
                 return _partie.Etat.ToString();
             }
         }
-
+        /// <summary>
+        /// Obtient le message d'erreur éventuel lié à la dernière action invalide.
+        /// </summary>
         public string MessageErreur { get; private set; } = "";
+        /// <summary>
+        /// Obtient le nom du joueur dont c'est actuellement le tour.
+        /// </summary>
         public string NomJoueur { get => _partie.JoueurCourant.Pseudo; }
+        /// <summary>
+        /// Obtient le nom du joueur gagnant (ou "Aucun").
+        /// </summary>
 
         public string NomGagnant { get => _partie.JoueurGagnant?.Pseudo ?? "Aucun"; }
-
+        /// <summary>
+        /// Obtient la représentation console du plateau.
+        /// </summary>
         public string AffichagePlateau
         {
             get => _partie.AffichagePlateau();
@@ -53,7 +86,9 @@ namespace LibOrbito
         {
             return _partie.EstTerminee();
         }
-
+        /// <summary>
+        /// Indique si c'est actuellement au tour d'une IA de jouer.
+        /// </summary>
         public bool EstTourIA => _partie.JoueurCourant.EstIA;
 
         /// <summary>
@@ -69,9 +104,35 @@ namespace LibOrbito
         public OrbitoManager(string nomJ1, string avatarJ1, string nomJ2, string avatarJ2, ModeJeu mode, DifficulteIA? difficulte)
         {
             _partie = new Partie(nomJ1, avatarJ1, nomJ2, avatarJ2, mode, difficulte);
+            _partie.VarianteInverse = varianteInverse;
             PhaseActuelle = PhaseTour.PlacementBille;
 
         }
+        /// <summary>
+        /// Initialise une instance du gestionnaire à partir d'une sauvegarde existante.
+        /// </summary>
+        /// <param name="partieSauvegardee">L'instance de la partie sauvegardée.</param>
+        public OrbitoManager(Partie partieSauvegardee)
+        {
+            _partie = partieSauvegardee;
+            if (_partie.CompteurTours <= 2)
+            {
+                PhaseActuelle = PhaseTour.PlacementBille;
+            }
+            if (_partie.CompteurTours > 16)
+            {
+                PhaseActuelle = PhaseTour.AttenteBouton;
+            }
+            else
+            {
+                PhaseActuelle = PhaseTour.ChoixDeplacementAdverse;
+            }
+
+            MessageErreur = "";
+        }
+        /// <summary>
+        /// Tente de déclencher l'appui sur le bouton Orbito si la phase de jeu le permet.
+        /// </summary>
         public void ActionnerBouton()
         {
             if (PhaseActuelle != PhaseTour.AttenteBouton) return;
@@ -92,6 +153,7 @@ namespace LibOrbito
                     PhaseActuelle = PhaseTour.AttenteBouton;
                 }
             }
+            OnMiseAJourUI?.Invoke();
         }
 
 
@@ -150,7 +212,7 @@ namespace LibOrbito
             if (_partie.PoserBille(p))
             {
                 PhaseActuelle = PhaseTour.AttenteBouton;
-                MessageErreur = ""; 
+                MessageErreur = "";
             }
             else
             {
@@ -158,14 +220,18 @@ namespace LibOrbito
             }
         }
 
-
-        public void GererAction(int X, int Y) 
+        /// <summary>
+        /// Traite une interaction sur le plateau (sélection, déplacement, placement) en fonction de la phase actuelle.
+        /// </summary>
+        /// <param name="X">La coordonnée X de la case cliquée.</param>
+        /// <param name="Y">La coordonnée Y de la case cliquée.</param>
+        public void GererAction(int X, int Y)
         {
-            switch(PhaseActuelle)
+            switch (PhaseActuelle)
             {
                 case PhaseTour.ChoixDeplacementAdverse:
-                    if (_partie.CompteurTours < 2) 
-                    { 
+                    if (_partie.CompteurTours < 2)
+                    {
                         PhaseActuelle = PhaseTour.PlacementBille;
                         return;
                     }
@@ -180,7 +246,11 @@ namespace LibOrbito
                 case PhaseTour.AttenteBouton:
                     break;
             }
+            OnMiseAJourUI?.Invoke();
         }
+        /// <summary>
+        /// Déclenche le tour de l'Intelligence Artificielle de manière synchrone.
+        /// </summary>
         public void FaireJouerIA()
         {
             if (!EstTourIA) return;
@@ -227,8 +297,58 @@ namespace LibOrbito
                     PhaseActuelle = PhaseTour.AttenteBouton;
                 }
             }
+            OnMiseAJourUI?.Invoke();
         }
 
+        /// <summary>
+        /// Événement asynchrone déclenché lors d'une action de l'IA.
+        /// </summary>
+        public event Func<string, Task>? OnActionIADetailleeAsync;
+        /// <summary>
+        /// Déclenche le tour de l'Intelligence Artificielle de manière asynchrone (permet des animations).
+        /// </summary>
+        /// <returns>Une tâche asynchrone.</returns>
+        public async Task FaireJouerIAAsync()
+        {
+            if (!EstTourIA) return;
+
+            Action coupIA = _partie.JoueurCourant.ComportementIA!.CalculerCoup(_partie);
+
+            if (coupIA.origineDeplacement != null && coupIA.destinationDeplacement != null)
+            {
+                GererAction(coupIA.origineDeplacement.X, coupIA.origineDeplacement.Y);
+                if (OnActionIADetailleeAsync != null) await OnActionIADetailleeAsync($"{NomJoueur} déplace une bille de ({coupIA.origineDeplacement.X}, {coupIA.origineDeplacement.Y}) vers ({coupIA.destinationDeplacement.X}, {coupIA.destinationDeplacement.Y}).");
+                GererAction(coupIA.destinationDeplacement.X, coupIA.destinationDeplacement.Y);
+            }
+            else if (_partie.CompteurTours > 2 && _partie.CompteurTours <= 16)
+            {
+                if (OnActionIADetailleeAsync != null) await OnActionIADetailleeAsync($"{NomJoueur} décide de ne déplacer aucune bille.");
+            }
+
+            if (coupIA.placement != null)
+            {
+                PhaseActuelle = PhaseTour.PlacementBille;
+                OnMiseAJourUI?.Invoke();
+                if (OnActionIADetailleeAsync != null) await OnActionIADetailleeAsync($"{NomJoueur} pose une bille en ({coupIA.placement.X}, {coupIA.placement.Y}).");
+                bool poseReussie = _partie.PoserBille(coupIA.placement);
+                if (!poseReussie)
+                {
+                    MessageErreur = "L'IA a tenté un coup illégal.";
+                    return;
+                }
+            }
+
+            if (OnActionIADetailleeAsync != null) await OnActionIADetailleeAsync($"{NomJoueur} appuie sur le bouton Orbito !");
+            _partie.AppuyerBoutonOrbito();
+
+            if (!_partie.EstTerminee())
+            {
+                if (_partie.CompteurTours <= 2) PhaseActuelle = PhaseTour.PlacementBille;
+                else if (_partie.CompteurTours <= 16) PhaseActuelle = PhaseTour.ChoixDeplacementAdverse;
+                else PhaseActuelle = PhaseTour.AttenteBouton;
+            }
+            OnMiseAJourUI?.Invoke();
+        }
     }
 
     public enum PhaseTour

@@ -5,6 +5,9 @@ using System.Text;
 
 namespace LibOrbito
 {
+    /// <summary>
+    /// Représente les différents états possibles d'une partie d'Orbito.
+    /// </summary>
     public enum EtatPartie
     {
         Configuration,

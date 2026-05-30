@@ -9,7 +9,7 @@
     <Grid>
         <VerticalStackLayout
                 Padding="30,0"
-                Spacing="25">
+                Spacing="15">
             <Border
                     BackgroundColor="Transparent"
                     Stroke="Transparent">
@@ -42,7 +42,7 @@
 
 
                     <Grid Padding="30"
-                              RowDefinitions="*,200,*">
+                              RowDefinitions="*,200,*,*">
 
                         <Label
                                 Text="Joueur 1"
@@ -59,16 +59,23 @@
                                 >
                             <Image
                             
-                                    Source="dotnet_bot.png"
+                                    Source="{Binding CheminImage}"
                                     Aspect="AspectFit"
                                     />
                         </Border>
-                        <Entry
+                            <Picker
+                                Grid.Row="2"
+                                ItemsSource="{Binding ListeAvatars}"
+                                ItemDisplayBinding="{Binding Nom}"
+                                SelectedItem="{Binding AvatarSelectionne, Mode=TwoWay}"
+                                />
+                            <Entry
                                 Margin="0,30,0,0"
                                 VerticalOptions="End"
-                                Placeholder="Entrez le pseudo ici"
+                                Text="{Binding Pseudo1}"
+                                Placeholder="Entrez le pseudo blanc ici"
                                 WidthRequest="400"
-                                Grid.Row="2"
+                                Grid.Row="3"
                                 />
 
                     </Grid>
@@ -83,7 +90,7 @@
 
                     <Grid 
                             Padding="30"
-                            RowDefinitions="*,200,*">
+                            RowDefinitions="*,200,*,*">
 
                         <Label
                                 Text="Joueur 2"
@@ -99,16 +106,23 @@
                                 StrokeThickness="6"
                                 >
                             <Image
-                                    Source="dotnet_bot.png"
+                                    Source="{Binding CheminImage2}"
                                     Aspect="AspectFit"
                                     />
                         </Border>
-                        <Entry
+                            <Picker
+                                Grid.Row="2"
+                                ItemsSource="{Binding ListeAvatars}"
+                                ItemDisplayBinding="{Binding Nom}"
+                                SelectedItem="{Binding AvatarSelectionne2, Mode=TwoWay}"
+                                />
+                            <Entry
                                 Margin="0,30,0,0"
                                 VerticalOptions="End"
-                                Placeholder="Entrez le pseudo ici"
+                                Text="{Binding Pseudo2}"
+                                Placeholder="Entrez le pseudo noir ici"
                                 WidthRequest="400"
-                                Grid.Row="2"
+                                Grid.Row="3"
                                 />
                     </Grid>
 

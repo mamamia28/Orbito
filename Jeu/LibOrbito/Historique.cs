@@ -1,34 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace LibOrbito
 {
+    [DataContract]
     public class Historique
     {
 
         public float TauxVictoireHumainContreIA => CalculerTauxVictoireHumainContreIA();
-        public List<Joueur> lesJoueurs { get; set; } = new List<Joueur>();
-        private List<Partie> _lesSessions = new List<Partie>();
-        public IReadOnlyList<Partie> LesParties => _lesSessions.AsReadOnly();
-        public int NbParties => _lesSessions.Count;
 
+        [DataMember]
+        public List<Joueur> lesJoueurs { get; set; } = new List<Joueur>();
+        [DataMember]
+        private List<PartieTerminee> _lesSessions = new List<PartieTerminee>();
+
+        public IReadOnlyList<PartieTerminee> LesParties => _lesSessions.AsReadOnly();
+        public int NbParties => _lesSessions.Count;
         public void AjouterPartie(Partie partie)
         {
-            if(partie != null)
+            if (partie != null)
             {
-                _lesSessions.Add(partie);
-                ActualiserListeJoueurs(partie);
+                PartieTerminee archive = new PartieTerminee(partie);
+
+                _lesSessions.Insert(0, archive);
+                ActualiserListeJoueurs(archive);
             }
         }
-
-        public List<Partie> RecupererHistorique(string joueur)
+        public List<PartieTerminee> RecupererHistorique(string joueur)
         {
-            List<Partie> resultat = new List<Partie>();
-            
+            List<PartieTerminee> resultat = new List<PartieTerminee>();
+
             foreach (var partie in _lesSessions)
             {
-                if(EstPresentDansPartie(partie, joueur))
+                if (EstPresentDansPartie(partie, joueur))
                 {
                     resultat.Add(partie);
                 }
@@ -44,12 +50,12 @@ namespace LibOrbito
 
             foreach (var partie in _lesSessions)
             {
-                if(EstPresentDansPartie(partie, joueur))
+                if (EstPresentDansPartie(partie, joueur))
                 {
                     total++;
                     if (partie.JoueurGagnant != null)
                     {
-                        if(partie.JoueurGagnant.Pseudo == joueur)
+                        if (partie.JoueurGagnant.Pseudo == joueur)
                         {
                             victoires++;
                         }
@@ -62,15 +68,12 @@ namespace LibOrbito
             }
             return new Statistiques(total, victoires, defaites);
         }
-
-        private bool EstPresentDansPartie(Partie p, string pseudo)
+        private bool EstPresentDansPartie(PartieTerminee p, string pseudo)
         {
-            Joueur j1 = p.JoueurCourant;
-            p.ChangerJoueurCourant();
-            Joueur j2 = p.JoueurCourant;
-            p.ChangerJoueurCourant();
+            Joueur j1 = p.Joueur1;
+            Joueur j2 = p.Joueur2;
 
-            return j1.Pseudo == pseudo || j2.Pseudo == pseudo;
+            return (j1 != null && j1.Pseudo == pseudo) || (j2 != null && j2.Pseudo == pseudo);
         }
 
         private void AjouterSiExistant(Joueur j)
@@ -78,24 +81,19 @@ namespace LibOrbito
             bool existe = false;
             foreach (var joueurExistant in lesJoueurs)
             {
-                if(joueurExistant.Pseudo == j.Pseudo)
+                if (joueurExistant.Pseudo == j.Pseudo)
                 {
                     existe = true;
+                    joueurExistant.Avatar = j.Avatar;
                     break;
                 }
             }
             if (!existe) lesJoueurs.Add(j);
         }
-
-        private void ActualiserListeJoueurs(Partie p)
+        private void ActualiserListeJoueurs(PartieTerminee p)
         {
-            Joueur j1 = p.JoueurCourant;
-            p.ChangerJoueurCourant();
-            Joueur j2 = p.JoueurCourant;
-            p.ChangerJoueurCourant();
-
-            AjouterSiExistant(j1);
-            AjouterSiExistant(j2);
+            if (p.Joueur1 != null) AjouterSiExistant(p.Joueur1);
+            if (p.Joueur2 != null) AjouterSiExistant(p.Joueur2);
         }
 
         private float CalculerTauxVictoireHumainContreIA()
@@ -103,12 +101,12 @@ namespace LibOrbito
             int totalPartiesIA = 0;
             int victoiresHumain = 0;
 
-            foreach(var partie in _lesSessions)
+            foreach (var partie in _lesSessions)
             {
-                if(partie.Mode == ModeJeu.HumainVsIA)
+                if (partie.Mode == ModeJeu.HumainVsIA)
                 {
                     totalPartiesIA++;
-                    if(partie.JoueurGagnant != null && partie.JoueurGagnant.ComportementIA != null)
+                    if (partie.JoueurGagnant != null && partie.JoueurGagnant.ComportementIA == null)
                     {
                         victoiresHumain++;
                     }
@@ -124,7 +122,7 @@ namespace LibOrbito
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"- Nombre total de parties : {NbParties}");
             sb.AppendLine($"- Joueurs enregistrés : {lesJoueurs.Count}");
-            sb.AppendLine($"- Taux de victoire (Humain vs IA) : {TauxVictoireHumainContreIA}%");
+            sb.AppendLine($"- Taux de victoire (Humain vs IA) : {TauxVictoireHumainContreIA:F2}%");
             return sb.ToString();
         }
     }

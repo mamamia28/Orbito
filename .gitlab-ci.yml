@@ -2,7 +2,9 @@ stages:
     - 🏗️build
     - 🧪tests
     - ☢️code-analysis
-
+    - 📦push
+    - 🚀deploy
+    
 include:
   - project: 'IUT_INF63/generic-ci'
     ref: 'main'
@@ -47,3 +49,35 @@ sonar_analysis:
   needs:
     - job: build
 
+
+build-doxygen-documentation:
+  extends: .build-documentation
+  stage: 🏗️build
+  variables:
+    DOXYGEN_FOLDER_PATH: Documentation/doxygen/
+    DOC_TYPE: DOXYGEN
+    DESTINATION_REGISTRY_IMAGE_NAME: codefirst.iut.uca.fr/iut_inf63/maui-2026-g3-g4/orbito
+    DESTINATION_REGISTRY_IMAGE_VERSION: main
+  rules:
+    - when: always
+
+push-doxygen-documentation:
+  extends: .push-documentation-image
+  stage: 📦push
+  needs:
+    - build-doxygen-documentation
+  rules:
+    - when: always
+
+deploy-my-pod:
+  extends: .deploy-image
+  stage: 🚀deploy
+  variables:
+    CONTAINER_NAME: orbitodoc
+    CONTAINER_IMAGE_PATH: codefirst.iut.uca.fr/iut_inf63/maui-2026-g3-g4/orbito:main
+    NAMESPACE_NAME: iut-inf63-maui-2026-g3-g4
+    NAMESPACE_TOKEN: $NAMESPACE_TOKEN
+  needs:
+    - push-doxygen-documentation
+  rules:
+    - when: always

@@ -20,5 +20,38 @@
         {
             await Shell.Current.GoToAsync("Statistiques");
         }
+
+        private async void OnQuitterClicked(object sender, EventArgs e)
+        {
+            bool confirmation = await DisplayAlertAsync(
+                "Quitter le jeu",
+                "Voulez-vous vraiment fermer l'application ?",
+                "Oui",
+                "Non"
+            );
+            if (confirmation)
+            {
+                Application.Current?.Quit();
+            }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            PopUpReprendre.IsVisible = (App.PartieActive != null && !App.PartieActive.EstTerminee());
+        }
+
+        private async void OnReprendreClicked(object sender, EventArgs e)
+        {
+            App.RepriseEnCours = true;
+            await Shell.Current.GoToAsync("Plateau");
+        }
+        private async void OnCloseReprendreClicked(object sender, EventArgs e)
+        {
+            PopUpReprendre.IsVisible = false;
+            App.PartieActive = null;
+            File.Delete(App.xmlSauvegarde);
+        }
     }
 }

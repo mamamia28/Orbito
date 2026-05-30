@@ -1,18 +1,23 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Threading;
 using LibOrbito;
 using Stub;
 using Microsoft.Win32.SafeHandles;
+using System.Runtime.Serialization;
 
 namespace ConsoleAppOrbito
 {
     class Program
     {
-        static Historique historique = new Stub.Stub();
+        static Historique historique = new Historique();
+        static string xmlFile = Path.Combine("XML", "parties.xml");
+
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
+
+            historique = OrbitoPersistance.Persistance.ChargerHistorique(xmlFile, historique);
 
             bool quitterApp = false;
             while (!quitterApp)
@@ -31,6 +36,8 @@ namespace ConsoleAppOrbito
                 else if (choix == "3") MenuHistorique();
                 else if (choix == "4") quitterApp = true;
             }
+
+            OrbitoPersistance.Persistance.SauvegarderHistorique(historique, xmlFile);
         }
 
         static void MenuChoixMode()
@@ -261,18 +268,16 @@ namespace ConsoleAppOrbito
             Console.ReadLine();
         }
 
-        static void AfficherLigneHistorique(Partie p)
+        static void AfficherLigneHistorique(PartieTerminee p)
         {
-            Joueur j1Inst = p.JoueurCourant;
-            p.ChangerJoueurCourant();
-            Joueur j2Inst = p.JoueurCourant;
-            p.ChangerJoueurCourant();
+            Joueur j1Inst = p.Joueur1;
+            Joueur j2Inst = p.Joueur2;
 
             string j1 = (j1Inst.CouleurBilles == Couleur.Blanc) ? j1Inst.Pseudo : j2Inst.Pseudo;
             string j2 = (j1Inst.CouleurBilles == Couleur.Noir) ? j1Inst.Pseudo : j2Inst.Pseudo;
 
-            string date = p.DateDeCreation.ToString("dd/MM");
-            int nbCoups = p.CoupsJoues.Count;
+            string date = p.DateDeFin.ToString("dd/MM");
+            int nbCoups = p.HistoriqueCoups.Count;
             string mode = p.Mode.ToString();
 
             if (p.Etat == EtatPartie.Egalite)
@@ -293,7 +298,7 @@ namespace ConsoleAppOrbito
             Console.WriteLine($"\nIA : {message}");
             Thread.Sleep(1200);
         }
-        static void LancerPartie(ModeJeu mode,DifficulteIA? difficulte)
+        static void LancerPartie(ModeJeu mode, DifficulteIA? difficulte)
         {
             bool modeHardcode = false;
 
@@ -388,8 +393,6 @@ namespace ConsoleAppOrbito
             }
 
             Console.ReadLine();
-
-
         }
     }
 }

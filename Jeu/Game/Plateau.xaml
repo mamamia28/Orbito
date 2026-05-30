@@ -1,140 +1,588 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Game.Models"
              x:Class="Game.Plateau"
-             BackgroundColor="#2E073F"
-             Title="Plateau">
+             x:Name="PlateauMain"
+             xmlns:local="clr-namespace:Game.Behaviors"
+             BackgroundColor="#2E073F">
 
-    <Border Stroke="Black" StrokeThickness="3" Margin="10" BackgroundColor="Transparent">
-        <Border.StrokeShape>
-            <RoundRectangle CornerRadius="20" />
-        </Border.StrokeShape>
+    <Grid RowDefinitions="Auto, *, Auto" ColumnDefinitions="*, Auto, *" Padding="20">
 
-        <Grid ColumnDefinitions="Auto, *, Auto" RowDefinitions="Auto, *" Margin="10">
+        <VerticalStackLayout 
+            Grid.Row="0" 
+            Grid.ColumnSpan="3" 
+            HorizontalOptions="Center" 
+            Spacing="10" 
+            Margin="0,0,0,20">
+            <Label 
+                Text="{Binding NomJoueurCourant, StringFormat='Tour de {0}'}" 
+                TextColor="White" 
+                FontSize="28" 
+                FontFamily="MoreSugar" 
+                HorizontalOptions="Center"/>
+            <Label 
+                Text="{Binding MessageActuel}" 
+                TextColor="#E0B0FF" 
+                FontSize="28" 
+                HorizontalOptions="Center" 
+                HorizontalTextAlignment="Center"/>
+            <Label 
+                Text="{Binding MessageErreur}" 
+                TextColor="#FF4C4C" 
+                FontSize="16" 
+                FontAttributes="Bold" 
+                HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+        
+        <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Spacing="10" VerticalOptions="Start" HorizontalOptions="Start">
+            <Button
+                Text="Quitter Partie"
+                WidthRequest="200"
+                HeightRequest="70"
+                FontSize="20"
+                BackgroundColor="Red"
+                TextColor="Black"
+                BorderColor="Black"
+                BorderWidth="3"
+                FontFamily="MoreSugar"
+                CornerRadius="20"
+                local:HoverBehavior.CursorHoverType="Hand"
+                Clicked="OnRetourClicked" />
+            <Button 
+                Text="?" 
+                WidthRequest="70" 
+                HeightRequest="70" 
+                FontSize="30" 
+                BackgroundColor="White" 
+                TextColor="Black" 
+                BorderColor="Black" 
+                BorderWidth="3" 
+                FontFamily="MoreSugar" 
+                CornerRadius="35" 
+                local:HoverBehavior.CursorHoverType="Hand" 
+                Clicked="OnAideClicked" />
+        </HorizontalStackLayout>
 
-            <Button Grid.Row="0" Grid.Column="0"
-                    Text="QUITTER LA PARTIE"
-                    FontFamily="MoreSugar" 
-                    BackgroundColor="Red" 
-                    TextColor="Black"
-                    BorderColor="Black"
-                    BorderWidth="3"
-                    CornerRadius="15" 
-                    HeightRequest="60" 
-                    Margin="10"
-                    Clicked="OnRetourClicked"
-                    HorizontalOptions="Start" 
-                    VerticalOptions="Start"/>
+        <HorizontalStackLayout Grid.Row="0" Grid.Column="2" Spacing="10" VerticalOptions="Start" HorizontalOptions="End" ZIndex="10">
+            <Button
+                IsVisible="{Binding VarianteEstActivee}"
+                Text="50' Reverse"
+                WidthRequest="200"
+                HeightRequest="70"
+                FontSize="20"
+                TextColor="White"
+                BorderColor="White"
+                BorderWidth="3"
+                FontFamily="MoreSugar"
+                CornerRadius="20">
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#8A2BE2" Offset="0.0" />
+                        <GradientStop Color="#FF0000" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
 
-            <VerticalStackLayout Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Start" Spacing="-5">
-                <Label Text="ORBITO" FontFamily="MoreSugar" FontSize="48" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
-                <Label Text="Tour de Joueur X" FontFamily="MoreSugar" FontSize="16" TextColor="White" HorizontalOptions="Center" />
-            </VerticalStackLayout>
+            <Button
+                Text="Liste coups"
+                WidthRequest="200"
+                HeightRequest="70"
+                FontSize="20"
+                BackgroundColor="CadetBlue"
+                TextColor="White"
+                BorderColor="White"
+                BorderWidth="3"
+                FontFamily="MoreSugar"
+                CornerRadius="20"
+                local:HoverBehavior.CursorHoverType="Hand"
+                Clicked="OnCoupsClicked" />
+        </HorizontalStackLayout>
 
-            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Margin="20,10,10,10" Spacing="25" WidthRequest="280">
-
-                <Border Stroke="Black" StrokeThickness="3" BackgroundColor="DarkViolet" HeightRequest="240">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="20" />
-                    </Border.StrokeShape>
-                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="20">
-                        <Border Stroke="Black" StrokeThickness="3" BackgroundColor="Transparent" WidthRequest="140" HeightRequest="140">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="15" />
-                            </Border.StrokeShape>
-                        </Border>
-                        <Label Text="Carte Joueur 1" FontFamily="MoreSugar" FontSize="22" TextColor="Black" HorizontalOptions="Center" FontAttributes="Bold" />
-                    </VerticalStackLayout>
-                </Border>
-
-                <Border Stroke="Black" StrokeThickness="3" BackgroundColor="DarkViolet" Padding="15" VerticalOptions="FillAndExpand">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="20" />
-                    </Border.StrokeShape>
-                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="15">
-                        <Label Text="8" FontFamily="MoreSugar" FontSize="90" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
-                        <Label Text="COMPTEUR BILLES&#x0a;JOUEUR 1" FontFamily="MoreSugar" FontSize="18" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center" />
-                        <Ellipse Fill="White" Stroke="Black" StrokeThickness="4" WidthRequest="160" HeightRequest="160" HorizontalOptions="Center" Margin="0,20,0,0"/>
-                    </VerticalStackLayout>
-                </Border>
-
-            </VerticalStackLayout>
-
-            <Border Grid.Row="1" Grid.Column="1" Stroke="Black" StrokeThickness="3" BackgroundColor="#2E073F" Margin="20" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="600" HeightRequest="600">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="20" />
-                </Border.StrokeShape>
-
-                <Grid Padding="15" RowSpacing="5" ColumnSpacing="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2" Stroke="Black" StrokeThickness="3" Margin="-5" />
-
-                    <Image Grid.Row="0" Grid.Column="0" Source="boite.png" Rotation="90" Aspect="AspectFit" />
-                    <Image Grid.Row="0" Grid.Column="1" Source="boite.png" Rotation="180" Aspect="AspectFit" />
-                    <Image Grid.Row="0" Grid.Column="2" Source="boite.png" Rotation="180" Aspect="AspectFit" />
-                    <Image Grid.Row="0" Grid.Column="3" Source="boite.png" Rotation="180" Aspect="AspectFit" />
-
-                    <Image Grid.Row="1" Grid.Column="0" Source="boite.png" Rotation="90" Aspect="AspectFit" />
-                    <Image Grid.Row="1" Grid.Column="1" Source="boite.png" Rotation="90" Aspect="AspectFit" />
-                    <Image Grid.Row="1" Grid.Column="2" Source="boite.png" Rotation="180" Aspect="AspectFit" />
-                    <Image Grid.Row="1" Grid.Column="3" Source="boite.png" Rotation="270" Aspect="AspectFit" />
-
-                    <Image Grid.Row="2" Grid.Column="0" Source="boite.png" Rotation="90" Aspect="AspectFit" />
-                    <Image Grid.Row="2" Grid.Column="1" Source="boite.png" Rotation="0" Aspect="AspectFit" />
-                    <Image Grid.Row="2" Grid.Column="2" Source="boite.png" Rotation="270" Aspect="AspectFit" />
-                    <Image Grid.Row="2" Grid.Column="3" Source="boite.png" Rotation="270" Aspect="AspectFit" />
-
-                    <Image Grid.Row="3" Grid.Column="0" Source="boite.png" Rotation="0" Aspect="AspectFit" />
-                    <Image Grid.Row="3" Grid.Column="1" Source="boite.png" Rotation="0" Aspect="AspectFit" />
-                    <Image Grid.Row="3" Grid.Column="2" Source="boite.png" Rotation="0" Aspect="AspectFit" />
-                    <Image Grid.Row="3" Grid.Column="3" Source="boite.png" Rotation="270" Aspect="AspectFit" />
-
-                    <Ellipse Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="2" Fill="Red" Stroke="Black" StrokeThickness="3" WidthRequest="65" HeightRequest="65" HorizontalOptions="Center" VerticalOptions="Center" />
+        <VerticalStackLayout 
+            Grid.Row="1" 
+            Grid.Column="0" 
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            Spacing="10">
+            <Border
+                Stroke="AntiqueWhite"
+                StrokeShape="RoundRectangle 20"
+                StrokeThickness="4"
+                BackgroundColor="#4D7A1CAC"
+                >
+                <Grid
+                    RowDefinitions="*,*,*,*"
+                    ColumnDefinitions="*"
+                    Margin="80,20"
+                    >
+                    <Border
+                        Grid.Row="0"
+                        WidthRequest="200"
+                        HeightRequest="200"
+                        StrokeShape="RoundRectangle 100"
+                        Stroke="WhiteSmoke"
+                        BackgroundColor="#7A1CAC"
+                        StrokeThickness="6"
+                        >
+                        <Image
+                            Source="{Binding AvatarJoueur1}"
+                            Aspect="AspectFit"
+                            />
+                    </Border>
+                    <Label 
+                        Grid.Row="1"
+                        Text="{Binding NomJoueur1}" 
+                        TextColor="White" 
+                        HorizontalOptions="Center"
+                        FontSize="Large"
+                        FontFamily="MoreSugar"/>
+                    <Border
+                        Grid.Row="2"
+                        Margin="0,20,0,6"
+                        Stroke="Transparent"
+                        StrokeThickness="6"
+                        WidthRequest="100" 
+                        HeightRequest="100"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        StrokeShape="RoundRectangle 50">
+                        <Image
+                            Source="bille_blanche.png" 
+                            local:HoverBehavior.CursorHoverType="Hand"
+                            Aspect="AspectFit">
+                            <Image.GestureRecognizers>
+                                <DragGestureRecognizer DragStartingCommand="{Binding CommandeClicReserve}" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </Border>
+                    <Label
+                        Grid.Row="3"
+                        HorizontalOptions="Center"
+                        Text="{Binding BillesRestantesJoueur1, StringFormat='{0} Billes restantes'}"
+                        FontFamily="MoreSugar"
+                        FontSize="Medium"
+                        />
                 </Grid>
+            </Border>
+            </VerticalStackLayout>
+
+            <Grid 
+                Grid.Row="1" 
+                Grid.Column="1"
+                RowDefinitions="Auto, Auto, Auto" 
+                ColumnDefinitions="Auto, Auto, Auto"
+                HorizontalOptions="Center" 
+                VerticalOptions="Center">
+
+                <Image Grid.Row="0" Grid.Column="1" Source="fleche_horizontale.png" HeightRequest="40" Rotation="180" Margin="0,0,0,10" Opacity="0.7">
+                    <Image.Triggers>
+                        <DataTrigger TargetType="Image" Binding="{Binding VarianteEstActivee}" Value="True">
+                            <Setter Property="Source" Value="double_fleche_horizontale.png" />
+                        </DataTrigger>
+                    </Image.Triggers>
+                </Image>
+
+                <Image Grid.Row="1" Grid.Column="0" Source="fleche_verticale.png" WidthRequest="40" Rotation="0" Margin="0,0,10,0" Opacity="0.7">
+                    <Image.Triggers>
+                        <DataTrigger TargetType="Image" Binding="{Binding VarianteEstActivee}" Value="True">
+                            <Setter Property="Source" Value="double_fleche_verticale.png" />
+                        </DataTrigger>
+                    </Image.Triggers>
+                </Image>
+
+                <Image Grid.Row="1" Grid.Column="2" Source="fleche_verticale.png" WidthRequest="40" Rotation="180" Margin="10,0,0,0" Opacity="0.7">
+                    <Image.Triggers>
+                        <DataTrigger TargetType="Image" Binding="{Binding VarianteEstActivee}" Value="True">
+                            <Setter Property="Source" Value="double_fleche_verticale.png" />
+                        </DataTrigger>
+                    </Image.Triggers>
+                </Image>
+
+                <Image Grid.Row="2" Grid.Column="1" Source="fleche_horizontale.png" HeightRequest="40" Rotation="0" Margin="0,10,0,0" Opacity="0.7">
+                    <Image.Triggers>
+                        <DataTrigger TargetType="Image" Binding="{Binding VarianteEstActivee}" Value="True">
+                        <Setter Property="Source" Value="double_fleche_horizontale.png" />
+                        </DataTrigger>
+                    </Image.Triggers>
+                </Image>
+
+            <Border 
+                x:Name="VuePlateau" 
+                Grid.Row="1"
+                Grid.Column="1"
+                BackgroundColor="#7A1CAC" 
+                StrokeThickness="6" 
+                Stroke="WhiteSmoke" 
+                StrokeShape="RoundRectangle 20" 
+                Padding="10" 
+                WidthRequest="500" 
+                HeightRequest="500">
+                <CollectionView ItemsSource="{Binding Grille}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout 
+                            Orientation="Vertical" 
+                            Span="4" 
+                            HorizontalItemSpacing="5" 
+                            VerticalItemSpacing="5"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="vm:CelluleModel">
+
+                            <Border 
+                                Stroke="White" 
+                                StrokeThickness="2" 
+                                 
+                                StrokeShape="RoundRectangle 10" 
+                                HeightRequest="105" 
+                                WidthRequest="105">
+                                <Border.GestureRecognizers>
+                                    <DragGestureRecognizer 
+                                        DragStartingCommand="{Binding Source={x:Reference PlateauMain}, Path=BindingContext.CommandeDragCase}" 
+                                        DragStartingCommandParameter="{Binding .}"/>
+                                    <DropGestureRecognizer 
+                                        AllowDrop="True"
+                                        DropCommand="{Binding Source={x:Reference PlateauMain}, Path=BindingContext.CommandeDropCase}" 
+                                        DropCommandParameter="{Binding .}"/>
+                                </Border.GestureRecognizers>
+                                <Border.Background>
+                                    <Color>#5A0E82</Color>
+                                </Border.Background>
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding Highlighted}" Value="True">
+                                        <Setter Property="Background" Value="GreenYellow" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                                <Image 
+                                    Source="{Binding CheminImage}" 
+                                    Margin="5" 
+                                    Aspect="AspectFill"
+                                    
+                                    local:HoverBehavior.CursorHoverType="Hand"/>
+                            </Border>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
             </Border>
 
-            <VerticalStackLayout Grid.Row="1" Grid.Column="2" Margin="10,10,20,10" Spacing="25" WidthRequest="280">
-
-                <Border Stroke="Black" StrokeThickness="3" BackgroundColor="DarkViolet" HeightRequest="240">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="20" />
-                    </Border.StrokeShape>
-                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="20">
-                        <Border Stroke="Black" StrokeThickness="3" BackgroundColor="Transparent" WidthRequest="140" HeightRequest="140">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="15" />
-                            </Border.StrokeShape>
-                        </Border>
-                        <Label Text="Carte Joueur 2" FontFamily="MoreSugar" FontSize="22" TextColor="Black" HorizontalOptions="Center" FontAttributes="Bold" />
-                    </VerticalStackLayout>
-                </Border>
-
-                <Border Stroke="Black" StrokeThickness="3" BackgroundColor="DarkViolet" Padding="15" VerticalOptions="FillAndExpand">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="20" />
-                    </Border.StrokeShape>
-                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="15">
-                        <Label Text="8" FontFamily="MoreSugar" FontSize="90" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
-                        <Label Text="COMPTEUR BILLES&#x0a;JOUEUR 2" FontFamily="MoreSugar" FontSize="18" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center" />
-                        <Ellipse Fill="Black" Stroke="White" StrokeThickness="4" WidthRequest="160" HeightRequest="160" HorizontalOptions="Center" Margin="0,20,0,0"/>
-                    </VerticalStackLayout>
-                </Border>
-
-            </VerticalStackLayout>
+            <Button Text="#" 
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    FontSize="40"
+                    Command="{Binding CommandeClicOrbito}"
+                    HorizontalOptions="Center" 
+                    VerticalOptions="Center" 
+                    WidthRequest="90" 
+                    HeightRequest="90" 
+                    CornerRadius="45" 
+                    BackgroundColor="Red" 
+                    FontFamily="MoreSugarExtras"
+                    TextColor="Black"
+                    BorderColor="Black"
+                    BorderWidth="4"
+                    ZIndex="10"
+                    local:HoverBehavior.CursorHoverType="Hand"
+                    />
 
         </Grid>
-    </Border>
+
+        <VerticalStackLayout 
+            Grid.Row="1" 
+            Grid.Column="2" 
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" 
+            Spacing="10">
+            <Border
+                Stroke="AntiqueWhite"
+                StrokeShape="RoundRectangle 20"
+                StrokeThickness="4"
+                BackgroundColor="#4D7A1CAC"
+                
+                >
+                <Grid
+                    RowDefinitions="*,*,*,*"
+                    ColumnDefinitions="*"
+                    Margin="80,20"
+                    >
+                    <Border
+                        Grid.Row="0"
+                        WidthRequest="200"
+                        HeightRequest="200"
+                        StrokeShape="RoundRectangle 100"
+                        Stroke="WhiteSmoke"
+                        BackgroundColor="#7A1CAC"
+                        StrokeThickness="6"
+                        >
+                        <Image
+                            Source="{Binding AvatarJoueur2}"
+                            Aspect="AspectFit"
+                        />
+                    </Border>
+                    <Label 
+                        Grid.Row="1"
+                        Text="{Binding NomJoueur2}" 
+                        TextColor="White" 
+                        HorizontalOptions="Center"
+                        FontSize="Large"
+                        FontFamily="MoreSugar"/>
+                    <Border
+                        Grid.Row="2"
+                        Margin="0,20,0,6"
+                        Stroke="White"
+                        StrokeThickness="3"
+                        WidthRequest="100" 
+                        HeightRequest="100"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        StrokeShape="RoundRectangle 50">
+                        <Image
+                            Source="bille_noire.png" 
+                            local:HoverBehavior.CursorHoverType="Hand"
+                            Aspect="AspectFit">
+                            <Image.GestureRecognizers>
+                                <DragGestureRecognizer DragStartingCommand="{Binding CommandeClicReserve}" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </Border>
+                    <Label
+                        Grid.Row="3"
+                        HorizontalOptions="Center"
+                        Text="{Binding BillesRestantesJoueur2, StringFormat='{0} Billes restantes'}"
+                        FontFamily="MoreSugar"
+                        FontSize="Medium"
+                        />
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
+        <Button 
+            x:Name="BoutonPasser"
+            Grid.Row="1" 
+            Grid.Column="1" 
+            Text="Ne rien déplacer" 
+            FontSize="20" 
+            FontFamily="MoreSugar" 
+            BackgroundColor="#808080" 
+            TextColor="White" 
+            BorderColor="Yellow"
+            BorderWidth="6"
+            HeightRequest="60" 
+            CornerRadius="25" 
+            VerticalOptions="Start"
+            local:HoverBehavior.CursorHoverType="Hand"
+            Command="{Binding CommandePasserDeplacement}"
+            IsVisible="{Binding PeutPasserDeplacement}"
+            PropertyChanged="BoutonPasser_PropertyChanged"/>
+
+        <Grid Grid.Row="0" Grid.RowSpan="3" 
+              Grid.Column="0" Grid.ColumnSpan="3"
+              BackgroundColor="#EE2E073F" 
+              IsVisible="{Binding EstPartieTerminee}"
+              ZIndex="1000">
+
+            <VerticalStackLayout 
+                HorizontalOptions="Center" 
+                VerticalOptions="Center" 
+                Spacing="30">
+
+                <Border 
+                    BackgroundColor="#8B00CC" 
+                    WidthRequest="450" 
+                    Padding="30" 
+                    Stroke="Black" 
+                    StrokeThickness="2" 
+                    StrokeShape="RoundRectangle 25" 
+                    HorizontalOptions="Center">
+                    <VerticalStackLayout 
+                        Spacing="20" 
+                        HorizontalOptions="Center">
+
+                        <Label 
+                            Text="{Binding TexteVictoire}" 
+                            FontFamily="MoreSugar" 
+                            FontSize="35" 
+                            FontAttributes="Bold" 
+                            TextColor="Black" 
+                            HorizontalOptions="Center" 
+                            HorizontalTextAlignment="Center"/>
+
+                        <Border 
+                            BackgroundColor="White" 
+                            Stroke="Black" 
+                            StrokeThickness="2" 
+                            StrokeShape="RoundRectangle 20" 
+                            HeightRequest="200" 
+                            WidthRequest="250" 
+                            HorizontalOptions="Center" 
+                            Padding="15">
+                            <Image
+                                Source="{Binding AvatarJoueurGagnant}" 
+                                Aspect="AspectFit" 
+                                HorizontalOptions="Center" 
+                                VerticalOptions="Center"/>
+                        </Border>
+
+                        <Label 
+                            Text="{Binding TexteCarte}" 
+                            FontFamily="MoreSugar" 
+                            FontSize="22" 
+                            TextColor="Black" 
+                            HorizontalOptions="Center"/>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <Grid 
+                    ColumnDefinitions="*, *" 
+                    ColumnSpacing="20" 
+                    HorizontalOptions="Center" 
+                    WidthRequest="450">
+                    <Button Text="MENU PRINCIPAL" 
+                            Grid.Column="0" 
+                            FontFamily="MoreSugar" 
+                            FontSize="16" 
+                            FontAttributes="Bold" 
+                            BackgroundColor="#8B00CC" 
+                            TextColor="Black" 
+                            BorderColor="Black" 
+                            BorderWidth="2" 
+                            HeightRequest="70" 
+                            CornerRadius="15"
+                            Command="{Binding CommandeMenuPrincipal}"
+                            local:HoverBehavior.CursorHoverType="Hand"
+                            />
+
+                    <Button Text="REJOUER" 
+                            Grid.Column="1" 
+                            FontFamily="MoreSugar" 
+                            FontSize="16" 
+                            FontAttributes="Bold" 
+                            BackgroundColor="#8B00CC" 
+                            TextColor="Black" 
+                            BorderColor="Black" 
+                            BorderWidth="2" 
+                            HeightRequest="70" 
+                            CornerRadius="15"
+                            Command="{Binding CommandeRejouer}"
+                            local:HoverBehavior.CursorHoverType="Hand"
+                            />
+                </Grid>
+
+            </VerticalStackLayout>
+        </Grid>
+        
+        <Grid Grid.Row="0" Grid.RowSpan="3" 
+              Grid.Column="0" Grid.ColumnSpan="3"
+              BackgroundColor="#CC2E073F" 
+              IsVisible="{Binding EstCoupsClicked}"
+              ZIndex="100"
+              >
+            <Border 
+                BackgroundColor="#2E073F" 
+                WidthRequest="1300"
+                HeightRequest="600"
+                Padding="30" 
+                Stroke="Black" 
+                StrokeThickness="2" 
+                StrokeShape="RoundRectangle 25" 
+                HorizontalOptions="Center">
+            <Grid 
+                RowDefinitions="Auto,*">
+                <Grid Grid.Row="0">
+                    <Border 
+                        Stroke="White" 
+                        StrokeThickness="2" 
+                        StrokeShape="RoundRectangle 10" 
+                        Padding="15" 
+                        HorizontalOptions="Center">
+                        <Label 
+                            Text="LISTE DES COUPS" 
+                            FontSize="40" 
+                            FontFamily="MoreSugar" 
+                            FontAttributes="Bold" 
+                            TextColor="White" />
+                    </Border>
+
+                    <Button 
+                        Text="X" 
+                        FontSize="35" 
+                        FontAttributes="Bold" 
+                        TextColor="White" 
+                        BackgroundColor="Transparent"
+                        WidthRequest="60" 
+                        HeightRequest="60" 
+                        HorizontalOptions="End" 
+                        VerticalOptions="Start"
+                        Clicked="OnCloseCoupsClicked" 
+                        local:HoverBehavior.CursorHoverType="Hand" />
+                </Grid>
+                    <ScrollView
+                        Grid.Row="1"
+                        Margin="0,20,0,0">
+                        <CollectionView
+                            ItemsSource="{Binding LesCoups}"
+                            >
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border
+                                        BackgroundColor="DarkViolet"
+                                        Stroke="Black"
+                                        StrokeThickness="3"
+                                        StrokeShape="RoundRectangle 15"
+                                        Padding="15"
+                                        Margin="0,10">
+                                        <Grid ColumnDefinitions="*,*,*">
+                                            <Label
+                                                Grid.Column="0"
+                                                Text="{Binding origineDeplacement, StringFormat='origine {0}',TargetNullValue='Deplacement passé'}"
+                                                TextColor="AntiqueWhite"
+                                                FontSize="15"
+                                                FontFamily="MoreSugar"
+                                                HorizontalOptions="Center"/>
+                                            <Label
+                                                Grid.Column="1"
+                                                Text="{Binding destinationDeplacement, StringFormat='destination {0}',TargetNullValue=''}"
+                                                TextColor="AntiqueWhite"
+                                                FontSize="15"
+                                                FontFamily="MoreSugar"
+                                                HorizontalOptions="Center"/>
+                                            <Label
+                                                Grid.Column="2"
+                                                Text="{Binding placement, StringFormat='Placement {0}'}"
+                                                TextColor="AntiqueWhite"
+                                                FontSize="15"
+                                                FontFamily="MoreSugar"
+                                                HorizontalOptions="Center"/>
+
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                                
+
+                        </CollectionView>
+                    </ScrollView>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid 
+            Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3"
+            BackgroundColor="#CC2E073F" IsVisible="{Binding EstAideAffiche}" ZIndex="150">
+            <Border 
+                BackgroundColor="#2E073F" WidthRequest="700" HeightRequest="400" Padding="30" Stroke="Black" StrokeThickness="2" StrokeShape="RoundRectangle 25" HorizontalOptions="Center" VerticalOptions="Center">
+                <Grid RowDefinitions="Auto,*">
+                    <Grid Grid.Row="0">
+                        <Border Stroke="White" StrokeThickness="2" StrokeShape="RoundRectangle 10" Padding="15" HorizontalOptions="Center">
+                            <Label Text="AIDE DE JEU" FontSize="30" FontFamily="MoreSugar" FontAttributes="Bold" TextColor="White" />
+                        </Border>
+                        <Button Text="X" FontSize="35" FontAttributes="Bold" TextColor="White" BackgroundColor="Transparent" WidthRequest="60" HeightRequest="60" HorizontalOptions="End" VerticalOptions="Start" Clicked="OnCloseAideClicked" local:HoverBehavior.CursorHoverType="Hand" />
+                    </Grid>
+                    <ScrollView Grid.Row="1" Margin="0,30,0,0">
+                        <Label Text="{Binding TexteAide}" TextColor="AntiqueWhite" FontSize="22" FontFamily="MoreSugar" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalOptions="Center" />
+                    </ScrollView>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
 </ContentPage>

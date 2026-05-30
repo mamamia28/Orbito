@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace LibOrbito
 {
+    [DataContract]
     public class IAFacile : IComportementIA
     {
+        [DataMember]
         private Random _rnd = new Random();
 
         public Action CalculerCoup(Partie partie)
