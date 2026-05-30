@@ -85,13 +85,13 @@ namespace Game.Models
             for(int i=0; i<= _indexCoupCourant; i++)
             {
                 var coup = _partie.HistoriqueCoups[i];
-                if(coup.placement != null)
-                {
-                    plateauVirtuel.AjouterBille(new Bille(coup.Responsable.CouleurBilles), coup.placement);
-                }
-                if(coup.origineDeplacement != null && coup.destinationDeplacement != null)
+                if (coup.origineDeplacement != null && coup.destinationDeplacement != null)
                 {
                     plateauVirtuel.DeplacerBille(coup.origineDeplacement, coup.destinationDeplacement);
+                }
+                if (coup.placement != null)
+                {
+                    plateauVirtuel.AjouterBille(new Bille(coup.Responsable.CouleurBilles), coup.placement);
                 }
                 plateauVirtuel.ActionnerOrbite(coup.SensRotationInverse);
             }

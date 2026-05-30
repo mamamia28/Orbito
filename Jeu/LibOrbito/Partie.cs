@@ -276,11 +276,8 @@ namespace LibOrbito
                 if (!LePlateau.ActionnerOrbite()) return false;
             }
 
-            if (_bufferPlacement != null)
-            {
-                Coup nouveauCoup = new Coup(_bufferOrigine, _bufferDestination, _bufferPlacement, JoueurCourant, estRotationInverse);
-                _coupsJoues.Add(nouveauCoup);
-            }
+            Coup nouveauCoup = new Coup(_bufferOrigine, _bufferDestination, _bufferPlacement, JoueurCourant, estRotationInverse);
+            _coupsJoues.Add(nouveauCoup);
 
             _bufferOrigine = null;
             _bufferDestination = null;

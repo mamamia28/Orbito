@@ -20,6 +20,7 @@ namespace LibOrbito
         /// <summary>
         /// Obtient une valeur indiquant si la rotation de l'orbite a été effectuée dans le sens inverse (variante).
         /// </summary>
+        [DataMember]
         public bool SensRotationInverse { get; private set; }
         /// <summary>
         /// Initialise une nouvelle instance de la classe <see cref="Coup"/>.
