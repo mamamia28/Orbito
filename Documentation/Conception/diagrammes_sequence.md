@@ -384,7 +384,192 @@ Ce diagramme explique ce qui se passe au lancement du jeu. Le `OrbitoManager` (q
 **3. Déroulement d'un tour de jeu**
 Ici, on voit comment le code réagit aux clics du joueur. Selon le moment du tour (choisir une bille, la déplacer ou poser une bille), le `OrbitoManager` demande à la `Partie` d'effectuer l'action. À la toute fin, quand on clique sur le bouton Orbito, le plateau effectue sa rotation et le jeu vérifie si quelqu'un a aligné 4 billes pour gagner.
 
-**4. Intelligence Artificielle (Facile et Moyenne)**
-Les deux derniers diagrammes montrent comment l'ordinateur réfléchit pour choisir son coup.
-- **Pour l'IA Facile** : Elle récupère la liste des cases vides et des déplacements possibles, puis choisit son action complètement au hasard.
 - **Pour l'IA Moyenne** : Elle simule tous ses coups possibles sur une copie du plateau (un faux plateau). Elle regarde d'abord si un coup la fait gagner immédiatement. Si ce n'est pas le cas, elle va tester les futurs coups du joueur adverse pour essayer de ne choisir que des actions "sans danger" (pour ne pas perdre bêtement au tour suivant).
+
+---
+
+## Mise à jour (Mai 2026) - Nouveaux diagrammes de séquence
+
+Suite aux dernières évolutions du code, voici les versions mises à jour des diagrammes de séquence les plus importants.
+
+### 1. Déroulement d'un tour de jeu (avec la Variante de rotation)
+
+Ce diagramme intègre la possibilité de faire tourner le plateau dans le sens inverse (variante).
+
+```plantuml
+@startuml
+participant "ClientUI"        as C  order 1
+participant "OrbitoManager"   as M  order 2
+participant "Partie"          as P  order 3
+participant "JoueurCourant"   as J  order 4
+participant "Plateau"         as Pl order 5
+
+== 1. Gestion de l'Action (Sélection, Déplacement ou Placement) ==
+
+C -> M : GererAction(X, Y)
+activate M
+
+alt PhaseActuelle == ChoixDeplacementAdverse
+    M -> M : TraiterSelectionAdverse(Position(X, Y))
+    M -> P : EstBilleAdverse(Position)
+    P -> Pl : At(Position)
+    Pl --> P : Bille
+    P --> M : bool
+
+else PhaseActuelle == DestinationDeplacement
+    M -> M : TraiterDestinationAdverse(Position(X, Y))
+    M -> P : DeplacerBilleAdverse(source, dest)
+    P -> Pl : DeplacerBille(source, dest)
+    Pl --> P : bool
+    P --> M : bool
+
+else PhaseActuelle == PlacementBille
+    M -> M : TraiterPlacementBille(Position(X, Y))
+    
+    M -> P : PoserBille(Position)
+    P -> J : placerBille()
+    J --> P : void
+    
+    P -> Pl : AjouterBille(Bille, Position)
+    Pl --> P : bool
+    P --> M : bool
+end
+
+M --> C : void
+deactivate M
+
+== 2. Fin du Tour (Bouton Orbito) ==
+
+C -> M : ActionnerBouton()
+activate M
+
+M -> P : AppuyerBoutonOrbito()
+activate P
+
+P -> Pl : ActionnerOrbite(VarianteInverse)
+activate Pl
+Pl --> P : bool
+deactivate Pl
+
+P -> P : VerifierVictoire()
+P -> Pl : DetecterAlignement()
+Pl --> P : (blancGagne, noirGagne)
+P --> P : JoueurGagnant
+
+alt Partie terminée
+    P --> M : true
+else Partie en cours
+    P -> P : ChangerJoueurCourant()
+    P --> M : true
+end
+deactivate P
+
+M -> M : Mettre à jour PhaseActuelle
+M --> C : void
+deactivate M
+@enduml
+```
+
+### 2. Gestion de l'Historique
+
+Le diagramme d'historique a été fortement simplifié. Avant, on sauvegardait une classe `Partie` entière, ce qui nous obligeait à simuler des tours de jeu fictifs (`ChangerJoueurCourant`) juste pour lire qui avait joué. Désormais, l'utilisation de `PartieTerminee` rend le code beaucoup plus direct.
+
+```plantuml
+@startuml
+skinparam maxMessageSize 150
+
+participant "Client"         as C order 1
+participant "Historique"     as H order 2
+participant "PartieTerminee" as PT order 3
+participant "Statistiques"   as S order 4
+
+== 1. Ajout d'une Partie à l'Historique ==
+
+C -> H : AjouterPartie(partie)
+activate H
+
+create PT
+H -> PT : new PartieTerminee(partie)
+PT --> H : instance PartieTerminee
+
+H -> H : _lesSessions.Insert(0, PartieTerminee)
+
+H -> H : ActualiserListeJoueurs(PartieTerminee)
+H -> H : AjouterSiExistant(Joueur1)
+H -> H : AjouterSiExistant(Joueur2)
+
+H --> C : void
+deactivate H
+
+== 2. Génération des Statistiques d'un Joueur ==
+
+C -> H : RecupererStats(pseudo)
+activate H
+
+loop pour chaque PartieTerminee dans _lesSessions
+    H -> H : EstPresentDansPartie(PartieTerminee, pseudo)
+    H --> H : bool
+    
+    opt EstPrésent == true
+        H -> H : incrémente (total)
+        alt pseudo == JoueurGagnant.Pseudo
+            H -> H : incrémente (victoires)
+        else
+            H -> H : incrémente (defaites)
+        end
+    end
+end
+
+H -> S : new Statistiques(total, victoires, defaites)
+activate S
+S -> S : calcul interne du TauxVictoire
+S --> H : instance Statistiques
+deactivate S
+
+H --> C : Statistiques
+deactivate H
+@enduml
+```
+
+### 3. Tour de jeu de l'Intelligence Artificielle (Asynchrone)
+
+Ce nouveau diagramme montre le flux d'exécution d'un tour de l'ordinateur. Le processus est désormais "Asynchrone" (`Task`), ce qui signifie que l'IA réfléchit en arrière-plan sans bloquer l'écran du joueur.
+
+```plantuml
+@startuml
+participant "ClientUI"        as C  order 1
+participant "OrbitoManager"   as M  order 2
+participant "IComportementIA" as IA order 3
+participant "Partie"          as P  order 4
+
+== Tour de l'IA (Exécution Asynchrone) ==
+
+C -> M : FaireJouerIAAsync()
+activate M
+
+M -> IA : CalculerCoup(partie)
+activate IA
+IA -> IA : Analyse (Aléatoire ou Simulations)
+IA --> M : Action (Coup choisi : origine, dest, placement)
+deactivate IA
+
+M -> M : GererAction(origine)
+M -> M : GererAction(destination)
+M -> M : GererAction(placement)
+
+M -> P : AppuyerBoutonOrbito()
+activate P
+P --> M : bool
+deactivate P
+
+M -> M : OnMiseAJourUI.Invoke()
+M --> C : Task terminée
+deactivate M
+@enduml
+```
+
+### Explications des changements récents
+
+1. **La Variante Inverse** : Le premier diagramme montre comment le bouton Orbito déclenche désormais la méthode `ActionnerOrbite(VarianteInverse)` du plateau pour faire tourner les billes dans le sens inverse si on l'a activé.
+2. **Le grand nettoyage de l'historique** : Grâce à `PartieTerminee`, l'extraction des statistiques est devenue très propre.
+3. **Une IA fluide** : L'IA ne bloque plus le jeu pendant qu'elle cherche son meilleur coup (IA Moyenne) car elle s'exécute avec la méthode asynchrone `FaireJouerIAAsync()`.

@@ -1,121 +1,137 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:d="http://schemas.microsoft.com/dotnet/2021/maui/design"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Game.MainPage"
              xmlns:local="clr-namespace:Game.Behaviors"
              BackgroundColor="#2E073F">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <Grid
-                ColumnDefinitions="*"
-                RowDefinitions="*,*,*">
-            <Button
-                    Grid.Row="0"
-                    VerticalOptions="Start"
-                    Grid.Column="0"
-                    Text="Orbito"
-                    HeightRequest="200"
-                    FontFamily="MoreSugar"
-                    FontSize="150"
-                    BackgroundColor="Transparent"
-                    TextColor="White"
-                    
-                    SemanticProperties.Description="Logo Orbito" 
-                    HorizontalOptions="Center"
-                    />
-            
-            <Border
-                ZIndex="1"
-                Grid.Row="0"
-                Grid.RowSpan="2"
-                Margin="0,150,0,0"
-                HorizontalOptions="End"
-                WidthRequest="260"
-                HeightRequest="400"
-                Stroke="Transparent"
-                StrokeShape="0"
-                StrokeThickness="2">
-                
-                <Grid Padding="30" RowDefinitions="Auto, auto" RowSpacing="15">
-                    
-                    <Button
-                        Text="HISTORIQUE"
-                        WidthRequest="250"
-                        HeightRequest="100"
-                        Clicked="OnHistoriqueClicked"
+    <Grid Padding="30"
+          ColumnDefinitions="Auto,*,Auto"
+          RowDefinitions="Auto, Auto, Auto">
 
-                        FontFamily="MoreSugar"
-                        FontSize="30"
-                        BorderColor="White"
-                        BorderWidth="2"
-                        Grid.Row="0"
-                        TextColor="White"
-                        VerticalOptions="Center"
-                        local:HoverBehavior.CursorHoverType="Hand"
-                    />
-                    <Button
-                        Clicked="OnStatistiquesClicked"
-                        Text="STATS"
-                        WidthRequest="250"
-                        FontFamily="MoreSugar"
-                        HeightRequest="100"
-                        FontSize="30"
-                        BorderColor="White"
-                        BorderWidth="2"
-                        Grid.Row="1"
-                        VerticalOptions="Center"
-                        TextColor="White"
-                        Margin="0,40,0,0"
-                        local:HoverBehavior.CursorHoverType="Hand"
-                    />
-                </Grid>
-                
-            </Border>
-            <Grid Padding="30"
-                  Grid.Row="1"
-                  Grid.RowSpan="2"
-                  VerticalOptions="End"
-                  Margin="0,00,0,0">
-                <Button
-                    Text="Quitter"
-                    FontFamily="MoreSugar"
-                    WidthRequest="200"
-                    HeightRequest="70"
-                    FontSize="30"
-                    BackgroundColor="Red"
-                    TextColor="Black"
-                    HorizontalOptions="Start"
-                    BorderColor="Black"
-                    BorderWidth="3"
-                    Margin="0, 350, 0, 0"
-                    Grid.Column="0"
-                    CornerRadius="15"
-                    local:HoverBehavior.CursorHoverType="Hand"
-                    />
+        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                Text="Orbito"
+                FontFamily="MoreSugar"
+                FontSize="150"
+                BackgroundColor="Transparent"
+                TextColor="White"
+                HorizontalOptions="Center"
+                VerticalOptions="Start"/>
 
-                <Button
-                    Text="Jouer"
-                    FontFamily="MoreSugar"
-                    Padding="20"
-                    Clicked="OnPlayClicked"
-                    BackgroundColor="DarkViolet"
-                    TextColor="Black"
-                    BorderColor="Black"
-                    BorderWidth="3"
-                    WidthRequest="600"
-                    HeightRequest="300"
-                    FontSize="150"
-                    Margin="0, 00, 0, 0"
-                    Grid.Column="1"
-                    HorizontalOptions="Center"
-                    CornerRadius="45"
-                    local:HoverBehavior.CursorHoverType="Hand"
-                    />
-            </Grid>
-            </Grid>
+        <VerticalStackLayout Grid.Row="1" Grid.Column="2"
+                             Spacing="50"
+                             VerticalOptions="Start"
+                             HorizontalOptions="Center">
+            <Button Text="HISTORIQUE"
+                    WidthRequest="250" HeightRequest="100"
+                    FontFamily="MoreSugar" FontSize="30"
+                    BackgroundColor="CadetBlue" TextColor="White"
+                    BorderColor="White" BorderWidth="2"
+                    Clicked="OnHistoriqueClicked"
+                    local:HoverBehavior.CursorHoverType="Hand"/>
+
+            <Button Text="STATS"
+                    WidthRequest="250" HeightRequest="100"
+                    FontFamily="MoreSugar" FontSize="30"
+                    BackgroundColor="CadetBlue" TextColor="White"
+                    BorderColor="White" BorderWidth="2"
+                    Clicked="OnStatistiquesClicked"
+                    local:HoverBehavior.CursorHoverType="Hand"/>
         </VerticalStackLayout>
-    </ScrollView>
+
+        <VerticalStackLayout Grid.Row="1" Grid.Column="1"
+                             Spacing="20"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center">
+            
+
+            <Button Text="Jouer"
+                    FontFamily="MoreSugar" FontSize="150"
+                    BackgroundColor="DarkViolet" TextColor="Black"
+                    BorderColor="Black" BorderWidth="3"
+                    WidthRequest="600" HeightRequest="350"
+                    Margin="0,150,0,0"
+                    CornerRadius="55"
+                    Clicked="OnPlayClicked"
+                    local:HoverBehavior.CursorHoverType="Hand"/>
+        </VerticalStackLayout>
+
+        <Button Grid.Row="2" Grid.Column="0"
+                Text="Quitter"
+                FontFamily="MoreSugar" FontSize="30"
+                BackgroundColor="Red" TextColor="Black"
+                BorderColor="Black" BorderWidth="3"
+                WidthRequest="250" HeightRequest="70"
+                CornerRadius="15"
+                VerticalOptions="End"
+                HorizontalOptions="Start"
+                Clicked="OnQuitterClicked"
+                local:HoverBehavior.CursorHoverType="Hand"/>
+
+
+        <Grid 
+            x:Name="PopUpReprendre"
+            VerticalOptions="Fill"
+            HorizontalOptions="Fill"
+            Grid.Row="0" Grid.RowSpan="3"
+            Grid.Column="0" Grid.ColumnSpan="3"
+            BackgroundColor="#EE2E073F"
+            IsVisible="True"
+            
+            
+            ZIndex="100"
+            >
+            <Border
+                WidthRequest="1100"
+                HeightRequest="400"
+                VerticalOptions="Center"
+                BackgroundColor="#2E073F"
+                Stroke="PapayaWhip"
+                StrokeShape="RoundRectangle 40"
+                StrokeThickness="4"
+                >
+                <Grid
+                    RowDefinitions="*,Auto,*"
+                    ColumnDefinitions="*,*">
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="0" Grid.ColumnSpan="2"
+                        Text="Reprendre la partie"
+                        FontFamily="MoreSugar" FontSize="40"
+                        BackgroundColor="#FFD700" TextColor="Black"
+                        BorderColor="Black" BorderWidth="3"
+                        WidthRequest="600" HeightRequest="80"
+                        CornerRadius="25"
+                        ZIndex="100"
+                        Clicked="OnReprendreClicked"
+                        local:HoverBehavior.CursorHoverType="Hand"/>
+                    <Button
+                        Text="X"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        Margin="20"
+                        TextColor="White"
+                        BackgroundColor="Transparent"
+                        FontSize="30"
+                        local:HoverBehavior.CursorHoverType="Hand"
+                        Clicked="OnCloseReprendreClicked"/>
+                    <Label
+                        Text="La partie a été coupée, voulez vous la reprendre ?"
+                        FontFamily="MoreSugar"
+                        FontSize="40"
+                        Grid.Row="0"
+                        Grid.Column="0" Grid.ColumnSpan="2"
+                        HorizontalOptions="Center"
+                        Margin="30"
+                        local:HoverBehavior.CursorHoverType="IBeam"
+                        
+                        />
+                </Grid>
+            </Border>
+        </Grid>
+
+    </Grid>
+    
 </ContentPage>

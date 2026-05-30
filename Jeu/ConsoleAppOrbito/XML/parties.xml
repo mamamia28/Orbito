@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Historique xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/LibOrbito">
+  <_lesSessions>
+    <PartieTerminee>
+      <DateDeFin>2026-05-25T17:28:27.0650641+02:00</DateDeFin>
+      <Etat>Terminee</Etat>
+      <HistoriqueCoups>
+        <Coup>
+          <destinationDeplacement i:nil="true" />
+          <origineDeplacement i:nil="true" />
+          <placement>
+            <X>3</X>
+            <Y>2</Y>
+          </placement>
+          <Responsable z:Id="i1" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+            <Avatar i:nil="true" />
+            <BillesRestantes>0</BillesRestantes>
+            <ComportementIA i:type="IAMoyenne">
+              <_rnd xmlns:d8p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+            </ComportementIA>
+            <CouleurBilles>Blanc</CouleurBilles>
+            <Pseudo i:nil="true" />
+          </Responsable>
+        </Coup>
+        <Coup>
+          <destinationDeplacement i:nil="true" />
+          <origineDeplacement i:nil="true" />
+          <placement>
+            <X>2</X>
+            <Y>2</Y>
+          </placement>
+          <Responsable z:Id="i2" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+            <Avatar i:nil="true" />
+            <BillesRestantes>0</BillesRestantes>
+            <ComportementIA i:type="IAMoyenne">
+              <_rnd xmlns:d8p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+            </ComportementIA>
+            <CouleurBilles>Blanc</CouleurBilles>
+            <Pseudo i:nil="true" />
+          </Responsable>
+        </Coup>
+        <Coup>
+          <destinationDeplacement i:nil="true" />
+          <origineDeplacement i:nil="true" />
+          <placement>
+            <X>1</X>
+            <Y>3</Y>
+          </placement>
+          <Responsable z:Id="i3" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+            <Avatar i:nil="true" />
+            <BillesRestantes>0</BillesRestantes>
+            <ComportementIA i:type="IAMoyenne">
+              <_rnd xmlns:d8p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+            </ComportementIA>
+            <CouleurBilles>Blanc</CouleurBilles>
+            <Pseudo i:nil="true" />
+          </Responsable>
+        </Coup>
+        <Coup>
+          <destinationDeplacement i:nil="true" />
+          <origineDeplacement i:nil="true" />
+          <placement>
+            <X>0</X>
+            <Y>3</Y>
+          </placement>
+          <Responsable z:Id="i4" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+            <Avatar i:nil="true" />
+            <BillesRestantes>0</BillesRestantes>
+            <ComportementIA i:type="IAMoyenne">
+              <_rnd xmlns:d8p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+            </ComportementIA>
+            <CouleurBilles>Blanc</CouleurBilles>
+            <Pseudo i:nil="true" />
+          </Responsable>
+        </Coup>
+        <Coup>
+          <destinationDeplacement i:nil="true" />
+          <origineDeplacement i:nil="true" />
+          <placement>
+            <X>3</X>
+            <Y>2</Y>
+          </placement>
+          <Responsable z:Id="i5" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+            <Avatar i:nil="true" />
+            <BillesRestantes>0</BillesRestantes>
+            <ComportementIA i:type="IAMoyenne">
+              <_rnd xmlns:d8p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+            </ComportementIA>
+            <CouleurBilles>Blanc</CouleurBilles>
+            <Pseudo i:nil="true" />
+          </Responsable>
+        </Coup>
+        <Coup>
+          <destinationDeplacement i:nil="true" />
+          <origineDeplacement i:nil="true" />
+          <placement>
+            <X>2</X>
+            <Y>1</Y>
+          </placement>
+          <Responsable z:Id="i6" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+            <Avatar i:nil="true" />
+            <BillesRestantes>0</BillesRestantes>
+            <ComportementIA i:type="IAMoyenne">
+              <_rnd xmlns:d8p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+            </ComportementIA>
+            <CouleurBilles>Blanc</CouleurBilles>
+            <Pseudo i:nil="true" />
+          </Responsable>
+        </Coup>
+        <Coup>
+          <destinationDeplacement i:nil="true" />
+          <origineDeplacement i:nil="true" />
+          <placement>
+            <X>2</X>
+            <Y>0</Y>
+          </placement>
+          <Responsable z:Id="i7" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+            <Avatar i:nil="true" />
+            <BillesRestantes>0</BillesRestantes>
+            <ComportementIA i:type="IAMoyenne">
+              <_rnd xmlns:d8p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+            </ComportementIA>
+            <CouleurBilles>Blanc</CouleurBilles>
+            <Pseudo i:nil="true" />
+          </Responsable>
+        </Coup>
+        <Coup>
+          <destinationDeplacement i:nil="true" />
+          <origineDeplacement i:nil="true" />
+          <placement>
+            <X>2</X>
+            <Y>3</Y>
+          </placement>
+          <Responsable z:Id="i8" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+            <Avatar i:nil="true" />
+            <BillesRestantes>0</BillesRestantes>
+            <ComportementIA i:type="IAMoyenne">
+              <_rnd xmlns:d8p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+            </ComportementIA>
+            <CouleurBilles>Blanc</CouleurBilles>
+            <Pseudo i:nil="true" />
+          </Responsable>
+        </Coup>
+        <Coup>
+          <destinationDeplacement i:nil="true" />
+          <origineDeplacement i:nil="true" />
+          <placement>
+            <X>2</X>
+            <Y>1</Y>
+          </placement>
+          <Responsable z:Id="i9" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+            <Avatar i:nil="true" />
+            <BillesRestantes>0</BillesRestantes>
+            <ComportementIA i:type="IAMoyenne">
+              <_rnd xmlns:d8p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+            </ComportementIA>
+            <CouleurBilles>Blanc</CouleurBilles>
+            <Pseudo i:nil="true" />
+          </Responsable>
+        </Coup>
+        <Coup>
+          <destinationDeplacement i:nil="true" />
+          <origineDeplacement i:nil="true" />
+          <placement>
+            <X>2</X>
+            <Y>0</Y>
+          </placement>
+          <Responsable z:Id="i10" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+            <Avatar i:nil="true" />
+            <BillesRestantes>0</BillesRestantes>
+            <ComportementIA i:type="IAMoyenne">
+              <_rnd xmlns:d8p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+            </ComportementIA>
+            <CouleurBilles>Blanc</CouleurBilles>
+            <Pseudo i:nil="true" />
+          </Responsable>
+        </Coup>
+        <Coup>
+          <destinationDeplacement i:nil="true" />
+          <origineDeplacement i:nil="true" />
+          <placement>
+            <X>2</X>
+            <Y>2</Y>
+          </placement>
+          <Responsable z:Id="i11" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+            <Avatar i:nil="true" />
+            <BillesRestantes>0</BillesRestantes>
+            <ComportementIA i:type="IAMoyenne">
+              <_rnd xmlns:d8p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+            </ComportementIA>
+            <CouleurBilles>Blanc</CouleurBilles>
+            <Pseudo i:nil="true" />
+          </Responsable>
+        </Coup>
+        <Coup>
+          <destinationDeplacement>
+            <X>2</X>
+            <Y>3</Y>
+          </destinationDeplacement>
+          <origineDeplacement>
+            <X>2</X>
+            <Y>2</Y>
+          </origineDeplacement>
+          <placement>
+            <X>1</X>
+            <Y>3</Y>
+          </placement>
+          <Responsable z:Id="i12" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+            <Avatar i:nil="true" />
+            <BillesRestantes>0</BillesRestantes>
+            <ComportementIA i:type="IAMoyenne">
+              <_rnd xmlns:d8p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+            </ComportementIA>
+            <CouleurBilles>Blanc</CouleurBilles>
+            <Pseudo i:nil="true" />
+          </Responsable>
+        </Coup>
+        <Coup>
+          <destinationDeplacement i:nil="true" />
+          <origineDeplacement i:nil="true" />
+          <placement>
+            <X>1</X>
+            <Y>0</Y>
+          </placement>
+          <Responsable z:Id="i13" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+            <Avatar i:nil="true" />
+            <BillesRestantes>0</BillesRestantes>
+            <ComportementIA i:type="IAMoyenne">
+              <_rnd xmlns:d8p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+            </ComportementIA>
+            <CouleurBilles>Blanc</CouleurBilles>
+            <Pseudo i:nil="true" />
+          </Responsable>
+        </Coup>
+        <Coup>
+          <destinationDeplacement i:nil="true" />
+          <origineDeplacement i:nil="true" />
+          <placement>
+            <X>1</X>
+            <Y>1</Y>
+          </placement>
+          <Responsable z:Id="i14" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+            <Avatar i:nil="true" />
+            <BillesRestantes>0</BillesRestantes>
+            <ComportementIA i:type="IAMoyenne">
+              <_rnd xmlns:d8p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+            </ComportementIA>
+            <CouleurBilles>Blanc</CouleurBilles>
+            <Pseudo i:nil="true" />
+          </Responsable>
+        </Coup>
+        <Coup>
+          <destinationDeplacement i:nil="true" />
+          <origineDeplacement i:nil="true" />
+          <placement>
+            <X>2</X>
+            <Y>0</Y>
+          </placement>
+          <Responsable z:Id="i15" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+            <Avatar i:nil="true" />
+            <BillesRestantes>0</BillesRestantes>
+            <ComportementIA i:type="IAMoyenne">
+              <_rnd xmlns:d8p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+            </ComportementIA>
+            <CouleurBilles>Blanc</CouleurBilles>
+            <Pseudo i:nil="true" />
+          </Responsable>
+        </Coup>
+        <Coup>
+          <destinationDeplacement i:nil="true" />
+          <origineDeplacement i:nil="true" />
+          <placement>
+            <X>0</X>
+            <Y>0</Y>
+          </placement>
+          <Responsable z:Id="i16" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+            <Avatar i:nil="true" />
+            <BillesRestantes>0</BillesRestantes>
+            <ComportementIA i:type="IAMoyenne">
+              <_rnd xmlns:d8p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+            </ComportementIA>
+            <CouleurBilles>Blanc</CouleurBilles>
+            <Pseudo i:nil="true" />
+          </Responsable>
+        </Coup>
+      </HistoriqueCoups>
+      <Joueur1 z:Id="i17" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+        <Avatar i:nil="true" />
+        <BillesRestantes>0</BillesRestantes>
+        <ComportementIA i:type="IAMoyenne">
+          <_rnd xmlns:d6p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+        </ComportementIA>
+        <CouleurBilles>Blanc</CouleurBilles>
+        <Pseudo i:nil="true" />
+      </Joueur1>
+      <Joueur2 z:Id="i18" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+        <Avatar i:nil="true" />
+        <BillesRestantes>0</BillesRestantes>
+        <ComportementIA i:type="IAMoyenne">
+          <_rnd xmlns:d6p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+        </ComportementIA>
+        <CouleurBilles>Blanc</CouleurBilles>
+        <Pseudo i:nil="true" />
+      </Joueur2>
+      <JoueurGagnant z:Id="i19" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+        <Avatar i:nil="true" />
+        <BillesRestantes>0</BillesRestantes>
+        <ComportementIA i:type="IAMoyenne">
+          <_rnd xmlns:d6p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+        </ComportementIA>
+        <CouleurBilles>Blanc</CouleurBilles>
+        <Pseudo i:nil="true" />
+      </JoueurGagnant>
+      <JoueurPerdant z:Id="i20" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+        <Avatar i:nil="true" />
+        <BillesRestantes>0</BillesRestantes>
+        <ComportementIA i:type="IAMoyenne">
+          <_rnd xmlns:d6p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+        </ComportementIA>
+        <CouleurBilles>Blanc</CouleurBilles>
+        <Pseudo i:nil="true" />
+      </JoueurPerdant>
+      <Mode>IAVsIA</Mode>
+      <NombreDeTours>17</NombreDeTours>
+    </PartieTerminee>
+  </_lesSessions>
+  <lesJoueurs>
+    <Joueur z:Id="i21" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/">
+      <Avatar i:nil="true" />
+      <BillesRestantes>0</BillesRestantes>
+      <ComportementIA i:type="IAMoyenne">
+        <_rnd xmlns:d5p1="http://schemas.datacontract.org/2004/07/System" i:nil="true" />
+      </ComportementIA>
+      <CouleurBilles>Blanc</CouleurBilles>
+      <Pseudo i:nil="true" />
+    </Joueur>
+  </lesJoueurs>
+</Historique>

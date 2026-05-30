@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:lib="clr-namespace:LibOrbito;assembly=LibOrbito"
              x:Class="Game.Historique"
              xmlns:local="clr-namespace:Game.Behaviors"
              BackgroundColor="#2E073F">
@@ -44,16 +45,7 @@
 
             </Grid>
 
-            <CollectionView>
-                <CollectionView.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>P1</x:String>
-                        <x:String>P2</x:String>
-                        <x:String>P3</x:String>
-                        <x:String>P4</x:String>
-                    </x:Array>
-                </CollectionView.ItemsSource>
-
+            <CollectionView ItemsSource="{Binding LesParties}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Border
@@ -62,7 +54,7 @@
                             StrokeThickness="3"
                             StrokeShape="RoundRectangle 15"
                             Padding="15"
-                            Margin="0,10">
+                            Margin="0,10">  
 
                             <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
 
@@ -76,34 +68,29 @@
                                     Padding="0">
 
                                     <Grid ColumnDefinitions="*, 2, *">
-
                                         <Image
-                                            Source="dotnet_bot.png"
-                                            Aspect="AspectFit"
+                                            Source="{Binding Joueur1.Avatar}"
+                                            Aspect="AspectFill"
                                             Grid.Column="0"
                                             HeightRequest="55"
                                             HorizontalOptions="Center"
                                             VerticalOptions="Center"
-                                            Margin="6,0"
-                                        />
+                                            Margin="6,0" />
 
                                         <BoxView
                                             Color="Black"
                                             Grid.Column="1"
                                             HorizontalOptions="Fill"
-                                            VerticalOptions="Fill"
-                                        />
+                                            VerticalOptions="Fill" />
 
                                         <Image
-                                            Source="dotnet_bot.png"
+                                            Source="{Binding Joueur2.Avatar}"
                                             Aspect="AspectFit"
                                             Grid.Column="2"
                                             HeightRequest="55"
                                             HorizontalOptions="Center"
                                             VerticalOptions="Center"
-                                            Margin="6,0"
-                                        />
-
+                                            Margin="6,0" />
                                     </Grid>
                                 </Border>
 
@@ -114,31 +101,43 @@
                                     VerticalOptions="Center">
 
                                     <Label
-                                        Text="Partie du XX/XX à XX:XX"
+                                        Text="{Binding DateDeFin, StringFormat='Partie du {0:dd/MM} à {0:HH:mm}'}"
                                         FontFamily="MoreSugar"
                                         FontSize="18"
                                         FontAttributes="Bold"
                                         TextColor="Black"
-                                        HorizontalOptions="Center"
-                                    />
+                                        HorizontalOptions="Center" />
 
                                     <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
                                         <Label
-                                            Text="Joueur X vainqueur"
+                                            Text="{Binding JoueurGagnant.Pseudo, StringFormat='{0} vainqueur', FallbackValue='Égalité'}"
                                             Grid.Column="0"
                                             FontFamily="MoreSugar"
                                             FontSize="14"
                                             TextColor="Black"
-                                            HorizontalOptions="End"
-                                        />
+                                            HorizontalOptions="End">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding Etat}" Value="{x:Static lib:EtatPartie.Egalite}">
+                                                    <Setter Property="Grid.ColumnSpan" Value="2" />
+                                                    <Setter Property="HorizontalOptions" Value="Center" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+
                                         <Label
-                                            Text="Joueur X perdant"
+                                            Text="{Binding JoueurPerdant.Pseudo, StringFormat='{0} perdant', FallbackValue=''}"
                                             Grid.Column="1"
                                             FontFamily="MoreSugar"
                                             FontSize="14"
                                             TextColor="Black"
-                                            HorizontalOptions="Start"
-                                        />
+                                            HorizontalOptions="Start">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding Etat}" Value="{x:Static lib:EtatPartie.Egalite}">
+                                                    <Setter Property="IsVisible" Value="False" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+
                                     </Grid>
 
                                 </VerticalStackLayout>
@@ -158,7 +157,8 @@
                                     HorizontalOptions="End"
                                     VerticalOptions="Center"
                                     local:HoverBehavior.CursorHoverType="Hand"
-                                />
+                                    Clicked="OnRevoirPartieClicked"
+                                    CommandParameter="{Binding .}"/>
 
                             </Grid>
                         </Border>
