@@ -39,6 +39,7 @@ public partial class Plateau : ContentPage
 	{
 		InitializeComponent();
         _viewModel = new PlateauModel();
+        _viewModel.OnOrbiteActive += OnBoutonOrbitoClicked;
         this.BindingContext = _viewModel;
     }
     
@@ -112,5 +113,31 @@ public partial class Plateau : ContentPage
     private void OnCloseAideClicked(object sender, EventArgs e)
     {
         _viewModel.EstAideAffiche = false;
+    }
+
+    public async Task TremblerPlateauAsync(int durationMs = 400, double intensity = 8)
+    {
+        Random random = new Random();
+        int stepDelay = 15; 
+        int steps = durationMs / stepDelay;
+
+        for (int i = 0; i < steps; i++)
+        {
+            double offsetX = (random.NextDouble() * 2 - 1) * intensity;
+            double offsetY = (random.NextDouble() * 2 - 1) * intensity;
+
+            VuePlateau.TranslationX = offsetX;
+            VuePlateau.TranslationY = offsetY;
+
+            await Task.Delay(stepDelay);
+        }
+
+        VuePlateau.TranslationX = 0;
+        VuePlateau.TranslationY = 0;
+    }
+
+    private async void OnBoutonOrbitoClicked()
+    {
+        await TremblerPlateauAsync(durationMs: 200, intensity: 5);
     }
 }

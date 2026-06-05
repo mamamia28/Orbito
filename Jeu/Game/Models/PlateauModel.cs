@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows.Input;
 using LibOrbito;
 
@@ -23,6 +24,7 @@ namespace Game.Models
         public string AvatarJoueur2 => _manager?._partie.Joueur2.Avatar!;
         public string AvatarJoueurGagnant => (_manager?._partie.JoueurGagnant == null) ? "egalite.png" : _manager?._partie.JoueurGagnant!.Avatar;
         public bool PeutPasserDeplacement => _manager?.PhaseActuelle == PhaseTour.ChoixDeplacementAdverse && !_manager.EstTourIA;
+        public bool PeutAppuyerOrbito => _manager?.PhaseActuelle == PhaseTour.AttenteBouton && !_manager.EstTourIA;
         public bool VarianteEstActivee => _manager != null && _manager.varianteInverse;
 
         private bool _estPartieTerminee = false;
@@ -85,7 +87,9 @@ namespace Game.Models
         public ICommand CommandeDropCase { get; }
         public ICommand CommandePasserDeplacement { get; }
         public ICommand CommandeMenuPrincipal { get; }
-        public ICommand CommandeRejouer { get; }     
+        public ICommand CommandeRejouer { get; }
+
+        public event System.Action OnOrbiteActive;
 
         public PlateauModel()
         {
@@ -144,10 +148,16 @@ namespace Game.Models
                     EffacerSurbrillance();
                 }
             });
+            
 
-            CommandeClicOrbito = new Command(() =>
+            CommandeClicOrbito = new Command( async() =>
             {
-                if (_manager != null && !_manager.EstTourIA && !EstPartieTerminee) _manager.ActionnerBouton();
+                if (_manager != null && !_manager.EstTourIA && !EstPartieTerminee && PeutAppuyerOrbito == true)
+                {
+                    _manager.ActionnerBouton();
+                    OnOrbiteActive!.Invoke();
+                    
+                }
             });
             CommandeMenuPrincipal = new Command(async () =>
             {
@@ -211,6 +221,7 @@ namespace Game.Models
             OnPropertyChanged(nameof(TexteAide));
             OnPropertyChanged(nameof(NomJoueurCourant));
             OnPropertyChanged(nameof(PeutPasserDeplacement));
+            OnPropertyChanged(nameof(PeutAppuyerOrbito));
             OnPropertyChanged(nameof(BillesRestantesJoueur1));
             OnPropertyChanged(nameof(BillesRestantesJoueur2));
             App.PartieActive = _manager._partie;

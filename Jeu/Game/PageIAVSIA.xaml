@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Game.PageIAVSIA"
              xmlns:local="clr-namespace:Game.Behaviors"
-             BackgroundColor="#2E073F"
+             BackgroundImageSource="fond_mac.jpg"
              Shell.NavBarIsVisible="False">
     <ScrollView>
         <Grid>
@@ -43,21 +43,24 @@
                             StrokeShape="RoundRectangle 25"
                             Padding="40,0,40,0">
                             <Grid 
-                            Padding="30"
-                            RowDefinitions="*,200,*"
+                                Padding="30"
+                                RowDefinitions="Auto,200,Auto"
                             >
 
                                 <Label
-                                Text="IA"
-                                VerticalOptions="Start"
-                                Grid.Row="0"
+                                    Text="IA"
+                                    VerticalOptions="Start"
+                                    HorizontalOptions="Center"
+                                    FontFamily="MoreSugar"
+                                    FontSize="18"
+                                    Grid.Row="0"
                                 />
                                 <Border
                                     Grid.Row="1"
                                     WidthRequest="200"
                                     StrokeShape="RoundRectangle 100"
                                     Stroke="WhiteSmoke"
-                                    BackgroundColor="#7A1CAC"
+                                    BackgroundColor="Transparent"
                                     StrokeThickness="6"
                                     >
                                     <Image
@@ -66,14 +69,16 @@
                                         />
                                 </Border>
                                 <Picker 
-                                 ItemsSource="{Binding ListeDifficultes}"
-                                 SelectedItem ="{Binding DifficulteSelectionnee}"
-                                 Title="Choisir la difficulté"
-                                 WidthRequest="400"
-                                 Margin="0,30,0,0"
-                                 Grid.Row="2"
-                                 HorizontalOptions="Center"
-                                 VerticalTextAlignment="Center"
+                                    ItemsSource="{Binding ListeDifficultes}"
+                                    SelectedItem ="{Binding DifficulteSelectionnee}"
+                                    Title="Choisir la difficulté"
+                                    WidthRequest="400"
+                                    Margin="5,30,0,0"
+                                    Grid.Row="2"
+                                    HorizontalOptions="Center"
+                                    FontFamily="MoreSugar"
+                                    BackgroundColor="#44000000"
+                                    VerticalTextAlignment="Center"
                                 />
                             </Grid>
                         </Border>
@@ -85,16 +90,19 @@
                     BackgroundColor="Transparent"
                     StrokeThickness="0">
                     <Button
-                            local:HoverBehavior.CursorHoverType="Hand"
-                            Text="Lancer la partie"
-                            WidthRequest="700"
-                            Padding="0"
-                            HeightRequest="70"
-                            FontFamily="MoreSugar"
-                            LineBreakMode="WordWrap"
-                            FontSize="50"
-                            Clicked="OnPlateauClicked"
-                            />
+                        local:HoverBehavior.CursorHoverType="Hand"
+                        Text="Lancer la partie"
+                        WidthRequest="700"
+    
+                        Padding="0"
+                        HeightRequest="75"
+                        FontFamily="MoreSugar"
+                        BorderColor="AntiqueWhite"
+                        BorderWidth="5"
+                        CornerRadius="25"
+                        FontSize="50"
+                        Clicked="OnPlateauClicked"
+                        />
                 </Border>
 
                 <Grid Padding="20">

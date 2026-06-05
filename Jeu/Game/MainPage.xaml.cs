@@ -53,5 +53,19 @@
             App.PartieActive = null;
             File.Delete(App.xmlSauvegarde);
         }
+
+        private void OnCreditsClicked(object sender, EventArgs e)
+        {
+            PopupCredits.IsVisible = true;
+            BtnCredits.BackgroundColor = Colors.Black;
+            BtnCredits.TextColor = Colors.White;
+        }
+
+        private void OnCloseCreditsClicked(object sender, EventArgs e)
+        {
+            PopupCredits.IsVisible = false;
+            BtnCredits.BackgroundColor = Colors.White;
+            BtnCredits.TextColor = Colors.Black;
+        }
     }
 }

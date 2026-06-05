@@ -5,16 +5,16 @@
              x:Class="Game.Plateau"
              x:Name="PlateauMain"
              xmlns:local="clr-namespace:Game.Behaviors"
-             BackgroundColor="#2E073F">
+             BackgroundImageSource="fond_mac.jpg">
 
-    <Grid RowDefinitions="Auto, *, Auto" ColumnDefinitions="*, Auto, *" Padding="20">
+    <Grid RowDefinitions="Auto, *, Auto" ColumnDefinitions="*, Auto, *">
 
         <VerticalStackLayout 
             Grid.Row="0" 
             Grid.ColumnSpan="3" 
             HorizontalOptions="Center" 
             Spacing="10" 
-            Margin="0,0,0,20">
+            Margin="0,20,0,20">
             <Label 
                 Text="{Binding NomJoueurCourant, StringFormat='Tour de {0}'}" 
                 TextColor="White" 
@@ -35,7 +35,7 @@
                 HorizontalOptions="Center"/>
         </VerticalStackLayout>
         
-        <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Spacing="10" VerticalOptions="Start" HorizontalOptions="Start">
+        <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Spacing="10" VerticalOptions="Start" HorizontalOptions="Start" Padding="20">
             <Button
                 Text="Quitter Partie"
                 WidthRequest="200"
@@ -64,7 +64,7 @@
                 Clicked="OnAideClicked" />
         </HorizontalStackLayout>
 
-        <HorizontalStackLayout Grid.Row="0" Grid.Column="2" Spacing="10" VerticalOptions="Start" HorizontalOptions="End" ZIndex="10">
+        <HorizontalStackLayout Grid.Row="0" Grid.Column="2" Spacing="10" VerticalOptions="Start" HorizontalOptions="End" ZIndex="10" Padding="20">
             <Button
                 IsVisible="{Binding VarianteEstActivee}"
                 Text="50' Reverse"
@@ -109,7 +109,7 @@
                 Stroke="AntiqueWhite"
                 StrokeShape="RoundRectangle 20"
                 StrokeThickness="4"
-                BackgroundColor="#4D7A1CAC"
+                BackgroundColor="#CC2E073F"
                 >
                 <Grid
                     RowDefinitions="*,*,*,*"
@@ -298,7 +298,7 @@
                 Stroke="AntiqueWhite"
                 StrokeShape="RoundRectangle 20"
                 StrokeThickness="4"
-                BackgroundColor="#4D7A1CAC"
+                BackgroundColor="#CC2E073F"
                 
                 >
                 <Grid
