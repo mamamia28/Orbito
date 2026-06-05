@@ -4,7 +4,7 @@
              xmlns:vm="clr-namespace:Game.Models"
              xmlns:local="clr-namespace:Game.Behaviors"
              x:Class="Game.ReplayPartie"
-             BackgroundColor="#2E073F">
+             BackgroundImageSource="fond_mac.jpg">
 
     <Grid RowDefinitions="Auto, *, Auto" ColumnDefinitions="*, Auto, *" Padding="20">
 

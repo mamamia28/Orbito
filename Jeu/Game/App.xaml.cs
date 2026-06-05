@@ -19,6 +19,7 @@ namespace Game
         public App()
         {
             InitializeComponent();
+            UserAppTheme = AppTheme.Dark;
             System.Diagnostics.Debug.WriteLine($"\n\nChemin maui (xml) : {xmlFile}\n\n");
             Hist = Persistance.ChargerHistorique(xmlFile, Hist);
             ChargerPartieEnCours();

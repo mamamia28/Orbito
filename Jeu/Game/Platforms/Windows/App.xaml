@@ -5,4 +5,20 @@
     xmlns:maui="using:Microsoft.Maui"
     xmlns:local="using:Game.WinUI">
 
+    <maui:MauiWinUIApplication.Resources>
+        <SolidColorBrush x:Key="ContentDialogBackground" Color="#2E073F" />
+        <SolidColorBrush x:Key="ContentDialogBorderBrush" Color="AntiqueWhite" />
+
+        <SolidColorBrush x:Key="ContentDialogForeground" Color="White" />
+        <SolidColorBrush x:Key="ContentDialogTitleForeground" Color="White" />
+
+        <SolidColorBrush x:Key="ContentDialogButtonBackground" Color="#8B00CC" />
+        <SolidColorBrush x:Key="ContentDialogButtonForeground" Color="White" />
+        <SolidColorBrush x:Key="ContentDialogButtonBorderBrush" Color="Black" />
+
+        <SolidColorBrush x:Key="ContentDialogButtonBackgroundPointerOver" Color="#7A1CAC" />
+        <SolidColorBrush x:Key="ContentDialogButtonForegroundPointerOver" Color="White" />
+        <SolidColorBrush x:Key="ContentDialogButtonBorderBrushPointerOver" Color="AntiqueWhite" />
+    </maui:MauiWinUIApplication.Resources>
+
 </maui:MauiWinUIApplication>
