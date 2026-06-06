@@ -76,7 +76,7 @@ build-download-site:
     DOCKERFILE_CONTEXT_PATH: Docker/
     DESTINATION_REGISTRY_IMAGE_NAME: codefirst.iut.uca.fr/iut_inf63/maui-2026-g3-g4/orbito/site
     DESTINATION_REGISTRY_IMAGE_VERSION: main
-    KANIKO_EXTRA_OPTIONS: "--build-arg PACKAGE_URL=https://github.com/mamamia28/Orbito/releases/download/v1.1.0-pre/orbito-1.1.0.zip"
+    KANIKO_EXTRA_OPTIONS: "--build-arg PACKAGE_URL=https://github.com/mamamia28/Orbito/releases/download/v1.1.1-pre/orbito-1.1.1.zip"
   needs:
     - push-doxygen-documentation
   rules:
