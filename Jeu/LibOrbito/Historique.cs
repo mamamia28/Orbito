@@ -84,6 +84,7 @@ namespace LibOrbito
 
             foreach (var partie in _lesSessions)
             {
+                if (partie.Mode == ModeJeu.IAVsIA) continue;
                 if (EstPresentDansPartie(partie, joueur))
                 {
                     total++;

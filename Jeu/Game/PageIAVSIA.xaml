@@ -5,38 +5,34 @@
              xmlns:local="clr-namespace:Game.Behaviors"
              BackgroundImageSource="fond_mac.jpg"
              Shell.NavBarIsVisible="False">
-    <ScrollView>
-        <Grid>
+    <Grid>
+        <ScrollView>
             <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
+                Padding="30,0,30,100"
+                Spacing="25">
+
                 <Border
-                BackgroundColor="Transparent"
-                Stroke="Transparent">
+                    BackgroundColor="Transparent"
+                    Stroke="Transparent">
                     <Button
-                BackgroundColor="Transparent"
-            
-                HeightRequest="185"
-                Text="Orbito"
-                FontSize="150"
-                TextColor="White"
-                FontFamily="MoreSugar"
-                SemanticProperties.Description="Logo Orbito" />
+                        BackgroundColor="Transparent"
+                        HeightRequest="185"
+                        Text="Orbito"
+                        FontSize="150"
+                        TextColor="White"
+                        FontFamily="MoreSugar"
+                        SemanticProperties.Description="Logo Orbito" />
                 </Border>
 
-
-
                 <HorizontalStackLayout
-                Padding="30"
-                Spacing="200"
-                HorizontalOptions="Center"
-           
-                >
+                    Padding="30"
+                    Spacing="200"
+                    HorizontalOptions="Center">
+
                     <VerticalStackLayout
-                    Margin="10"
-                    WidthRequest="400"
-                    Spacing="15"
-                    >
+                        Margin="10"
+                        WidthRequest="400"
+                        Spacing="15">
 
                         <Border
                             Stroke="Transparent"
@@ -44,8 +40,7 @@
                             Padding="40,0,40,0">
                             <Grid 
                                 Padding="30"
-                                RowDefinitions="Auto,200,Auto"
-                            >
+                                RowDefinitions="Auto,200,Auto">
 
                                 <Label
                                     Text="IA"
@@ -61,8 +56,7 @@
                                     StrokeShape="RoundRectangle 100"
                                     Stroke="WhiteSmoke"
                                     BackgroundColor="Transparent"
-                                    StrokeThickness="6"
-                                    >
+                                    StrokeThickness="6">
                                     <Image
                                         Source="ia.png"
                                         Aspect="AspectFit"
@@ -82,7 +76,6 @@
                                 />
                             </Grid>
                         </Border>
-
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
 
@@ -93,7 +86,6 @@
                         local:HoverBehavior.CursorHoverType="Hand"
                         Text="Lancer la partie"
                         WidthRequest="700"
-    
                         Padding="0"
                         HeightRequest="75"
                         FontFamily="MoreSugar"
@@ -104,10 +96,10 @@
                         Clicked="OnPlateauClicked"
                         />
                 </Border>
+            </VerticalStackLayout>
+        </ScrollView>
 
-                <Grid Padding="20">
-
-                    <Button
+        <Button
                     Text="="
                     WidthRequest="200"
                     HeightRequest="70"
@@ -118,16 +110,15 @@
                     BorderColor="Black"
                     BorderWidth="3"
                     FontFamily="MoreSugarExtras"
-                    Grid.Column="0"
                     IsVisible="True"
                     IsEnabled="True"
                     CornerRadius="20"
                     local:HoverBehavior.CursorHoverType="Hand"
                     Clicked="OnRetourClicked"
+                    VerticalOptions="End"
+                    Margin="20"
+                    ZIndex="10"
                     />
 
-                </Grid>
-            </VerticalStackLayout>
-        </Grid>
-    </ScrollView>
+    </Grid>
 </ContentPage>

@@ -26,6 +26,7 @@ namespace Game.Models
         public bool PeutPasserDeplacement => _manager?.PhaseActuelle == PhaseTour.ChoixDeplacementAdverse && !_manager.EstTourIA;
         public bool PeutAppuyerOrbito => _manager?.PhaseActuelle == PhaseTour.AttenteBouton && !_manager.EstTourIA;
         public bool VarianteEstActivee => _manager != null && _manager.varianteInverse;
+        public bool PartieCoupee = false;
 
         private bool _estPartieTerminee = false;
         public bool EstPartieTerminee
@@ -201,7 +202,7 @@ namespace Game.Models
             }
             if (_manager.EstTerminee())
             {
-                if (!EstPartieTerminee)
+                if (!EstPartieTerminee && !PartieCoupee)
                 {
                     OnPropertyChanged(nameof(AvatarJoueurGagnant));
                     OnPropertyChanged(nameof(TexteVictoire));
@@ -310,6 +311,17 @@ namespace Game.Models
             foreach (var cellule in Grille)
             {
                 cellule.Highlighted = false;
+            }
+        }
+
+        public void NettoyerAvantQuitter()
+        {
+            EstPartieTerminee = true;
+            PartieCoupee = true;
+            if (_manager != null)
+            {
+                _manager.OnMiseAJourUI -= SynchroniserGrille;
+                _manager.OnActionIADetailleeAsync -= AfficherActionIA;
             }
         }
 
