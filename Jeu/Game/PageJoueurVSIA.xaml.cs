@@ -27,6 +27,18 @@ public partial class PageJoueurVSIA : ContentPage
             return;
         }
 
+        if (_viewModel.Pseudo1.Contains(" "))
+        {
+            await DisplayAlertAsync("Erreur", "Les espaces ne sont pas autorisés dans le pseudo.", "OK");
+            return;
+        }
+
+        if (_viewModel.Pseudo1.Trim().Equals("IA", StringComparison.OrdinalIgnoreCase))
+        {
+            await DisplayAlertAsync("Erreur","Vous ne pouvez pas utilise le pseudo 'IA'.","OK");
+            return;
+        }
+
         var parametres = new Dictionary<string, object>
         {
             { "Pseudo1", _viewModel.Pseudo1 },

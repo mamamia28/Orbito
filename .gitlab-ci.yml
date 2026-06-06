@@ -11,6 +11,7 @@ include:
     file:
       - 'build/.documentation-build.yml'
       - 'deploy/.docker-deploy.yml'
+      - 'build/.docker-build.yml'
 
 build:
   stage: 🏗️build
@@ -45,10 +46,8 @@ sonar_analysis:
     - reportgenerator -reports:"**/coverage.cobertura.xml" -reporttypes:SonarQube -targetdir:"coveragereport"
     - dotnet publish OrbitoTests/OrbitoTests.csproj -c Release --no-restore -o $CI_PROJECT_DIR/build/release
     - dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN
-
   needs:
     - job: build
-
 
 build-doxygen-documentation:
   extends: .build-documentation
@@ -66,6 +65,34 @@ push-doxygen-documentation:
   stage: 📦push
   needs:
     - build-doxygen-documentation
+  rules:
+    - when: always
+
+build-download-site:
+  extends: .build-and-push-docker-image
+  stage: 📦push
+  variables:
+    DOCKERFILE_RELATIVE_PATH: Docker/Dockerfile
+    DOCKERFILE_CONTEXT_PATH: Docker/
+    DESTINATION_REGISTRY_IMAGE_NAME: codefirst.iut.uca.fr/iut_inf63/maui-2026-g3-g4/orbito/site
+    DESTINATION_REGISTRY_IMAGE_VERSION: main
+    KANIKO_EXTRA_OPTIONS: "--build-arg PACKAGE_URL=https://github.com/mamamia28/Orbito/releases/download/v1.1.0-pre/orbito-1.1.0.zip"
+  needs:
+    - push-doxygen-documentation
+  rules:
+    - when: always
+
+deploy-download-site:
+  extends: .deploy-image
+  stage: 🚀deploy
+  variables:
+    CONTAINER_NAME: orbito-site
+    CONTAINER_IMAGE_PATH: codefirst.iut.uca.fr/iut_inf63/maui-2026-g3-g4/orbito/site:main
+    NAMESPACE_NAME: iut-inf63-maui-2026-g3-g4
+    NAMESPACE_TOKEN: $NAMESPACE_TOKEN
+    IS_PUBLIC: "true"
+  needs:
+    - build-download-site
   rules:
     - when: always
 

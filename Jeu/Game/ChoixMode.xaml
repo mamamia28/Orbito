@@ -7,7 +7,7 @@
 
     <Grid>
         <ScrollView>
-            <VerticalStackLayout Padding="30,0" Spacing="25">
+            <VerticalStackLayout Padding="30,0,30,100" Spacing="25">
 
                 <Grid Padding="30,0,30,30">
                     <Border Grid.Column="1" Stroke="Transparent">
@@ -42,23 +42,48 @@
                         BorderColor="White" BorderWidth="2" Clicked="OnJoueurVSJoueurClicked"
                         FontFamily="MoreSugar" local:HoverBehavior.CursorHoverType="Hand" />
 
-                <Grid Padding="30" Margin="0,120,0,0">
-                    <Button Text="=" FontFamily="MoreSugarExtras" WidthRequest="200" HeightRequest="70"
-                            FontSize="30" BackgroundColor="Red" TextColor="Black" HorizontalOptions="Start"
-                            BorderColor="Black" BorderWidth="3" Grid.Column="0" CornerRadius="15"
-                            Clicked="OnRetourClicked" local:HoverBehavior.CursorHoverType="Hand" />
-
-                    <Button x:Name="BtnVariantes" Text="Variantes" WidthRequest="200" HeightRequest="70"
-                            FontSize="30" BackgroundColor="White" TextColor="Purple" HorizontalOptions="End"
-                            BorderColor="Purple" BorderWidth="3" Grid.Column="1" FontAttributes="Bold"
-                            FontFamily="MoreSugar" local:HoverBehavior.CursorHoverType="Hand"
-                            Clicked="OnVariantesClicked" />
-                </Grid>
-
             </VerticalStackLayout>
         </ScrollView>
 
-        <Grid x:Name="PopupVariantes" IsVisible="False" BackgroundColor="#B3000000" Padding="50">
+        <Button
+            Text="="
+            FontFamily="MoreSugarExtras"
+            WidthRequest="200"
+            HeightRequest="70"
+            FontSize="30"
+            BackgroundColor="Red"
+            TextColor="Black"
+            HorizontalOptions="Start"
+            VerticalOptions="End"
+            BorderColor="Black"
+            BorderWidth="3"
+            CornerRadius="15"
+            Margin="20"
+            ZIndex="10"
+            Clicked="OnRetourClicked"
+            local:HoverBehavior.CursorHoverType="Hand" />
+
+        <Button 
+            x:Name="BtnVariantes" 
+            Text="Variantes" 
+            WidthRequest="200" 
+            HeightRequest="70"
+            FontSize="30" 
+            BackgroundColor="White" 
+            TextColor="Purple" 
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            BorderColor="Purple" 
+            BorderWidth="3" 
+            FontAttributes="Bold"
+            CornerRadius="15"
+            Margin="20"
+            ZIndex="10"
+            FontFamily="MoreSugar" 
+            local:HoverBehavior.CursorHoverType="Hand"
+            Clicked="OnVariantesClicked" />
+
+        <Grid x:Name="PopupVariantes" IsVisible="False" BackgroundColor="#B3000000" Padding="50" ZIndex="100">
 
             <Border BackgroundColor="#2E073F" Stroke="White" StrokeThickness="3" StrokeShape="RoundRectangle 20"
                     VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="1000" HeightRequest="800" Padding="30">
@@ -87,7 +112,7 @@
                                 </Border.GestureRecognizers>
                                 <VerticalStackLayout VerticalOptions="Center" Spacing="15">
                                     <Label x:Name="TitreVariante" Text="50' Reverse" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White" FontFamily="MoreSugar"/>
-                                    <Label x:Name="DescVariante" Text="Le sens de rotation de l'obrite est choisi alétoirement." FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White"/>
+                                    <Label x:Name="DescVariante" Text="Le sens de rotation de l'orbite est choisi aléatoirement." FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White"/>
                                 </VerticalStackLayout>
                             </Border>
 
@@ -121,7 +146,7 @@
             </Border>
         </Grid>
 
-        <Grid x:Name="PopupRegles" IsVisible="False" BackgroundColor="#B3000000" Padding="50">
+        <Grid x:Name="PopupRegles" IsVisible="False" BackgroundColor="#B3000000" Padding="50" ZIndex="100">
 
             <Border BackgroundColor="#2E073F" Stroke="White" StrokeThickness="3" StrokeShape="RoundRectangle 20"
                     VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="900" HeightRequest="700" Padding="30">

@@ -63,6 +63,7 @@ public partial class Plateau : ContentPage
     {
         if (await DisplayAlertAsync("Quitter la partie", "Voulez-vous vraiment retourner au menu principal ? \nLa progression sera perdue.", "Confirmer", "Annuler"))
         {
+            _viewModel.NettoyerAvantQuitter();
             App.PartieActive = null;
             File.Delete(App.xmlSauvegarde);
             await Shell.Current.GoToAsync("///MainPage");
