@@ -7,6 +7,10 @@ Bienvenue sur le dépôt du projet Orbito, une adaptation numérique du célèbr
 Lien vers le site de téléchargement du jeu : 
 [Download Orbito](https://codefirst.iut.uca.fr/kubernetes/iut-inf63-maui-2026-g3-g4/orbito-site/)
 
+## Vidéo 
+Lien vers la Vidéo de Présentation Orbito
+[![Présentation du projet Orbito](https://opencast.dsi.uca.fr/paella/ui/watch.html?id=29122690-2a04-42ad-ad37-50ffedf7b7fe)](https://opencast.dsi.uca.fr/paella/ui/watch.html?id=29122690-2a04-42ad-ad37-50ffedf7b7fe)
+
 ## Description du Projet
 
 L'application permet d'affronter d'autres joueurs ou une intelligence artificielle, que ce soit le temps d'une partie rapide ou lors de tournois. Elle assure un suivi complet de la progression grâce à la sauvegarde des scores et des statistiques détaillées par joueur (nombre de victoires, coups joués, etc.).
