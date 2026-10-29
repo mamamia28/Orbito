@@ -5,7 +5,7 @@ Bienvenue sur le dépôt du projet Orbito, une adaptation numérique du célèbr
 ## Téléchargement
 
 Lien vers le site de téléchargement du jeu : 
-[Download Orbito](https://codefirst.iut.uca.fr/kubernetes/iut-inf63-maui-2026-g3-g4/orbito-site/)
+[https://mamamia28.github.io/Orbito/](https://mamamia28.github.io/Orbito/)
 
 ## Vidéo 
 Lien vers la Vidéo de Présentation Orbito
